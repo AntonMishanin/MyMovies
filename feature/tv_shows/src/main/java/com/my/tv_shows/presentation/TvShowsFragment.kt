@@ -1,19 +1,32 @@
 package com.my.tv_shows.presentation
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import com.my.tv_shows.R
+import com.my.tv_shows.databinding.FragmentTvShowsBinding
 import com.my.tv_shows.di.TvShowsFactory
 import com.my.tv_shows.entity.TvShowsEntity
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
-class TvShowsFragment : Fragment(R.layout.fragment_tv_shows), TvShowsView {
+class TvShowsFragment : Fragment(), TvShowsView {
+
+    private var _binding: FragmentTvShowsBinding? = null
+    private val binding get() = _binding!!
 
     private val adapter = GroupAdapter<GroupieViewHolder>()
     private val presenter by lazy { TvShowsFactory().providePresenter() }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentTvShowsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,11 +37,11 @@ class TvShowsFragment : Fragment(R.layout.fragment_tv_shows), TvShowsView {
     override fun onDestroyView() {
         super.onDestroyView()
         presenter.onViewDetached()
+        _binding = null
     }
 
     private fun initView() {
-        val tvShowsRecyclerView = view?.findViewById<RecyclerView>(R.id.tv_shows_recycler_view)
-        tvShowsRecyclerView?.adapter = adapter
+        binding.tvShowsRecyclerView.adapter = adapter
     }
 
     override fun setTvShowsList(content: List<TvShowsEntity>) {
