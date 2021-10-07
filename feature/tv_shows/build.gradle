@@ -43,11 +43,14 @@ dependencies {
     //Material
     implementation 'com.google.android.material:material:1.4.0'
 
-    // Groupie
+    //Groupie
     implementation "com.xwray:groupie:$rootProject.groupieVersion"
     implementation "com.xwray:groupie-kotlin-android-extensions:$rootProject.groupieVersion"
 
-    // Picasso
+    //Picasso
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
     implementation "jp.wasabeef:picasso-transformations:$rootProject.picassoTransformation"
+
+    //Leak canary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakCanaryVersion"
 }

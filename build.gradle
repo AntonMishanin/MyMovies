@@ -29,8 +29,8 @@ task clean(type: Delete) {
 ext {
     materialVersion = '1.4.0-beta01'
     navigationVersion = '2.3.5'
-    constraintLayoutVersion = '2.0.4'
-    recyclerViewVersion = '1.2.0'
+    constraintLayoutVersion = '2.1.1'
+    recyclerViewVersion = '1.2.1'
     picassoVersion = '2.71828'
     picassoTransformation = '2.4.0'
 
@@ -39,11 +39,13 @@ ext {
     lifecycleVersion = '2.3.1'
     lifecycleExtensionVersion = '2.2.0'
 
-    runnerVersion = '1.4.0-beta01'
+    runnerVersion = '1.4.1-alpha03'
     rulesVersion = '1.0.1'
     junitVersion = '4.13.2'
-    espressoVersion = '3.4.0-beta01'
+    espressoVersion = '3.5.0-alpha03'
     timberVersion = '4.7.1'
 
     groupieVersion = '2.8.0'
+
+    leakCanaryVersion = '2.7'
 }
