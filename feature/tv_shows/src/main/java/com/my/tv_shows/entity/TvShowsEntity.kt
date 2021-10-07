@@ -1,6 +1,6 @@
-package com.my.tv_shows
+package com.my.tv_shows.entity
 
-data class TvShowEntity(
+data class TvShowsEntity(
     val id: String,
     val imagePath: Int,
     val title: String,

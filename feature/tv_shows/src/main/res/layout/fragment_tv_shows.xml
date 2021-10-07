@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.my.tv_shows.TvShowsFragment"
+    tools:context="com.my.tv_shows.presentation.TvShowsFragment"
     android:background="@color/background">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -13,5 +13,5 @@
         tools:itemCount="5"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
-        tools:listitem="@layout/item_tv_show" />
+        tools:listitem="@layout/item_tv_shows" />
 </FrameLayout>

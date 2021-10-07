@@ -1,15 +1,17 @@
-package com.my.tv_shows
+package com.my.tv_shows.presentation
 
 import android.widget.RatingBar
 import android.widget.TextView
 import com.google.android.material.imageview.ShapeableImageView
+import com.my.tv_shows.R
+import com.my.tv_shows.entity.TvShowsEntity
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 
-class TvShowItem(
-    private val content: TvShowEntity,
-    private val onItemClicked: (TvShowEntity) -> Unit
+class TvShowsItem(
+    private val content: TvShowsEntity,
+    private val onItemClicked: (TvShowsEntity) -> Unit
 ) : Item() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
@@ -24,5 +26,5 @@ class TvShowItem(
         viewHolder.itemView.setOnClickListener { onItemClicked(content) }
     }
 
-    override fun getLayout(): Int = R.layout.item_tv_show
+    override fun getLayout(): Int = R.layout.item_tv_shows
 }
