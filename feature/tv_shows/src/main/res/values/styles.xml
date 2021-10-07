@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!--item preview-->
     <style name="ShapeAppearanceOverlay.App.CornerSize3Percent" parent="">
         <item name="cornerSize">3%</item>
+    </style>
+
+    <!--item title-->
+    <style name="tv_show_item_title" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/title</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 </resources>

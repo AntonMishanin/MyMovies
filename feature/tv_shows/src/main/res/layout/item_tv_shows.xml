@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="16dp"
-    android:paddingTop="16dp">
+    android:paddingHorizontal="@dimen/dimens_16"
+    android:paddingTop="@dimen/dimens_16">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_preview"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/tv_shows_item_height"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,12 +22,9 @@
 
     <TextView
         android:id="@+id/title"
+        style="@style/tv_show_item_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAllCaps="true"
-        android:textColor="@color/title"
-        android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/rating"
         app:layout_constraintHorizontal_bias="0.0"
@@ -41,6 +38,7 @@
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:progressBackgroundTint="@color/rating"
         app:layout_constraintBottom_toBottomOf="@+id/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
