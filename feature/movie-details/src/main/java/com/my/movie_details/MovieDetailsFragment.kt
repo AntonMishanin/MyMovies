@@ -1,10 +1,12 @@
 package com.my.movie_details
 
+import android.app.ActionBar
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.my.movie_details.databinding.FragmentMovieDetailsBinding
 import com.my.movie_details.entity.MovieEntity
@@ -32,6 +34,9 @@ class MovieDetailsFragment : Fragment() {
 
         val id = arguments?.getString(KEY_ID) ?: return
         val movie = getMovieById(id)
+
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        binding.toolbar.title = null
 
         Picasso.get().load(movie.previewId).into(binding.preview)
         with(binding.bodyContent) {
