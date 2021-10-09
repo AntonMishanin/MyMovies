@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="watch">Смотреть</string>
+    <string name="studio">Студия</string>
+    <string name="genre">Жанр</string>
+    <string name="year">Год</string>
+</resources>

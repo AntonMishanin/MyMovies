@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="body_background">#2C3848</color>
+    <color name="body_title">#FFFFFF</color>
+    <color name="body_watch">#5CA0D3</color>
+</resources>
