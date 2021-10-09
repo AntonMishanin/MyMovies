@@ -9,7 +9,6 @@ data class MovieEntity(
     val title: String,
     val rating: Float,
     val isFavorite: Boolean,
-    val descriptionShort: String,
     val descriptionFull: String,
     val actorsList: List<Actor>,
     val studio: String,
@@ -19,6 +18,7 @@ data class MovieEntity(
     data class Actor(
         val id: String,
         val name: String,
-        val previewPath: String
+        @DrawableRes
+        val previewId: Int
     )
 }

@@ -1,8 +1,6 @@
 package com.my.movie_details
 
-import android.app.ActionBar
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +10,8 @@ import com.my.movie_details.databinding.FragmentMovieDetailsBinding
 import com.my.movie_details.entity.MovieEntity
 import com.my.movie_details.utils.setCheckedListener
 import com.squareup.picasso.Picasso
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 
 private const val KEY_ID = "id"
 
@@ -19,6 +19,8 @@ class MovieDetailsFragment : Fragment() {
 
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
+
+    private val adapter = GroupAdapter<GroupieViewHolder>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +50,11 @@ class MovieDetailsFragment : Fragment() {
             studioValue.text = movie.studio
             genreValue.text = movie.genre
             yearValue.text = movie.year
+            actors.adapter = adapter
         }
+
+        val list = movie.actorsList.map { ActorItem(it, ::onItemActorClicked) }
+        adapter.apply { addAll(list) }
     }
 
     override fun onDestroyView() {
@@ -62,15 +68,54 @@ class MovieDetailsFragment : Fragment() {
         title = "Movie title",
         rating = 4.3f,
         isFavorite = false,
-        descriptionShort = "Description short",
         descriptionFull = "Deeeeeeeeeeeeeeeeescription full",
-        actorsList = listOf(),
+        actorsList = fetchActorsByMovie(),
         studio = "Warners",
         genre = "Genre",
         year = "1957"
     )
 
+    private fun fetchActorsByMovie() = listOf(
+        MovieEntity.Actor(
+            id = "",
+            name = "sdfsd sdfsd",
+            previewId = R.drawable.aquaman_preview
+        ),
+        MovieEntity.Actor(
+            id = "",
+            name = "sdfsd sdfsd",
+            previewId = R.drawable.aquaman_preview
+        ),
+        MovieEntity.Actor(
+            id = "",
+            name = "sdfsd sdfsd",
+            previewId = R.drawable.aquaman_preview
+        ),
+        MovieEntity.Actor(
+            id = "",
+            name = "sdfsd sdfsd",
+            previewId = R.drawable.aquaman_preview
+        ),
+        MovieEntity.Actor(
+            id = "",
+            name = "sdfsd sdfsd",
+            previewId = R.drawable.aquaman_preview
+        ),
+        MovieEntity.Actor(
+            id = "",
+            name = "sdfsd sdfsd",
+            previewId = R.drawable.aquaman_preview
+        ),
+        MovieEntity.Actor(
+            id = "",
+            name = "sdfsd sdfsd",
+            previewId = R.drawable.aquaman_preview
+        )
+    )
+
     private fun onFavoriteChecked(isChecked: Boolean) {
-        Log.d("EE", "nFavoriteChecked")
+    }
+
+    private fun onItemActorClicked(actor: MovieEntity.Actor) {
     }
 }

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -43,4 +44,8 @@ dependencies {
 
     //Picasso
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+
+    //Groupie
+    implementation "com.xwray:groupie:$rootProject.groupieVersion"
+    implementation "com.xwray:groupie-kotlin-android-extensions:$rootProject.groupieVersion"
 }
