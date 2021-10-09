@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/flow_step_one_dest"
         android:name="com.my.movie_details.MovieDetailsFragment"
-        tools:layout="@layout/movie_details_fragment">
+        tools:layout="@layout/fragment_movie_details">
         <argument
             android:name="flowStepNumber"
             android:defaultValue="1"
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/flow_step_two_dest"
         android:name="com.my.movie_details.MovieDetailsFragment"
-        tools:layout="@layout/movie_details_fragment">
+        tools:layout="@layout/fragment_movie_details">
 
         <argument
             android:name="flowStepNumber"
@@ -54,7 +54,7 @@
         android:id="@+id/movie_details_fragment"
         android:name="com.my.movie_details.MovieDetailsFragment"
         android:label="details_fragment"
-        tools:layout="@layout/movie_details_fragment" />
+        tools:layout="@layout/fragment_movie_details" />
     <fragment
         android:id="@+id/profile_fragment"
         android:name="ru.androidschool.intensiv.ui.profile.ProfileFragment"
