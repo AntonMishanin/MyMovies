@@ -1,24 +1,16 @@
 package com.my.tv_shows.presentation
 
+import com.my.tv_shows.base.BasePresenter
 import com.my.tv_shows.data.TvShowsRepository
 import com.my.tv_shows.entity.TvShowsEntity
 
-class TvShowsPresenter(private val repository: TvShowsRepository) {
+class TvShowsPresenter(private val repository: TvShowsRepository) : BasePresenter<TvShowsView>() {
 
-    private var view: TvShowsView? = null
-
-    fun onViewAttached(view: TvShowsView) {
-        this.view = view
-
+    override fun onViewReady() {
         val content = repository.fetchTvShows()
-        view.setTvShowsList(content)
-    }
-
-    fun onViewDetached() {
-        view = null
+        view?.setTvShowsList(content)
     }
 
     fun onItemTvShowClicked(tvShowsEntity: TvShowsEntity) {
-
     }
 }
