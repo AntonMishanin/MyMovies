@@ -1,58 +1,22 @@
 package com.my.movie_details.data
 
-import com.my.movie_details.R
+import com.my.movie_details.data.source.actors.ActorsDataSource
+import com.my.movie_details.data.source.genre.GenresDataSource
+import com.my.movie_details.data.source.movies.MoviesDataSource
+import com.my.movie_details.data.source.studios.StudiosDataSource
 import com.my.movie_details.entity.MovieEntity
 
-class MovieDetailsRepository {
-
-    fun getMovieById(id: String) = MovieEntity(
-        id = "",
-        previewId = R.drawable.aquaman_preview,
-        title = "Movie title",
-        rating = 4.3f,
-        isFavorite = false,
-        descriptionFull = "Deeeeeeeeeeeeeeeeescription full",
-        actorsList = fetchActorsByMovie(),
-        studio = "Warners",
-        genre = "Genre",
-        year = "1957"
-    )
-
-    private fun fetchActorsByMovie() = listOf(
-        MovieEntity.Actor(
-            id = "",
-            name = "sdfsd sdfsd",
-            previewId = R.drawable.aquaman_preview
-        ),
-        MovieEntity.Actor(
-            id = "",
-            name = "sdfsd sdfsd",
-            previewId = R.drawable.aquaman_preview
-        ),
-        MovieEntity.Actor(
-            id = "",
-            name = "sdfsd sdfsd",
-            previewId = R.drawable.aquaman_preview
-        ),
-        MovieEntity.Actor(
-            id = "",
-            name = "sdfsd sdfsd",
-            previewId = R.drawable.aquaman_preview
-        ),
-        MovieEntity.Actor(
-            id = "",
-            name = "sdfsd sdfsd",
-            previewId = R.drawable.aquaman_preview
-        ),
-        MovieEntity.Actor(
-            id = "",
-            name = "sdfsd sdfsd",
-            previewId = R.drawable.aquaman_preview
-        ),
-        MovieEntity.Actor(
-            id = "",
-            name = "sdfsd sdfsd",
-            previewId = R.drawable.aquaman_preview
-        )
-    )
+class MovieDetailsRepository(
+    private val actorsDataSource: ActorsDataSource,
+    private val genresDataSource: GenresDataSource,
+    private val moviesDataSource: MoviesDataSource,
+    private val studiosDataSource: StudiosDataSource
+) {
+    fun getMovieById(id: String): MovieEntity {
+        val movieDto = moviesDataSource.fetchMovieById(id)
+        val actors = actorsDataSource.fetchActorsById(movieDto.actorsIdList)
+        val studios = studiosDataSource.fetchStudiosById(movieDto.studiosIdList)
+        val genresDataSource = genresDataSource.fetchGenresById(movieDto.genresIdList)
+        return movieDto.toMovieEntity(actors, studios, genresDataSource)
+    }
 }
