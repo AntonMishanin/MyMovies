@@ -43,7 +43,7 @@ android {
 }
 
 dependencies {
-    implementation project(':feature:tv_shows')
+    implementation project(':feature:tv-shows')
     implementation project(':feature:movie-details')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
