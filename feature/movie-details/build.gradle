@@ -48,4 +48,7 @@ dependencies {
     //Groupie
     implementation "com.xwray:groupie:$rootProject.groupieVersion"
     implementation "com.xwray:groupie-kotlin-android-extensions:$rootProject.groupieVersion"
+
+    //For viewModel(by viewModels)
+    implementation "androidx.fragment:fragment-ktx:1.3.6"
 }

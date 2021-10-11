@@ -1,7 +1,8 @@
-package com.my.movie_details
+package com.my.movie_details.presentation
 
 import android.widget.ImageView
 import android.widget.TextView
+import com.my.movie_details.R
 import com.my.movie_details.entity.MovieEntity
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
