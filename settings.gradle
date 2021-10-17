@@ -1,3 +1,4 @@
 include ':app'
 rootProject.name='IntensivStart'
-include ':feature:tv_shows'
+include ':feature:tv-shows'
+include ':feature:movie-details'
