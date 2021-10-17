@@ -1,23 +1,25 @@
 package com.my.movie
 
+import com.my.domain.entity.Movie
+
 class MovieRepository(
     private val moviesDataSource: MoviesDataSource
 ) {
-    fun fetchNowPlaying(onSuccess: () -> Unit) {
+    fun fetchNowPlaying(onSuccess: (List<Movie>?) -> Unit) {
         moviesDataSource.fetchNowPlaying {
-
+            onSuccess(it.toValueObject())
         }
     }
 
-    fun fetchUpcoming(onSuccess: () -> Unit) {
+    fun fetchUpcoming(onSuccess: (List<Movie>?) -> Unit) {
         moviesDataSource.fetchUpcoming {
-
+            onSuccess(it.toValueObject())
         }
     }
 
-    fun fetchPopular(onSuccess: () -> Unit) {
+    fun fetchPopular(onSuccess: (List<Movie>?) -> Unit) {
         moviesDataSource.fetchPopular {
-
+            onSuccess(it.toValueObject())
         }
     }
 
