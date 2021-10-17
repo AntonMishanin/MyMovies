@@ -7,20 +7,18 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity() {
+class SingleActivity : AppCompatActivity(R.layout.activity_single) {
 
-    private var navController: NavController? = null
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val host: NavHostFragment = supportFragmentManager
-            .findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment? ?: return
 
-        // Set up Action Bar
+        val host =
+            supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
         navController = host.navController
 
-        setupBottomNavMenu(navController!!)
+        setupBottomNavMenu(navController)
     }
 
     private fun setupBottomNavMenu(navController: NavController) {
@@ -29,6 +27,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController?.navigateUp() ?: super.onSupportNavigateUp()
+        return navController.navigateUp()
     }
 }
