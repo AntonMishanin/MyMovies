@@ -8,7 +8,6 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_watchlist.*
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.MockRepository
 
 class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
 
@@ -22,14 +21,14 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
         movies_recycler_view.layoutManager = GridLayoutManager(context, 4)
         movies_recycler_view.adapter = adapter.apply { addAll(listOf()) }
 
-        val moviesList =
+        /*val moviesList =
             MockRepository.getMovies().map {
                 MoviePreviewItem(
                     it
                 ) { movie -> }
             }.toList()
 
-        movies_recycler_view.adapter = adapter.apply { addAll(moviesList) }
+        movies_recycler_view.adapter = adapter.apply { addAll(moviesList) }*/
     }
 
     companion object {
