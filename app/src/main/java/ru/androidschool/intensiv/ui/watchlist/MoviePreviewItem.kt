@@ -1,15 +1,15 @@
 package ru.androidschool.intensiv.ui.watchlist
 
+import com.my.domain.entity.Movie
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.item_with_text.*
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.Movie
 
 class MoviePreviewItem(
     private val content: Movie,
-    private val onClick: (movie: Movie) -> Unit
+    private val onClick: (Movie) -> Unit
 ) : Item() {
 
     override fun getLayout() = R.layout.item_small

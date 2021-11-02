@@ -5,14 +5,14 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import com.my.movie.di.MoviesFactory
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.feed_fragment.*
 import kotlinx.android.synthetic.main.feed_header.*
 import kotlinx.android.synthetic.main.search_toolbar.view.*
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.MockRepository
-import ru.androidschool.intensiv.data.Movie
+import com.my.domain.entity.Movie
 import ru.androidschool.intensiv.ui.afterTextChanged
 import timber.log.Timber
 
@@ -41,36 +41,36 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
             }
         }
 
-        // Используя Мок-репозиторий получаем фэйковый список фильмов
-        val moviesList = listOf(
-            MainCardContainer(
-                R.string.recommended,
-                MockRepository.getMovies().map {
-                    MovieItem(it) { movie ->
-                        openMovieDetails(
-                            movie
-                        )
-                    }
-                }.toList()
-            )
-        )
+        movies_recycler_view.adapter = adapter
 
-        movies_recycler_view.adapter = adapter.apply { addAll(moviesList) }
+        val remote = MoviesFactory().provideMovieRepository()
+        remote.fetchNowPlaying(::handleNowPlayingMovies)
+        remote.fetchPopular(::handlePopularMovies)
+        remote.fetchUpcoming(::handleUpcomingMovies)
+    }
 
-        // Используя Мок-репозиторий получаем фэйковый список фильмов
-        // Чтобы отобразить второй ряд фильмов
-        val newMoviesList = listOf(
-            MainCardContainer(
-                R.string.upcoming,
-                MockRepository.getMovies().map {
-                    MovieItem(it) { movie ->
-                        openMovieDetails(movie)
-                    }
-                }.toList()
-            )
-        )
+    private fun handleNowPlayingMovies(movies: List<Movie>?) {
+        if (movies.isNullOrEmpty()) return
 
-        adapter.apply { addAll(newMoviesList) }
+        val content = movies.map { MovieItem(it) { movie -> openMovieDetails(movie) } }.toList()
+        val nowPlayingMoviesList = listOf(MainCardContainer(R.string.recommended, content))
+        adapter.apply { addAll(nowPlayingMoviesList) }
+    }
+
+    private fun handlePopularMovies(movies: List<Movie>?) {
+        if (movies.isNullOrEmpty()) return
+
+        val content = movies.map { MovieItem(it) { movie -> openMovieDetails(movie) } }.toList()
+        val popularMoviesList = listOf(MainCardContainer(R.string.popular, content))
+        adapter.apply { addAll(popularMoviesList) }
+    }
+
+    private fun handleUpcomingMovies(movies: List<Movie>?) {
+        if (movies.isNullOrEmpty()) return
+
+        val content = movies.map { MovieItem(it) { movie -> openMovieDetails(movie) } }.toList()
+        val upcomingMoviesList = listOf(MainCardContainer(R.string.upcoming, content))
+        adapter.apply { addAll(upcomingMoviesList) }
     }
 
     private fun openMovieDetails(movie: Movie) {
