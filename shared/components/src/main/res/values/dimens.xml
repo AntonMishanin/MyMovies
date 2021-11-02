@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="material_margin_large">32dp</dimen>
+    <dimen name="material_margin_normal">16dp</dimen>
+    <dimen name="material_margin_small">8dp</dimen>
+    <dimen name="material_margin_super_small">4dp</dimen>
+
+    <dimen name="min_height">100dp</dimen>
+
+    <dimen name="search_bar_height">56dp</dimen>
+
+    <dimen name="close_width">20dp</dimen>
+</resources>

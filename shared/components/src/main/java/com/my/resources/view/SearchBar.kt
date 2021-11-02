@@ -1,4 +1,4 @@
-package ru.androidschool.intensiv.ui
+package com.my.resources.view
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,8 +7,9 @@ import android.view.View
 import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
+import com.my.resources.R
 import kotlinx.android.synthetic.main.search_toolbar.view.*
-import ru.androidschool.intensiv.R
+import ru.androidschool.intensiv.ui.afterTextChanged
 
 class SearchBar @JvmOverloads constructor(
     context: Context,
@@ -16,7 +17,7 @@ class SearchBar @JvmOverloads constructor(
     defStyle: Int = 0
 ) : FrameLayout(context, attrs, defStyle) {
 
-    private val editText: EditText by lazy { search_edit_text }
+    val editText: EditText by lazy { search_edit_text }
 
     private var hint: String = ""
     private var isCancelVisible: Boolean = true
