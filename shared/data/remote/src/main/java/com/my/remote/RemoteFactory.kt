@@ -11,6 +11,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+private const val TIMEOUT = 120_000L
+
 class RemoteFactory {
     fun provideRetrofit(): Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.MOVIE_BASE_URL)
@@ -27,8 +29,8 @@ class RemoteFactory {
         return OkHttpClient.Builder()
             .addInterceptor(provideLogging())
             .addInterceptor(provideInterceptor())
-            .connectTimeout(120_000, TimeUnit.MILLISECONDS)
-            .readTimeout(120_000, TimeUnit.MILLISECONDS)
+            .connectTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
+            .readTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
             .build()
     }
 
