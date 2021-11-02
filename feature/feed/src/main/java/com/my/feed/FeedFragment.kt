@@ -1,52 +1,56 @@
-package ru.androidschool.intensiv.ui.feed
+package com.my.feed
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import com.my.movie.di.MoviesFactory
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
-import kotlinx.android.synthetic.main.feed_fragment.*
-import kotlinx.android.synthetic.main.feed_header.*
-import kotlinx.android.synthetic.main.search_toolbar.view.*
-import ru.androidschool.intensiv.R
 import com.my.domain.entity.Movie
+import com.my.feed.databinding.FragmentFeedBinding
+import io.reactivex.disposables.CompositeDisposable
 import ru.androidschool.intensiv.ui.afterTextChanged
-import timber.log.Timber
 
-class FeedFragment : Fragment(R.layout.feed_fragment) {
+class FeedFragment : Fragment(R.layout.fragment_feed) {
+
+    private var _binding: FragmentFeedBinding? = null
+    private val binding get() = _binding!!
 
     private val adapter by lazy {
         GroupAdapter<GroupieViewHolder>()
     }
 
-    private val options = navOptions {
-        anim {
-            enter = R.anim.slide_in_right
-            exit = R.anim.slide_out_left
-            popEnter = R.anim.slide_in_left
-            popExit = R.anim.slide_out_right
-        }
+    private val compositeDisposable = CompositeDisposable()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentFeedBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        search_toolbar.search_edit_text.afterTextChanged {
-            Timber.d(it.toString())
+        binding.feedHeader.searchToolbar.editText.afterTextChanged {
             if (it.toString().length > MIN_LENGTH) {
                 openSearch(it.toString())
             }
         }
 
-        movies_recycler_view.adapter = adapter
+        binding.moviesRecyclerView.adapter = adapter
 
         val remote = MoviesFactory().provideMovieRepository()
-        remote.fetchNowPlaying(::handleNowPlayingMovies)
-        remote.fetchPopular(::handlePopularMovies)
-        remote.fetchUpcoming(::handleUpcomingMovies)
+        compositeDisposable.add(remote.fetchNowPlaying().subscribe(::handleNowPlayingMovies))
+        compositeDisposable.add(remote.fetchPopular().subscribe(::handlePopularMovies))
+        compositeDisposable.add(remote.fetchUpcoming().subscribe(::handleUpcomingMovies))
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun handleNowPlayingMovies(movies: List<Movie>?) {
@@ -74,20 +78,16 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
     }
 
     private fun openMovieDetails(movie: Movie) {
-        val bundle = Bundle()
-        bundle.putString(KEY_ID, movie.title)
-        findNavController().navigate(R.id.movie_details_fragment, bundle, options)
+        (requireActivity() as? FeedNavigator)?.openMovieDetails(movie.title)
     }
 
     private fun openSearch(searchText: String) {
-        val bundle = Bundle()
-        bundle.putString(KEY_SEARCH, searchText)
-        findNavController().navigate(R.id.search_dest, bundle, options)
+        (requireActivity() as? FeedNavigator)?.openSearch(searchText)
     }
 
     override fun onStop() {
         super.onStop()
-        search_toolbar.clear()
+        binding.feedHeader.searchToolbar.clear()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -96,7 +96,5 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
 
     companion object {
         const val MIN_LENGTH = 3
-        const val KEY_ID = "id"
-        const val KEY_SEARCH = "search"
     }
 }
