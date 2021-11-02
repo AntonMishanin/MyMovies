@@ -1,15 +1,14 @@
-package com.my.feed
+package com.my.feed.item
 
 import android.widget.TextView
-import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView
+import com.my.feed.R
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 
 class MainCardContainer(
-    @StringRes
-    private val title: Int,
+    private val title: String,
     private val items: List<Item>
 ) : Item() {
 
@@ -19,7 +18,7 @@ class MainCardContainer(
         val titleView = viewHolder.itemView.findViewById<TextView>(R.id.title_text_view)
         val itemsContainer = viewHolder.itemView.findViewById<RecyclerView>(R.id.items_container)
 
-        titleView.text = viewHolder.itemView.context.getString(title)
+        titleView.text = title
         itemsContainer.adapter =
             GroupAdapter<GroupieViewHolder>().apply { addAll(items) }
     }

@@ -1,4 +1,4 @@
-package com.my.feed
+package com.my.feed.navigator
 
 interface FeedNavigator {
 

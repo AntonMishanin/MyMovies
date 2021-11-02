@@ -7,7 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navOptions
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.my.feed.FeedNavigator
+import com.my.feed.navigator.FeedNavigator
 import com.my.resources.KEY_ID
 import com.my.resources.KEY_SEARCH
 

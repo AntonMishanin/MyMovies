@@ -3,24 +3,28 @@ package com.my.feed
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import com.my.movie.di.MoviesFactory
+import androidx.fragment.app.viewModels
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.my.domain.entity.Movie
 import com.my.feed.databinding.FragmentFeedBinding
-import io.reactivex.disposables.CompositeDisposable
+import com.my.feed.di.FeedFactory
+import com.my.feed.item.MainCardContainer
+import com.my.feed.item.MovieItem
+import com.my.feed.navigator.FeedNavigator
+import com.my.feed.state.NavigationState
 import ru.androidschool.intensiv.ui.afterTextChanged
 
-class FeedFragment : Fragment(R.layout.fragment_feed) {
+class FeedFragment : Fragment() {
 
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel: FeedViewModel by viewModels { FeedFactory().provideViewModelFactory() }
+
     private val adapter by lazy {
         GroupAdapter<GroupieViewHolder>()
     }
-
-    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,56 +37,8 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.feedHeader.searchToolbar.editText.afterTextChanged {
-            if (it.toString().length > MIN_LENGTH) {
-                openSearch(it.toString())
-            }
-        }
-
-        binding.moviesRecyclerView.adapter = adapter
-
-        val remote = MoviesFactory().provideMovieRepository()
-        compositeDisposable.add(remote.fetchNowPlaying().subscribe(::handleNowPlayingMovies))
-        compositeDisposable.add(remote.fetchPopular().subscribe(::handlePopularMovies))
-        compositeDisposable.add(remote.fetchUpcoming().subscribe(::handleUpcomingMovies))
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun handleNowPlayingMovies(movies: List<Movie>?) {
-        if (movies.isNullOrEmpty()) return
-
-        val content = movies.map { MovieItem(it) { movie -> openMovieDetails(movie) } }.toList()
-        val nowPlayingMoviesList = listOf(MainCardContainer(R.string.recommended, content))
-        adapter.apply { addAll(nowPlayingMoviesList) }
-    }
-
-    private fun handlePopularMovies(movies: List<Movie>?) {
-        if (movies.isNullOrEmpty()) return
-
-        val content = movies.map { MovieItem(it) { movie -> openMovieDetails(movie) } }.toList()
-        val popularMoviesList = listOf(MainCardContainer(R.string.popular, content))
-        adapter.apply { addAll(popularMoviesList) }
-    }
-
-    private fun handleUpcomingMovies(movies: List<Movie>?) {
-        if (movies.isNullOrEmpty()) return
-
-        val content = movies.map { MovieItem(it) { movie -> openMovieDetails(movie) } }.toList()
-        val upcomingMoviesList = listOf(MainCardContainer(R.string.upcoming, content))
-        adapter.apply { addAll(upcomingMoviesList) }
-    }
-
-    private fun openMovieDetails(movie: Movie) {
-        (requireActivity() as? FeedNavigator)?.openMovieDetails(movie.title)
-    }
-
-    private fun openSearch(searchText: String) {
-        (requireActivity() as? FeedNavigator)?.openSearch(searchText)
+        initViews()
+        subscribeObservers()
     }
 
     override fun onStop() {
@@ -90,11 +46,59 @@ class FeedFragment : Fragment(R.layout.fragment_feed) {
         binding.feedHeader.searchToolbar.clear()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_menu, menu)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
-    companion object {
-        const val MIN_LENGTH = 3
+    private fun initViews() {
+        binding.moviesRecyclerView.adapter = adapter
+
+        binding.feedHeader.searchToolbar.editText.afterTextChanged {
+            viewModel.onSearchTextChanged(it)
+        }
+    }
+
+    private fun subscribeObservers() {
+        viewModel.nowPlaying.observe(viewLifecycleOwner) {
+            handleMovies(it, titleRes = R.string.recommended)
+        }
+        viewModel.popular.observe(viewLifecycleOwner) {
+            handleMovies(it, titleRes = R.string.popular)
+        }
+        viewModel.upcoming.observe(viewLifecycleOwner) {
+            handleMovies(it, titleRes = R.string.upcoming)
+        }
+        viewModel.navigation.observe(viewLifecycleOwner, ::handleNavigation)
+    }
+
+    private fun handleMovies(movies: List<Movie>, titleRes: Int) {
+        val content = movies.map { MovieItem(it, viewModel::onMovieItemClicked) }.toList()
+        val title = requireContext().getString(titleRes)
+        val moviesList = listOf(MainCardContainer(title, content))
+        adapter.apply { addAll(moviesList) }
+    }
+
+    private fun handleNavigation(state: NavigationState) {
+        when (state) {
+            is NavigationState.MovieDetails -> openMovieDetails(state.id)
+            is NavigationState.Search -> openSearch(state.searchText)
+            NavigationState.None -> {
+            }
+        }
+    }
+
+    private fun openMovieDetails(id: String) {
+        viewModel.onNavigationSuccess()
+        (requireActivity() as? FeedNavigator)?.openMovieDetails(id)
+    }
+
+    private fun openSearch(searchText: String) {
+        viewModel.onNavigationSuccess()
+        (requireActivity() as? FeedNavigator)?.openSearch(searchText)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
     }
 }

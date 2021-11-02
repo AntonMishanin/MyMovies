@@ -1,4 +1,4 @@
-package com.my.feed
+package com.my.feed.item
 
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -8,6 +8,7 @@ import com.squareup.picasso.Picasso
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.my.domain.entity.Movie
+import com.my.feed.R
 
 class MovieItem(
     private val content: Movie,
