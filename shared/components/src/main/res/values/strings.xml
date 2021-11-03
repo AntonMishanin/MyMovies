@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_hint">Введите название</string>
+
+    <string name="main_title">Что будете смотреть\nсегодня?</string>
+
+    <string name="close">закрыть</string>
+
+    <string name="recommended">Рекомендуем</string>
+    <string name="popular">Популярные</string>
+    <string name="upcoming">Новинки</string>
+
+    <string name="more">Ещё…</string>
+</resources>

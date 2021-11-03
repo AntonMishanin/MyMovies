@@ -35,10 +35,12 @@ android {
 }
 
 dependencies {
+    implementation project(':feature:feed')
     implementation project(':feature:tv-shows')
     implementation project(':feature:movie-details')
     implementation project(':shared:data:movies')
     implementation project(':shared:domain')
+    implementation project(':shared:components')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -71,4 +73,8 @@ dependencies {
 
     //Leak canary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakCanaryVersion"
+
+    //Rx
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
 }

@@ -4,12 +4,25 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.my.feed.navigator.FeedNavigator
+import com.my.resources.KEY_ID
+import com.my.resources.KEY_SEARCH
 
-class SingleActivity : AppCompatActivity(R.layout.activity_single) {
+class SingleActivity : AppCompatActivity(R.layout.activity_single), FeedNavigator {
 
     private lateinit var navController: NavController
+
+    private val options = navOptions {
+        anim {
+            enter = R.anim.slide_in_right
+            exit = R.anim.slide_out_left
+            popEnter = R.anim.slide_in_left
+            popExit = R.anim.slide_out_right
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,5 +41,21 @@ class SingleActivity : AppCompatActivity(R.layout.activity_single) {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp()
+    }
+
+    /**
+     * Handle navigation from feature Feed
+     */
+
+    override fun openMovieDetails(id: String) {
+        val bundle = Bundle()
+        bundle.putString(KEY_ID, id)
+        navController.navigate(R.id.movie_details_fragment, bundle, options)
+    }
+
+    override fun openSearch(searchText: String) {
+        val bundle = Bundle()
+        bundle.putString(KEY_SEARCH, searchText)
+        navController.navigate(R.id.search_dest, bundle, options)
     }
 }

@@ -4,7 +4,7 @@ import com.my.domain.entity.Movie
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
-import kotlinx.android.synthetic.main.item_with_text.*
+import kotlinx.android.synthetic.main.item_small.*
 import ru.androidschool.intensiv.R
 
 class MoviePreviewItem(

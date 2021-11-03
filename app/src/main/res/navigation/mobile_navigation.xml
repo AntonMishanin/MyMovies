@@ -5,9 +5,9 @@
     app:startDestination="@+id/home_dest">
     <fragment
         android:id="@+id/home_dest"
-        android:name="ru.androidschool.intensiv.ui.feed.FeedFragment"
+        android:name="com.my.feed.FeedFragment"
         android:label="@string/home"
-        tools:layout="@layout/feed_fragment">
+        tools:layout="@layout/fragment_feed">
 
     </fragment>
 
