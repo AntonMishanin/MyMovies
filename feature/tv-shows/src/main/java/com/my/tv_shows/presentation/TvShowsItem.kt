@@ -1,10 +1,10 @@
 package com.my.tv_shows.presentation
 
 import android.view.View
+import com.my.resources.extensions.load
 import com.my.tv_shows.R
 import com.my.tv_shows.databinding.ItemTvShowsBinding
 import com.my.tv_shows.entity.TvShowsEntity
-import com.squareup.picasso.Picasso
 import com.xwray.groupie.viewbinding.BindableItem
 
 class TvShowsItem(
@@ -19,7 +19,7 @@ class TvShowsItem(
     override fun bind(viewBinding: ItemTvShowsBinding, position: Int) {
         viewBinding.title.text = content.title
         viewBinding.rating.rating = content.rating
-        Picasso.get().load(content.imagePath).into(viewBinding.imagePreview)
+        viewBinding.imagePreview.load(content.imagePath)
 
         viewBinding.root.setOnClickListener { onItemClicked(content) }
     }

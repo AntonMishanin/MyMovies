@@ -1,10 +1,10 @@
 package com.my.feed.item
 
 import android.view.View
-import com.squareup.picasso.Picasso
 import com.my.domain.entity.Movie
 import com.my.feed.R
 import com.my.feed.databinding.ItemWithTextBinding
+import com.my.resources.extensions.load
 import com.xwray.groupie.viewbinding.BindableItem
 
 class MovieItem(
@@ -22,8 +22,6 @@ class MovieItem(
         viewBinding.content.setOnClickListener {
             onClick.invoke(content)
         }
-        Picasso.get()
-            .load(content.posterPath)
-            .into(viewBinding.imagePreview)
+        viewBinding.imagePreview.load(content.posterPath)
     }
 }

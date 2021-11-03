@@ -32,6 +32,8 @@ android {
 }
 
 dependencies {
+    implementation project(':shared:components')
+
     //AndroidX
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
@@ -42,10 +44,6 @@ dependencies {
     //Groupie
     implementation "com.xwray:groupie:$rootProject.groupieVersion"
     implementation "com.xwray:groupie-viewbinding:$rootProject.groupieVersion"
-
-    //Picasso
-    implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
-    implementation "jp.wasabeef:picasso-transformations:$rootProject.picassoTransformation"
 
     //Leak canary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakCanaryVersion"

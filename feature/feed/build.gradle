@@ -46,9 +46,6 @@ dependencies {
     //Rx
     implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
 
-    //Picasso
-    implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
-
     //Groupie
     implementation "com.xwray:groupie:$rootProject.groupieVersion"
     implementation "com.xwray:groupie-viewbinding:$rootProject.groupieVersion"

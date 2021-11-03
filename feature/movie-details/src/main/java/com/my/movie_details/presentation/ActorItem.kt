@@ -4,7 +4,7 @@ import android.view.View
 import com.my.movie_details.R
 import com.my.movie_details.databinding.ItemActorBinding
 import com.my.movie_details.entity.MovieEntity
-import com.squareup.picasso.Picasso
+import com.my.resources.extensions.load
 import com.xwray.groupie.viewbinding.BindableItem
 
 class ActorItem(
@@ -18,8 +18,7 @@ class ActorItem(
 
     override fun bind(viewBinding: ItemActorBinding, position: Int) {
         viewBinding.actorName.text = content.name
-        Picasso.get().load(content.previewId).into(viewBinding.actorPreview)
-
+        viewBinding.actorPreview.load(content.previewId)
         viewBinding.root.setOnClickListener { onItemClicked(content) }
     }
 }
