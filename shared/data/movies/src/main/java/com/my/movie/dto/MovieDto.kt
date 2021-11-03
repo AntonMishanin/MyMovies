@@ -3,6 +3,8 @@ package com.my.movie.dto
 import com.google.gson.annotations.SerializedName
 import com.my.domain.entity.Movie
 
+private const val BASE_IMAGE_PATH = "https://image.tmdb.org/t/p/w500"
+
 data class MovieDto(
     @SerializedName(value = "poster_path")
     private val posterPath: String?,
@@ -29,6 +31,7 @@ data class MovieDto(
 ) {
     fun toValueObject(): Movie = Movie(
         title = title ?: "",
-        voteAverage = voteAverage?.toDouble() ?: 5.0
+        voteAverage = voteAverage?.toDouble() ?: 5.0,
+        posterPath = BASE_IMAGE_PATH + posterPath
     )
 }

@@ -22,10 +22,8 @@ class MovieItem(
         viewBinding.content.setOnClickListener {
             onClick.invoke(content)
         }
-
-        // TODO Получать из модели
         Picasso.get()
-            .load("https://m.media-amazon.com/images/M/MV5BYTk3MDljOWQtNGI2My00OTEzLTlhYjQtOTQ4ODM2MzUwY2IwXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_.jpg")
+            .load(content.posterPath)
             .into(viewBinding.imagePreview)
     }
 }
