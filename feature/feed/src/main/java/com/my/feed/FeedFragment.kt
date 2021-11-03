@@ -13,6 +13,7 @@ import com.my.feed.item.MainCardContainer
 import com.my.feed.item.MovieItem
 import com.my.feed.navigator.FeedNavigator
 import com.my.feed.state.NavigationState
+import com.my.resources.extensions.hide
 import ru.androidschool.intensiv.ui.afterTextChanged
 
 class FeedFragment : Fragment() {
@@ -61,6 +62,7 @@ class FeedFragment : Fragment() {
 
     private fun subscribeObservers() {
         viewModel.nowPlaying.observe(viewLifecycleOwner) {
+            binding.loader.hide()
             handleMovies(it, titleRes = R.string.recommended)
         }
         viewModel.popular.observe(viewLifecycleOwner) {
