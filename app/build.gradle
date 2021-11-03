@@ -35,6 +35,7 @@ android {
 }
 
 dependencies {
+    implementation project(':feature:search')
     implementation project(':feature:feed')
     implementation project(':feature:tv-shows')
     implementation project(':feature:movie-details')
