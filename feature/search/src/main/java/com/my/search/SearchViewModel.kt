@@ -2,6 +2,7 @@ package com.my.search
 
 import android.text.Editable
 import androidx.lifecycle.ViewModel
+import io.reactivex.Flowable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
@@ -11,15 +12,16 @@ class SearchViewModel : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val search = PublishSubject.create<String>()
+    private val searchSubject = PublishSubject.create<String>()
+    private val mockContent = listOf(
+        "test",
+        "testhj",
+        "testh",
+        "test"
+    )
 
     init {
-        val d = search
-            .debounce(500, TimeUnit.MILLISECONDS)
-            .subscribe {
-                Timber.d(it)
-            }
-        compositeDisposable.add(d)
+        addTimeoutForSearch()
     }
 
     override fun onCleared() {
@@ -27,7 +29,29 @@ class SearchViewModel : ViewModel() {
         compositeDisposable.dispose()
     }
 
+    private fun addTimeoutForSearch() {
+        val d = searchSubject
+            .debounce(500, TimeUnit.MILLISECONDS)
+            .subscribe {
+                Timber.d(it)
+                filterContentByText(it)
+            }
+        compositeDisposable.add(d)
+    }
+
     fun onSearchTextChanged(text: Editable?) {
-        search.onNext(text.toString())
+        searchSubject.onNext(text.toString())
+    }
+
+    private fun filterContentByText(searchText: String) {
+        val d = Flowable.fromIterable(mockContent)
+            .filter {
+                it.contains(searchText)
+            }
+            .toList()
+            .subscribe { list ->
+                Timber.d("${list.size}")
+            }
+        compositeDisposable.add(d)
     }
 }
