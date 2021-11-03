@@ -5,7 +5,6 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.my.domain.entity.Movie
 import com.my.feed.databinding.FragmentFeedBinding
 import com.my.feed.di.FeedFactory
@@ -14,6 +13,7 @@ import com.my.feed.item.MovieItem
 import com.my.feed.navigator.FeedNavigator
 import com.my.feed.state.NavigationState
 import com.my.resources.extensions.hide
+import com.xwray.groupie.GroupieViewHolder
 import ru.androidschool.intensiv.ui.afterTextChanged
 import timber.log.Timber
 

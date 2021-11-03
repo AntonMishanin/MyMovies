@@ -45,7 +45,7 @@ ext {
     espressoVersion = '3.5.0-alpha03'
     timberVersion = '4.7.1'
 
-    groupieVersion = '2.8.0'
+    groupieVersion = '2.9.0'
 
     leakCanaryVersion = '2.7'
 }

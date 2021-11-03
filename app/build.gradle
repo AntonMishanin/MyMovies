@@ -6,7 +6,7 @@ apply from: "../ktlint.gradle"
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "29.0.3"
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "ru.androidschool.intensiv"
         minSdkVersion 21
@@ -32,6 +32,9 @@ android {
     androidExtensions {
         experimental = true
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -45,6 +48,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    //AndroidX
     implementation "androidx.appcompat:appcompat:$supportLibVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation "com.google.android.material:material:$materialVersion"
@@ -64,12 +68,14 @@ dependencies {
     implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
     implementation "jp.wasabeef:picasso-transformations:$rootProject.picassoTransformation"
 
+    //RecyclerView
     implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
 
     //Groupie
     implementation "com.xwray:groupie:$rootProject.groupieVersion"
-    implementation "com.xwray:groupie-kotlin-android-extensions:$rootProject.groupieVersion"
+    implementation "com.xwray:groupie-viewbinding:$rootProject.groupieVersion"
 
+    //Timber
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
 
     //Leak canary
