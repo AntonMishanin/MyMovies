@@ -15,6 +15,7 @@ import com.my.feed.navigator.FeedNavigator
 import com.my.feed.state.NavigationState
 import com.my.resources.extensions.hide
 import ru.androidschool.intensiv.ui.afterTextChanged
+import timber.log.Timber
 
 class FeedFragment : Fragment() {
 
@@ -85,8 +86,7 @@ class FeedFragment : Fragment() {
         when (state) {
             is NavigationState.MovieDetails -> openMovieDetails(state.id)
             is NavigationState.Search -> openSearch(state.searchText)
-            NavigationState.None -> {
-            }
+            NavigationState.None -> Timber.d("Unused navigation state")
         }
     }
 
