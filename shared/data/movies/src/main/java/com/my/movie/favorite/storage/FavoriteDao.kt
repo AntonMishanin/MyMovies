@@ -11,7 +11,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 
 @Dao
-interface FavoriteDao {
+internal interface FavoriteDao {
     @Insert(onConflict = REPLACE)
     fun insert(favorite: FavoriteEntity): Completable
 
