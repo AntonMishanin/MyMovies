@@ -2,16 +2,14 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
 }
-/**
- * С выносом версий почитаю и разберусь немного попозже)
- */
+
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0"
     }
@@ -36,16 +34,15 @@ android {
 dependencies {
     implementation project(':shared:components')
 
-    //AndroidX
-    implementation "androidx.core:core-ktx:$coreVersion"
-    implementation "androidx.appcompat:appcompat:$supportLibVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
-    implementation "com.google.android.material:material:$materialVersion"
+    implementation libraries.coreKtx
+    implementation libraries.appcompat
+    implementation libraries.constraintLayout
+    implementation libraries.material
 
-    //Groupie
-    implementation "com.xwray:groupie:$rootProject.groupieVersion"
-    implementation "com.xwray:groupie-viewbinding:$rootProject.groupieVersion"
+    implementation libraries.groupie
+    implementation libraries.groupieViewbinding
 
-    //Fragment-ktx
-    implementation "androidx.fragment:fragment-ktx:1.3.6"
+    implementation libraries.fragmentKtx
+
+    debugImplementation libraries.leakCanary
 }
