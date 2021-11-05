@@ -14,6 +14,7 @@ import com.my.profile.R
 import com.my.profile.databinding.FragmentProfileBinding
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import timber.log.Timber
 
 class ProfileFragment : Fragment() {
 
@@ -24,11 +25,7 @@ class ProfileFragment : Fragment() {
 
     private var profilePageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
-            Toast.makeText(
-                requireActivity().applicationContext,
-                "Selected position: $position",
-                Toast.LENGTH_SHORT
-            ).show()
+            Timber.d("onPageSelected $position")
         }
     }
 
@@ -53,7 +50,7 @@ class ProfileFragment : Fragment() {
         profileTabLayoutTitles = resources.getStringArray(R.array.tab_titles)
 
         val profileAdapter = ProfileAdapter(
-            this,
+            fragment = this,
             profileTabLayoutTitles.size
         )
         binding.doppelgangerViewPager.adapter = profileAdapter
