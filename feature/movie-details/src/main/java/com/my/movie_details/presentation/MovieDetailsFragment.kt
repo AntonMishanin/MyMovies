@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.my.domain.entity.MovieDetails
 import com.my.movie_details.databinding.FragmentMovieDetailsBinding
 import com.my.movie_details.di.MovieDetailsFactory
-import com.my.movie_details.entity.MovieEntity
 import com.my.movie_details.utils.setCheckedListener
 import com.my.resources.extensions.load
 import com.xwray.groupie.GroupAdapter
@@ -23,7 +23,8 @@ class MovieDetailsFragment : Fragment() {
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
     private val viewModel: MovieDetailsViewModel by viewModels {
-        MovieDetailsFactory().provideViewModelFactory(arguments)
+        MovieDetailsFactory()
+            .provideViewModelFactory(arguments, requireActivity().applicationContext)
     }
 
     override fun onCreateView(
@@ -49,19 +50,21 @@ class MovieDetailsFragment : Fragment() {
     private fun initView() {
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
         binding.toolbar.title = null
+        binding.bodyContent.isFavorite.setCheckedListener(viewModel::onFavoriteClicked)
     }
 
     private fun subscribeObservers() {
         viewModel.movie.observe(viewLifecycleOwner, ::handleMovieState)
+        viewModel.isFavorite.observe(viewLifecycleOwner) {
+            binding.bodyContent.isFavorite.isChecked = it
+        }
     }
 
-    private fun handleMovieState(movie: MovieEntity) {
-        binding.preview.load(movie.previewId)
+    private fun handleMovieState(movie: MovieDetails) {
+        binding.preview.load(movie.posterPath)
         with(binding.bodyContent) {
             bodyTitle.text = movie.title
-            isFavorite.setCheckedListener(viewModel::onFavoriteClicked)
-            isFavorite.isSelected = movie.isFavorite
-            description.text = movie.descriptionFull
+            description.text = movie.overview
             rating.rating = movie.rating
             studioValue.text = movie.studio
             genreValue.text = movie.genre
@@ -69,7 +72,7 @@ class MovieDetailsFragment : Fragment() {
             actors.adapter = adapter
         }
 
-        val list = movie.actorsList.map { ActorItem(it, viewModel::onItemActorClicked) }
-        adapter.apply { addAll(list) }
+        // val list = movie.actorsList.map { ActorItem(it, viewModel::onItemActorClicked) }
+        // adapter.apply { addAll(list) }
     }
 }

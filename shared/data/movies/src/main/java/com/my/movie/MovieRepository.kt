@@ -1,6 +1,7 @@
 package com.my.movie
 
 import com.my.domain.entity.Movie
+import com.my.domain.entity.MovieDetails
 import com.my.movie.dto.CreditsResponse
 import com.my.movie.dto.MovieDetailsResponse
 import io.reactivex.Single
@@ -34,9 +35,10 @@ class MovieRepository(
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun fetchMovieById(id: String): Single<MovieDetailsResponse> {
+    fun fetchMovieById(id: String): Single<MovieDetails> {
         return moviesDataSource.fetchMovieById(id)
             .subscribeOn(Schedulers.io())
+            .map { it.toViewObject() }
             .doOnError { it.printStackTrace() }//TODO: handle error
             .observeOn(AndroidSchedulers.mainThread())
     }
@@ -48,3 +50,14 @@ class MovieRepository(
             .observeOn(AndroidSchedulers.mainThread())
     }
 }
+
+fun MovieDetailsResponse.toViewObject() = MovieDetails(
+    id = this.id ?: 0,
+    posterPath = this.posterPath ?: "",
+    title = this.title ?: "",
+    overview = this.overview ?: "",
+    rating = this.voteAverage ?: 5f,
+    studio = this.productionCompanies.toString(),
+    genre = this.genres.toString(),
+    year = this.releaseDate ?: ""
+)

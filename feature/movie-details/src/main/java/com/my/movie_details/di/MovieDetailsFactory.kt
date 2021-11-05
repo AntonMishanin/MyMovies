@@ -1,22 +1,19 @@
 package com.my.movie_details.di
 
+import android.content.Context
 import android.os.Bundle
-import com.my.movie_details.data.MovieDetailsRepository
-import com.my.movie_details.data.source.actors.ActorsDataSource
-import com.my.movie_details.data.source.genre.GenresDataSource
-import com.my.movie_details.data.source.movies.MoviesDataSource
-import com.my.movie_details.data.source.studios.StudiosDataSource
+import com.my.movie.di.MoviesFactory
+import com.my.movie.favorite.di.FavoriteFactory
 import java.lang.IllegalArgumentException
 
 class MovieDetailsFactory {
-    fun provideViewModelFactory(arguments: Bundle?): MovieDetailsViewModelFactory {
-        val repository = MovieDetailsRepository(
-            ActorsDataSource(),
-            GenresDataSource(),
-            MoviesDataSource(),
-            StudiosDataSource()
-        )
+    fun provideViewModelFactory(
+        arguments: Bundle?,
+        context: Context
+    ): MovieDetailsViewModelFactory {
         val id = arguments?.getString("id") ?: throw IllegalArgumentException("id must not be null")
-        return MovieDetailsViewModelFactory(id, repository)
+        val favoriteRepository = FavoriteFactory().provideRepository(context)
+        val movieRepository = MoviesFactory().provideMovieRepository()
+        return MovieDetailsViewModelFactory(id, favoriteRepository, movieRepository)
     }
 }

@@ -13,6 +13,10 @@ internal fun MovieDetails.toFavorite(): FavoriteEntity = FavoriteEntity(
 internal fun FavoriteEntity.toMovieDetails() = MovieDetails(
     id = this.id,
     title = this.title,
+    overview = "this.overview",
     posterPath = this.posterPath,
-    rating = this.rating
+    rating = this.rating,
+    studio = "",
+    genre = "",
+    year = ""
 )
