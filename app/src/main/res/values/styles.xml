@@ -8,18 +8,4 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
-    <style name="AppTheme.Title.Collapsed" parent="android:TextAppearance">
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="AppTheme.Title.Expanded" parent="android:TextAppearance">
-        <item name="android:textSize">48sp</item>
-    </style>
-
-    <style name="ShapeAppearanceOverlay.App.CornerSize10Percent" parent="">
-        <item name="cornerSize">10%</item>
-    </style>
-
-
 </resources>

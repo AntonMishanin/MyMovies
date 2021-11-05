@@ -1,11 +1,11 @@
-package ru.androidschool.intensiv.ui.watchlist
+package com.my.profile.watchlist
 
 import android.view.View
 import com.my.domain.entity.Movie
+import com.my.profile.R
+import com.my.profile.databinding.ItemSmallBinding
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.viewbinding.BindableItem
-import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.databinding.ItemSmallBinding
 
 class MoviePreviewItem(
     private val content: Movie,

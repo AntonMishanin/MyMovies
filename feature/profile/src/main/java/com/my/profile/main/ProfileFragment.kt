@@ -1,30 +1,44 @@
-package ru.androidschool.intensiv.ui.profile
+package com.my.profile.main
 
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.my.profile.R
+import com.my.profile.databinding.FragmentProfileBinding
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
-import kotlinx.android.synthetic.main.fragment_profile.*
-import ru.androidschool.intensiv.R
 
-class ProfileFragment : Fragment(R.layout.fragment_profile) {
+class ProfileFragment : Fragment() {
+
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var profileTabLayoutTitles: Array<String>
 
     private var profilePageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             Toast.makeText(
-                requireContext(),
+                requireActivity().applicationContext,
                 "Selected position: $position",
                 Toast.LENGTH_SHORT
             ).show()
         }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,7 +48,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             .load(R.drawable.ic_avatar)
             .transform(CropCircleTransformation())
             .placeholder(R.drawable.ic_avatar)
-            .into(avatar)
+            .into(binding.avatar)
 
         profileTabLayoutTitles = resources.getStringArray(R.array.tab_titles)
 
@@ -42,11 +56,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             this,
             profileTabLayoutTitles.size
         )
-        doppelgangerViewPager.adapter = profileAdapter
+        binding.doppelgangerViewPager.adapter = profileAdapter
 
-        doppelgangerViewPager.registerOnPageChangeCallback(profilePageChangeCallback)
+        binding.doppelgangerViewPager.registerOnPageChangeCallback(profilePageChangeCallback)
 
-        TabLayoutMediator(tabLayout, doppelgangerViewPager) { tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.doppelgangerViewPager) { tab, position ->
 
             // Выделение первой части заголовка таба
             // Название таба
@@ -59,5 +73,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
             tab.text = spannableStringTitle
         }.attach()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

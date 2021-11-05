@@ -57,7 +57,7 @@ class FeedViewModel(
     private fun Editable?.isNotShort() = this.toString().length > MIN_SEARCH_LENGTH
 
     fun onMovieItemClicked(movie: Movie) {
-        _navigation.value = NavigationState.MovieDetails(id = movie.title)
+        _navigation.value = NavigationState.MovieDetails(id = movie.id.toString())
     }
 
     fun onNavigationSuccess() {

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".ui.profile.ProfileFragment">
+    tools:context="com.my.profile.main.ProfileFragment">
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:layout_height="@dimen/avatar_size"
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="@dimen/material_margin_normal"
-                android:contentDescription="@string/profile" />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,22 +45,26 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_wave_big" />
+                android:src="@drawable/ic_wave_big"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_wave_third" />
+                android:src="@drawable/ic_wave_third"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_wave_second" />
+                android:src="@drawable/ic_wave_second"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_wave" />
+                android:src="@drawable/ic_wave"
+                tools:ignore="ContentDescription" />
         </FrameLayout>
 
         <com.google.android.material.tabs.TabLayout
