@@ -13,7 +13,7 @@ class MovieDetailsFactory {
     ): MovieDetailsViewModelFactory {
         val id = arguments?.getString("id") ?: throw IllegalArgumentException("id must not be null")
         val favoriteRepository = FavoriteFactory().provideRepository(context)
-        val movieRepository = MoviesFactory().provideMovieRepository()
+        val movieRepository = MoviesFactory().provideMovieRepository(context)
         return MovieDetailsViewModelFactory(id, favoriteRepository, movieRepository)
     }
 }

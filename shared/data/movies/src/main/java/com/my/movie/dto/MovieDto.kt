@@ -2,6 +2,7 @@ package com.my.movie.dto
 
 import com.google.gson.annotations.SerializedName
 import com.my.domain.entity.Movie
+import com.my.movie.storage.dto.NowPlayingEntity
 import java.util.*
 
 private const val BASE_IMAGE_PATH = "https://image.tmdb.org/t/p/w500"
@@ -35,5 +36,21 @@ data class MovieDto(
         title = title ?: "",
         voteAverage = voteAverage?.toDouble() ?: 5.0,
         posterPath = BASE_IMAGE_PATH + posterPath
+    )
+
+    fun toDbo() = NowPlayingEntity(
+        posterPath = this.posterPath ?: "",
+        adult = this.adult ?: false,
+        overview = this.overview ?: "",
+        releaseDate = this.releaseDate ?: "",
+        id = this.id ?: 1,
+        originalTitle = this.originalTitle ?: "",
+        originalLanguage = this.originalLanguage ?: "",
+        title = this.title ?: "",
+        backdropPath = this.backdropPath ?: "",
+        popularity = this.popularity ?: 5f,
+        voteCount = this.voteCount ?: 5,
+        video = this.video ?: false,
+        voteAverage = this.voteAverage ?: 5f
     )
 }

@@ -9,6 +9,8 @@ import com.my.feed.state.NavigationState
 import com.my.movie.MovieRepository
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import timber.log.Timber
 
 private const val MIN_SEARCH_LENGTH = 3
 
@@ -31,12 +33,18 @@ class FeedViewModel(
     val navigation: LiveData<NavigationState> = _navigation
 
     init {
+        movieRepository.fetchNowPlaying()
+            .subscribe({
+                Timber.d(it?.size.toString())
+                _nowPlaying.value = it
+            }, {
+
+            }).toComposite()
+
         val d = Single.zip(
-            movieRepository.fetchNowPlaying(),
             movieRepository.fetchPopular(),
             movieRepository.fetchUpcoming(),
-            { list1, list2, list3 ->
-                _nowPlaying.value = list1
+            { list2, list3 ->
                 _popular.value = list2
                 _upcoming.value = list3
             }).subscribe()
@@ -63,4 +71,6 @@ class FeedViewModel(
     fun onNavigationSuccess() {
         _navigation.value = NavigationState.None
     }
+
+    private fun Disposable.toComposite() = compositeDisposable.add(this)
 }

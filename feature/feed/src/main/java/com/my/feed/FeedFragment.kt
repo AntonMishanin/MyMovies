@@ -22,7 +22,9 @@ class FeedFragment : Fragment() {
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: FeedViewModel by viewModels { FeedFactory().provideViewModelFactory() }
+    private val viewModel: FeedViewModel by viewModels {
+        FeedFactory().provideViewModelFactory(requireActivity().applicationContext)
+    }
 
     private val adapter by lazy {
         GroupAdapter<GroupieViewHolder>()
