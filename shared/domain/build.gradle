@@ -32,4 +32,6 @@ dependencies {
     implementation libraries.coreKtx
     implementation libraries.appcompat
     implementation libraries.material
+    implementation libraries.rxAndroid
+    implementation libraries.rxJava
 }
