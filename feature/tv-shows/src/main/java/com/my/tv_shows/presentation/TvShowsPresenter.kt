@@ -14,10 +14,11 @@ class TvShowsPresenter(
             .subscribe({
                 view?.setTvShowsList(it)
             }, {
-                Timber.d(it)
+                Timber.e(it)
             }).addToComposite()
     }
 
     fun onItemTvShowClicked(tvShowsEntity: TvShowsEntity) {
+        Timber.d("On item tv show clicked $tvShowsEntity")
     }
 }

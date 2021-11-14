@@ -46,9 +46,9 @@ class MovieDetailsViewModel(
 
     private fun addToFavorite() {
         saveMovieToFavoriteUseCase(_movie.value ?: return).subscribe({
-            Timber.d("SUCCESS INSERT")
+            Timber.d("Success save movie to favorite ${_movie.value}")
         }, {
-            Timber.d("ERROR INSERT")
+            Timber.e(it)
         }).addToComposite()
         _isFavorite.value = true
     }
@@ -57,14 +57,15 @@ class MovieDetailsViewModel(
         val id = _movie.value?.id ?: return
 
         deleteFromFavoriteByIdUseCase(id).subscribe({
-            Timber.d("SUCCESS DELETE")
+            Timber.d("Success delete from favorite by id $id")
         }, {
-            Timber.d("ERROR DELETE")
+            Timber.e(it)
         }).addToComposite()
 
         _isFavorite.value = false
     }
 
     fun onItemActorClicked(actor: MovieEntity.Actor) {
+        Timber.d("On item actor clicked $actor")
     }
 }
