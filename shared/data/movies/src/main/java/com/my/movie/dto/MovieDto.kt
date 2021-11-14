@@ -7,7 +7,7 @@ import java.util.*
 
 private const val BASE_IMAGE_PATH = "https://image.tmdb.org/t/p/w500"
 
-data class MovieDto(
+internal data class MovieDto(
     @SerializedName(value = "poster_path")
     private val posterPath: String?,
     private val adult: Boolean?,

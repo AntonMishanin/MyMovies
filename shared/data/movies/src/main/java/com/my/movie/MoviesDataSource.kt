@@ -5,7 +5,7 @@ import com.my.movie.dto.MovieDetailsResponse
 import com.my.movie.dto.MoviesResponse
 import io.reactivex.Single
 
-class MoviesDataSource(
+internal class MoviesDataSource(
     private val moviesApi: MoviesApi
 ) {
     fun fetchNowPlaying(): Single<MoviesResponse> = moviesApi.fetchNowPlaying()

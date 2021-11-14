@@ -2,7 +2,7 @@ package com.my.movie.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class ProductionCompanyDto(
+internal data class ProductionCompanyDto(
     val id: Int?,
     @SerializedName(value = "logo_path")
     val logoPath: String?,

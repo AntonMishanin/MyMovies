@@ -2,7 +2,7 @@ package com.my.movie.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class CastDto(
+internal data class CastDto(
     val adult: Boolean?,
     val gender: Int?,
     val id: Int?,

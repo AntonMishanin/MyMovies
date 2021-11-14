@@ -1,9 +1,10 @@
 package com.my.movie.di
 
 import android.content.Context
+import com.my.domain.repository.MovieRepository
+import com.my.movie.MovieRepositoryImpl
 import com.my.movie.MoviesApi
 import com.my.movie.MoviesDataSource
-import com.my.movie.MovieRepository
 import com.my.movie.storage.MovieDatabase
 import com.my.remote.RemoteFactory
 
@@ -14,6 +15,6 @@ class MoviesFactory {
         val movieDataSource = MoviesDataSource(movieApi)
 
         val movieDao = MovieDatabase.getFavoriteDatabase(context).getMovieDao()
-        return MovieRepository(movieDataSource, movieDao)
+        return MovieRepositoryImpl(movieDataSource, movieDao)
     }
 }

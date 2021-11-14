@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class NowPlayingEntity(
+internal data class NowPlayingEntity(
     val posterPath: String,
     val adult: Boolean,
     val overview: String,
