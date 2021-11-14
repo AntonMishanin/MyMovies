@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.my.domain.entity.MovieDetails
-import com.my.movie.MovieRepository
-import com.my.movie.favorite.FavoriteRepository
+import com.my.domain.usecase.DeleteFromFavoriteByIdUseCase
+import com.my.domain.usecase.FetchMovieByIdUseCase
+import com.my.domain.usecase.IsFavoriteByIdUseCase
+import com.my.domain.usecase.SaveMovieToFavoriteUseCase
 import com.my.movie_details.entity.MovieEntity
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -13,8 +15,10 @@ import timber.log.Timber
 
 class MovieDetailsViewModel(
     id: String,
-    private val favoriteRepository: FavoriteRepository,
-    movieRepository: MovieRepository
+    isFavoriteByIdUseCase: IsFavoriteByIdUseCase,
+    private val saveMovieToFavoriteUseCase: SaveMovieToFavoriteUseCase,
+    private val deleteFromFavoriteByIdUseCase: DeleteFromFavoriteByIdUseCase,
+    fetchMovieByIdUseCase: FetchMovieByIdUseCase
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -26,12 +30,12 @@ class MovieDetailsViewModel(
     val isFavorite: LiveData<Boolean> = _isFavorite
 
     init {
-        movieRepository.fetchMovieById(id)
+        fetchMovieByIdUseCase(id)
             .subscribe { movie ->
                 _movie.value = movie
             }.toComposite()
 
-        favoriteRepository.isFavoriteById(id.toInt()) {
+        isFavoriteByIdUseCase(id.toInt()) {
             Timber.d(it.toString())
             _isFavorite.value = it
         }.toComposite()
@@ -50,7 +54,7 @@ class MovieDetailsViewModel(
     }
 
     private fun addToFavorite() {
-        favoriteRepository.insert(_movie.value ?: return).subscribe({
+        saveMovieToFavoriteUseCase(_movie.value ?: return).subscribe({
             Timber.d("SUCCESS INSERT")
         }, {
             Timber.d("ERROR INSERT")
@@ -61,7 +65,7 @@ class MovieDetailsViewModel(
     private fun removeFromFavorite() {
         val id = _movie.value?.id ?: return
 
-        favoriteRepository.deleteById(id).subscribe({
+        deleteFromFavoriteByIdUseCase(id).subscribe({
             Timber.d("SUCCESS DELETE")
         }, {
             Timber.d("ERROR DELETE")
