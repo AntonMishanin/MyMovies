@@ -56,7 +56,7 @@ internal class MovieRepositoryImpl(
 }
 
 internal fun MovieDetailsResponse.toViewObject() = MovieDetails(
-    id = this.id ?: 0,
+    id = this.id ?: throw NullPointerException("id must not be null"),
     posterPath = this.posterPath ?: "",
     title = this.title ?: "",
     overview = this.overview ?: "",
