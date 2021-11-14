@@ -19,7 +19,7 @@ class ProfileAdapter(
         return when (position) {
             FAVORITE -> FavoriteFragment.newInstance()
             WATCHLIST -> WatchlistFragment.newInstance()
-            else -> throw IllegalArgumentException("UnKnow position $position")
+            else -> throw IllegalArgumentException("Unknown position $position")
         }
     }
 }
