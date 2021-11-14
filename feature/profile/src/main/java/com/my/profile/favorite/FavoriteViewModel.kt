@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.my.domain.entity.MovieDetails
-import com.my.movie.favorite.FavoriteRepository
+import com.my.domain.usecase.FetchAllFavoriteUseCase
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import timber.log.Timber
 
 class FavoriteViewModel(
-    favoriteRepository: FavoriteRepository
+    fetchAllFavoriteUseCase: FetchAllFavoriteUseCase
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -19,7 +19,7 @@ class FavoriteViewModel(
     val content: LiveData<List<MovieDetails>> = _content
 
     init {
-        favoriteRepository.loadAll()
+        fetchAllFavoriteUseCase()
             .subscribe({
                 Timber.d("SUCCESS = ${it.size}")
                 _content.value = it
