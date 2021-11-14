@@ -3,7 +3,7 @@ package com.my.domain.repository
 import com.my.domain.entity.MovieDetails
 import io.reactivex.Completable
 import io.reactivex.Flowable
-import io.reactivex.disposables.Disposable
+import io.reactivex.Single
 
 interface FavoriteRepository {
     fun insert(movieDetails: MovieDetails): Completable
@@ -12,5 +12,5 @@ interface FavoriteRepository {
 
     fun loadAll(): Flowable<List<MovieDetails>>
 
-    fun isFavoriteById(id: Int, isFavorite: (Boolean) -> Unit): Disposable
+    fun isFavoriteById(id: Int): Single<MovieDetails>
 }
