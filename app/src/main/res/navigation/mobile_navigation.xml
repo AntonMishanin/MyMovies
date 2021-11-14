@@ -62,7 +62,7 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/search_dest"
-        android:name="ru.androidschool.intensiv.ui.search.SearchFragment"
+        android:name="com.my.search.SearchFragment"
         android:label="SearchFragment"
         tools:layout="@layout/fragment_search" />
 </navigation>

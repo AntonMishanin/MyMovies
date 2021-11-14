@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.my.domain.entity.Movie
 import com.my.feed.state.NavigationState
 import com.my.movie.MovieRepository
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 
 private const val MIN_SEARCH_LENGTH = 3
@@ -30,21 +31,16 @@ class FeedViewModel(
     val navigation: LiveData<NavigationState> = _navigation
 
     init {
-        compositeDisposable.add(
-            movieRepository
-                .fetchNowPlaying()
-                .subscribe(_nowPlaying::setValue)
-        )
-        compositeDisposable.add(
-            movieRepository
-                .fetchPopular()
-                .subscribe(_popular::setValue)
-        )
-        compositeDisposable.add(
-            movieRepository
-                .fetchUpcoming()
-                .subscribe(_upcoming::setValue)
-        )
+        val d = Single.zip(
+            movieRepository.fetchNowPlaying(),
+            movieRepository.fetchPopular(),
+            movieRepository.fetchUpcoming(),
+            { list1, list2, list3 ->
+                _nowPlaying.value = list1
+                _popular.value = list2
+                _upcoming.value = list3
+            }).subscribe()
+        compositeDisposable.add(d)
     }
 
     override fun onCleared() {

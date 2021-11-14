@@ -1,26 +1,22 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
@@ -36,21 +32,15 @@ android {
 }
 
 dependencies {
-    //AndroidX
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation project(':shared:components')
 
-    //Material
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation libraries.coreKtx
+    implementation libraries.appcompat
 
-    //Groupie
-    implementation "com.xwray:groupie:$rootProject.groupieVersion"
-    implementation "com.xwray:groupie-kotlin-android-extensions:$rootProject.groupieVersion"
+    implementation libraries.material
 
-    //Picasso
-    implementation "com.squareup.picasso:picasso:$rootProject.picassoVersion"
-    implementation "jp.wasabeef:picasso-transformations:$rootProject.picassoTransformation"
+    implementation libraries.groupie
+    implementation libraries.groupieViewbinding
 
-    //Leak canary
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.leakCanaryVersion"
+    debugImplementation libraries.leakCanary
 }

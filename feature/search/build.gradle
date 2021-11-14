@@ -26,10 +26,23 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
+    implementation project(':shared:components')
+
     implementation libraries.coreKtx
     implementation libraries.appcompat
     implementation libraries.material
+
+    implementation libraries.fragmentKtx
+
+    implementation libraries.rxJava
+
+    implementation libraries.timber
+
+    debugImplementation libraries.leakCanary
 }

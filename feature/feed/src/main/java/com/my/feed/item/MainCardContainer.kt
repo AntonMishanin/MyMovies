@@ -1,25 +1,24 @@
 package com.my.feed.item
 
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import android.view.View
 import com.my.feed.R
+import com.my.feed.databinding.ItemCardBinding
 import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
-import com.xwray.groupie.kotlinandroidextensions.Item
+import com.xwray.groupie.GroupieViewHolder
+import com.xwray.groupie.viewbinding.BindableItem
 
 class MainCardContainer(
     private val title: String,
-    private val items: List<Item>
-) : Item() {
+    private val items: List<MovieItem>
+) : BindableItem<ItemCardBinding>() {
 
     override fun getLayout() = R.layout.item_card
 
-    override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        val titleView = viewHolder.itemView.findViewById<TextView>(R.id.title_text_view)
-        val itemsContainer = viewHolder.itemView.findViewById<RecyclerView>(R.id.items_container)
+    override fun initializeViewBinding(view: View) = ItemCardBinding.bind(view)
 
-        titleView.text = title
-        itemsContainer.adapter =
+    override fun bind(viewBinding: ItemCardBinding, position: Int) {
+        viewBinding.titleTextView.text = title
+        viewBinding.itemsContainer.adapter =
             GroupAdapter<GroupieViewHolder>().apply { addAll(items) }
     }
 }

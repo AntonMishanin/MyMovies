@@ -11,7 +11,7 @@ import com.my.movie_details.databinding.FragmentMovieDetailsBinding
 import com.my.movie_details.di.MovieDetailsFactory
 import com.my.movie_details.entity.MovieEntity
 import com.my.movie_details.utils.setCheckedListener
-import com.squareup.picasso.Picasso
+import com.my.resources.extensions.load
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
@@ -56,7 +56,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun handleMovieState(movie: MovieEntity) {
-        Picasso.get().load(movie.previewId).into(binding.preview)
+        binding.preview.load(movie.previewId)
         with(binding.bodyContent) {
             bodyTitle.text = movie.title
             isFavorite.setCheckedListener(viewModel::onFavoriteClicked)
