@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.my.profile.databinding.FragmentWatchlistBinding
 import com.xwray.groupie.GroupAdapter
@@ -14,6 +15,8 @@ class WatchlistFragment : Fragment() {
 
     private var _binding: FragmentWatchlistBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: WatchlistViewModel by viewModels()
 
     private val adapter by lazy {
         GroupAdapter<GroupieViewHolder>()
@@ -30,18 +33,8 @@ class WatchlistFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.moviesRecyclerView.layoutManager = GridLayoutManager(context, 4)
-        binding.moviesRecyclerView.adapter = adapter.apply { addAll(listOf()) }
-
-        /*val moviesList =
-            MockRepository.getMovies().map {
-                MoviePreviewItem(
-                    it
-                ) { movie -> }
-            }.toList()
-
-        movies_recycler_view.adapter = adapter.apply { addAll(moviesList) }*/
+        initView()
+        subscribeToObservers()
     }
 
     override fun onDestroyView() {
@@ -49,9 +42,19 @@ class WatchlistFragment : Fragment() {
         _binding = null
     }
 
-    companion object {
+    private fun initView() {
+        binding.moviesRecyclerView.layoutManager = GridLayoutManager(context, 4)
+        binding.moviesRecyclerView.adapter = adapter
+    }
 
-        @JvmStatic
+    private fun subscribeToObservers() {
+        viewModel.content.observe(viewLifecycleOwner) { movies ->
+            val items = movies.map { MoviePreviewItem(it, viewModel::onMovieItemClicked) }
+            adapter.addAll(items)
+        }
+    }
+
+    companion object {
         fun newInstance() = WatchlistFragment()
     }
 }
