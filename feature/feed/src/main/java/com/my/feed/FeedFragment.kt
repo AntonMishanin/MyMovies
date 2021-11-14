@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.xwray.groupie.GroupAdapter
 import com.my.domain.entity.Movie
 import com.my.feed.databinding.FragmentFeedBinding
 import com.my.feed.di.FeedFactory
@@ -13,6 +12,7 @@ import com.my.feed.item.MovieItem
 import com.my.feed.navigator.FeedNavigator
 import com.my.feed.state.NavigationState
 import com.my.resources.extensions.hide
+import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import ru.androidschool.intensiv.ui.afterTextChanged
 import timber.log.Timber
@@ -64,24 +64,21 @@ class FeedFragment : Fragment() {
     }
 
     private fun subscribeObservers() {
-        viewModel.nowPlaying.observe(viewLifecycleOwner) {
+        viewModel.content.observe(viewLifecycleOwner) {
             binding.loader.hide()
-            handleMovies(it, titleRes = R.string.recommended)
-        }
-        viewModel.popular.observe(viewLifecycleOwner) {
-            handleMovies(it, titleRes = R.string.popular)
-        }
-        viewModel.upcoming.observe(viewLifecycleOwner) {
-            handleMovies(it, titleRes = R.string.upcoming)
+            adapter.clear()
+            handleMovies(it.nowPlaying, titleRes = R.string.recommended)
+            handleMovies(it.popular, titleRes = R.string.popular)
+            handleMovies(it.upcoming, titleRes = R.string.upcoming)
         }
         viewModel.navigation.observe(viewLifecycleOwner, ::handleNavigation)
     }
 
     private fun handleMovies(movies: List<Movie>, titleRes: Int) {
-        val content = movies.map { MovieItem(it, viewModel::onMovieItemClicked) }.toList()
+        val content = movies.map { MovieItem(it, viewModel::onMovieItemClicked) }
         val title = requireContext().getString(titleRes)
         val moviesList = listOf(MainCardContainer(title, content))
-        adapter.apply { addAll(moviesList) }
+        adapter.addAll(moviesList)
     }
 
     private fun handleNavigation(state: NavigationState) {
@@ -94,15 +91,17 @@ class FeedFragment : Fragment() {
 
     private fun openMovieDetails(id: String) {
         viewModel.onNavigationSuccess()
-        (requireActivity() as? FeedNavigator)?.openMovieDetails(id)
+        navigator()?.openMovieDetails(id)
     }
 
     private fun openSearch(searchText: String) {
         viewModel.onNavigationSuccess()
-        (requireActivity() as? FeedNavigator)?.openSearch(searchText)
+        navigator()?.openSearch(searchText)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_menu, menu)
     }
+
+    private fun navigator() = requireActivity() as? FeedNavigator
 }
