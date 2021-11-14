@@ -34,4 +34,5 @@ dependencies {
     implementation libraries.material
     implementation libraries.rxAndroid
     implementation libraries.rxJava
+    implementation libraries.timber
 }
