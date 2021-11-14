@@ -1,6 +1,7 @@
 package com.my.movie.favorite
 
 import com.my.domain.entity.MovieDetails
+import com.my.domain.repository.FavoriteRepository
 import com.my.movie.favorite.storage.FavoriteDao
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers

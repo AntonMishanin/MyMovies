@@ -1,4 +1,4 @@
-package com.my.movie.favorite
+package com.my.domain.repository
 
 import com.my.domain.entity.MovieDetails
 import io.reactivex.Completable
