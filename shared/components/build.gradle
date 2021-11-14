@@ -38,4 +38,6 @@ dependencies {
     implementation libraries.material
 
     implementation libraries.picasso
+
+    implementation libraries.rxJava
 }
