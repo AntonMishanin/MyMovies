@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="tab_titles">
+        <item>23\n Понравилось</item>
+        <item>@string/later</item>
+    </string-array>
+
+    <string name="later">44\n Буду смотреть</string>
+
+    <string name="placeholder">Пёс Киноман</string>
+</resources>

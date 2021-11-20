@@ -2,7 +2,7 @@ package com.my.tv.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class TvShowDto(
+internal data class TvShowDto(
     @SerializedName(value = "poster_path")
     val posterPath: String?,
     val popularity: Float?,

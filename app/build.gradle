@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation project(':feature:profile')
     implementation project(':feature:search')
     implementation project(':feature:feed')
     implementation project(':feature:tv-shows')
@@ -50,30 +51,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation libraries.appcompat
-    implementation libraries.constraintLayout
     implementation libraries.material
-
     implementation libraries.coreKtx
-    implementation libraries.lifecycleExtensions
-    implementation libraries.lifecycleRuntime
-    implementation libraries.lifecycleViewmodel
-    implementation libraries.lifecycleLivedata
 
     implementation libraries.naigationFragment
     implementation libraries.navigationUi
 
-    implementation libraries.picasso
-    implementation libraries.picassoTransform
-
-    implementation libraries.recyclerView
-
-    implementation libraries.groupie
-    implementation libraries.groupieViewbinding
-
     implementation libraries.timber
-
-    debugImplementation libraries.leakCanary
-
-    implementation libraries.rxAndroid
-    implementation libraries.rxJava
 }

@@ -2,8 +2,9 @@ package com.my.movie.dto
 
 import com.google.gson.annotations.SerializedName
 import com.my.domain.entity.Movie
+import com.my.movie.storage.dto.NowPlayingEntity
 
-data class MoviesResponse(
+internal data class MoviesResponse(
     private val page: Int?,
     private val results: List<MovieDto>?,
     private val maximum: String?,
@@ -14,4 +15,6 @@ data class MoviesResponse(
     private val totalResults: Int?
 ) {
     fun toValueObject(): List<Movie>? = results?.map { movieDto -> movieDto.toValueObject() }
+
+    fun toDbo(): List<NowPlayingEntity> = results?.map { network -> network.toDbo() } ?: emptyList()
 }

@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.my.domain.entity.TvShowsEntity
 import com.my.tv_shows.databinding.FragmentTvShowsBinding
 import com.my.tv_shows.di.TvShowsFactory
-import com.my.tv_shows.entity.TvShowsEntity
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 

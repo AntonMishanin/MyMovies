@@ -40,6 +40,5 @@ dependencies {
 
     implementation libraries.gson
 
-    implementation libraries.rxAndroid
     implementation libraries.rxJava
 }

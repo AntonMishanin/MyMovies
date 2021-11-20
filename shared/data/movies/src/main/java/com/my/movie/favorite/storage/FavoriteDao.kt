@@ -1,7 +1,6 @@
 package com.my.movie.favorite.storage
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
@@ -11,7 +10,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 
 @Dao
-interface FavoriteDao {
+internal interface FavoriteDao {
     @Insert(onConflict = REPLACE)
     fun insert(favorite: FavoriteEntity): Completable
 

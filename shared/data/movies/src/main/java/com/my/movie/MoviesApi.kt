@@ -7,7 +7,7 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface MoviesApi {
+internal interface MoviesApi {
     @GET("movie/now_playing")
     fun fetchNowPlaying(): Single<MoviesResponse>
 

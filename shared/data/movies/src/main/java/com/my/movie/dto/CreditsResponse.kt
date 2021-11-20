@@ -1,6 +1,6 @@
 package com.my.movie.dto
 
-data class CreditsResponse(
+internal data class CreditsResponse(
     val id: Int?,
     val cast: List<CastDto>?,
     val crew: List<CrewDto>?

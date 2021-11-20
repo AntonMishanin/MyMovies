@@ -1,0 +1,56 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation project(':shared:data:movies')
+    implementation project(':shared:domain')
+    implementation project(':shared:components')
+
+    implementation libraries.coreKtx
+    implementation libraries.appcompat
+    implementation libraries.material
+
+    implementation libraries.picasso
+    implementation libraries.picassoTransform
+
+    implementation libraries.groupie
+    implementation libraries.groupieViewbinding
+
+    implementation libraries.timber
+
+    debugImplementation libraries.leakCanary
+
+    implementation libraries.fragmentKtx
+
+    implementation libraries.rxJava
+}

@@ -2,7 +2,7 @@ package com.my.tv.remote.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class TvShowsResponse(
+internal data class TvShowsResponse(
     val page: Int?,
     val results: List<TvShowDto>?,
     @SerializedName(value = "total_results")

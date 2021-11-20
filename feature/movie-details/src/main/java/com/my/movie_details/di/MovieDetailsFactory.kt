@@ -1,22 +1,32 @@
 package com.my.movie_details.di
 
+import android.content.Context
 import android.os.Bundle
-import com.my.movie_details.data.MovieDetailsRepository
-import com.my.movie_details.data.source.actors.ActorsDataSource
-import com.my.movie_details.data.source.genre.GenresDataSource
-import com.my.movie_details.data.source.movies.MoviesDataSource
-import com.my.movie_details.data.source.studios.StudiosDataSource
-import java.lang.IllegalArgumentException
+import com.my.domain.usecase.DeleteFromFavoriteByIdUseCase
+import com.my.domain.usecase.FetchMovieByIdUseCase
+import com.my.domain.usecase.IsFavoriteByIdUseCase
+import com.my.domain.usecase.SaveMovieToFavoriteUseCase
+import com.my.movie.di.MoviesFactory
+import com.my.movie.favorite.di.FavoriteFactory
 
 class MovieDetailsFactory {
-    fun provideViewModelFactory(arguments: Bundle?): MovieDetailsViewModelFactory {
-        val repository = MovieDetailsRepository(
-            ActorsDataSource(),
-            GenresDataSource(),
-            MoviesDataSource(),
-            StudiosDataSource()
-        )
+    fun provideViewModelFactory(
+        arguments: Bundle?,
+        context: Context
+    ): MovieDetailsViewModelFactory {
         val id = arguments?.getString("id") ?: throw IllegalArgumentException("id must not be null")
-        return MovieDetailsViewModelFactory(id, repository)
+        val favoriteRepository = FavoriteFactory().provideRepository(context)
+        val movieRepository = MoviesFactory().provideMovieRepository(context)
+        val isFavoriteByIdUseCase = IsFavoriteByIdUseCase(favoriteRepository)
+        val saveMovieToFavoriteUseCase = SaveMovieToFavoriteUseCase(favoriteRepository)
+        val deleteFromFavoriteByIdUseCase = DeleteFromFavoriteByIdUseCase(favoriteRepository)
+        val fetchMovieByIdUseCase = FetchMovieByIdUseCase(movieRepository)
+        return MovieDetailsViewModelFactory(
+            id,
+            isFavoriteByIdUseCase,
+            saveMovieToFavoriteUseCase,
+            deleteFromFavoriteByIdUseCase,
+            fetchMovieByIdUseCase
+        )
     }
 }

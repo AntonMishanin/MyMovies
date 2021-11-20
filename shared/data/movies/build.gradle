@@ -13,6 +13,7 @@ android {
         targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "BASE_IMAGE_PATH", '"https://image.tmdb.org/t/p/w500"'
     }
 
     buildTypes {
@@ -41,7 +42,6 @@ dependencies {
 
     implementation libraries.gson
 
-    implementation libraries.rxAndroid
     implementation libraries.rxJava
 
     implementation libraries.room
