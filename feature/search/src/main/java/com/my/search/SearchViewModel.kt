@@ -7,6 +7,8 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
+private const val DEBOUNCE_TIMEOUT = 500L
+
 class SearchViewModel : RxViewModel() {
 
     private val searchSubject = PublishSubject.create<String>()
@@ -23,7 +25,7 @@ class SearchViewModel : RxViewModel() {
 
     private fun addTimeoutForSearch() {
         searchSubject
-            .debounce(500, TimeUnit.MILLISECONDS)
+            .debounce(DEBOUNCE_TIMEOUT, TimeUnit.MILLISECONDS)
             .subscribe {
                 Timber.d(it)
                 filterContentByText(it)
