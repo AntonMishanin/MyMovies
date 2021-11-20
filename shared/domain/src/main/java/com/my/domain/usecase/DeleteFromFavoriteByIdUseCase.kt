@@ -1,7 +1,7 @@
 package com.my.domain.usecase
 
 import com.my.domain.repository.FavoriteRepository
-import com.my.domain.utils.applySchedulers
+import com.my.resources.extensions.applySchedulers
 import io.reactivex.Completable
 
 class DeleteFromFavoriteByIdUseCase(private val repository: FavoriteRepository) {

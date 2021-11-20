@@ -40,4 +40,5 @@ dependencies {
     implementation libraries.picasso
 
     implementation libraries.rxJava
+    implementation libraries.rxAndroid
 }

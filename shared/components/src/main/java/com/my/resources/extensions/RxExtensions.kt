@@ -1,4 +1,4 @@
-package com.my.domain.utils
+package com.my.resources.extensions
 
 import io.reactivex.Completable
 import io.reactivex.Flowable
