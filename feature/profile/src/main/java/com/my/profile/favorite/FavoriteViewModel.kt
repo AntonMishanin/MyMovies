@@ -17,10 +17,9 @@ class FavoriteViewModel(
     init {
         fetchAllFavoriteUseCase()
             .subscribe({
-                Timber.d("SUCCESS = ${it.size}")
                 _content.value = it
             }, {
-                Timber.d("Load favorite with error $it")
+                Timber.e("Load favorite with error $it")
             }).addToComposite()
     }
 }
