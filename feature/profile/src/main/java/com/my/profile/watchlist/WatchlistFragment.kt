@@ -11,6 +11,8 @@ import com.my.profile.databinding.FragmentWatchlistBinding
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
+private const val WATCHLIST_SPAN_COUNT = 4
+
 class WatchlistFragment : Fragment() {
 
     private var _binding: FragmentWatchlistBinding? = null
@@ -43,7 +45,7 @@ class WatchlistFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.moviesRecyclerView.layoutManager = GridLayoutManager(context, 4)
+        binding.moviesRecyclerView.layoutManager = GridLayoutManager(context, WATCHLIST_SPAN_COUNT)
         binding.moviesRecyclerView.adapter = adapter
     }
 
