@@ -2,30 +2,23 @@ package com.my.tv_shows.presentation
 
 import com.my.domain.entity.TvShowsEntity
 import com.my.domain.usecase.FetchPopularTvShowsUseCase
-import com.my.tv_shows.base.BasePresenter
-import io.reactivex.disposables.CompositeDisposable
+import com.my.resources.mvp.RxPresenter
 import timber.log.Timber
 
 class TvShowsPresenter(
     private val fetchPopularTvShowsUseCase: FetchPopularTvShowsUseCase
-) : BasePresenter<TvShowsView>() {
-
-    private val compositeDisposable = CompositeDisposable()
+) : RxPresenter<TvShowsView>() {
 
     override fun onViewReady() {
-        val d = fetchPopularTvShowsUseCase()
+        fetchPopularTvShowsUseCase()
             .subscribe({
                 view?.setTvShowsList(it)
             }, {
-                Timber.d(it)
-            })
-        compositeDisposable.add(d)
-    }
-
-    override fun onViewDetached() {
-        compositeDisposable.clear()
+                Timber.e(it)
+            }).addToComposite()
     }
 
     fun onItemTvShowClicked(tvShowsEntity: TvShowsEntity) {
+        Timber.d("On item tv show clicked $tvShowsEntity")
     }
 }

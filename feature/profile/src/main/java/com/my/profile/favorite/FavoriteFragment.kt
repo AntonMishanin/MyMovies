@@ -12,6 +12,8 @@ import com.my.profile.favorite.di.FavoriteFactory
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
+private const val FAVORITE_SPAN_COUNT = 4
+
 class FavoriteFragment : Fragment() {
 
     private var _binding: FragmentFavoriteBinding? = null
@@ -46,7 +48,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.list.layoutManager = GridLayoutManager(requireContext(), 4)
+        binding.list.layoutManager = GridLayoutManager(requireContext(), FAVORITE_SPAN_COUNT)
         binding.list.adapter = adapter
     }
 

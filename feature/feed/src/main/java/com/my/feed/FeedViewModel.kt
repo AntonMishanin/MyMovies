@@ -3,21 +3,17 @@ package com.my.feed
 import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.my.domain.entity.CompositeMovieEntity
 import com.my.domain.entity.Movie
 import com.my.domain.usecase.FetchCompositeMovieUseCase
 import com.my.feed.state.NavigationState
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import com.my.resources.mvvm.RxViewModel
 
 private const val MIN_SEARCH_LENGTH = 3
 
 class FeedViewModel(
     fetchCompositeMovieUseCase: FetchCompositeMovieUseCase
-) : ViewModel() {
-
-    private val compositeDisposable = CompositeDisposable()
+) : RxViewModel() {
 
     private val _content: MutableLiveData<CompositeMovieEntity> = MutableLiveData()
     val content: LiveData<CompositeMovieEntity> = _content
@@ -29,12 +25,7 @@ class FeedViewModel(
         fetchCompositeMovieUseCase.invoke()
             .subscribe {
                 _content.value = it
-            }.toComposite()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
+            }.addToComposite()
     }
 
     fun onSearchTextChanged(text: Editable?) {
@@ -52,6 +43,4 @@ class FeedViewModel(
     fun onNavigationSuccess() {
         _navigation.value = NavigationState.None
     }
-
-    private fun Disposable.toComposite() = compositeDisposable.add(this)
 }

@@ -57,7 +57,7 @@
         tools:layout="@layout/fragment_movie_details" />
     <fragment
         android:id="@+id/profile_fragment"
-        android:name="com.my.profile.main.ProfileFragment"
+        android:name="com.my.profile.main.presentation.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment

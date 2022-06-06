@@ -2,15 +2,13 @@ package com.my.movie_details.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.my.domain.entity.MovieDetails
 import com.my.domain.usecase.DeleteFromFavoriteByIdUseCase
 import com.my.domain.usecase.FetchMovieByIdUseCase
 import com.my.domain.usecase.IsFavoriteByIdUseCase
 import com.my.domain.usecase.SaveMovieToFavoriteUseCase
 import com.my.movie_details.entity.MovieEntity
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import com.my.resources.mvvm.RxViewModel
 import timber.log.Timber
 
 class MovieDetailsViewModel(
@@ -19,9 +17,7 @@ class MovieDetailsViewModel(
     private val saveMovieToFavoriteUseCase: SaveMovieToFavoriteUseCase,
     private val deleteFromFavoriteByIdUseCase: DeleteFromFavoriteByIdUseCase,
     fetchMovieByIdUseCase: FetchMovieByIdUseCase
-) : ViewModel() {
-
-    private val compositeDisposable = CompositeDisposable()
+) : RxViewModel() {
 
     private val _movie = MutableLiveData<MovieDetails>()
     val movie: LiveData<MovieDetails> = _movie
@@ -33,17 +29,12 @@ class MovieDetailsViewModel(
         fetchMovieByIdUseCase(id)
             .subscribe { movie ->
                 _movie.value = movie
-            }.toComposite()
+            }.addToComposite()
 
         isFavoriteByIdUseCase(id.toInt()) {
             Timber.d(it.toString())
             _isFavorite.value = it
-        }.toComposite()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
+        }.addToComposite()
     }
 
     fun onFavoriteClicked(isChecked: Boolean) {
@@ -55,10 +46,10 @@ class MovieDetailsViewModel(
 
     private fun addToFavorite() {
         saveMovieToFavoriteUseCase(_movie.value ?: return).subscribe({
-            Timber.d("SUCCESS INSERT")
+            Timber.d("Success save movie to favorite ${_movie.value}")
         }, {
-            Timber.d("ERROR INSERT")
-        }).toComposite()
+            Timber.e(it)
+        }).addToComposite()
         _isFavorite.value = true
     }
 
@@ -66,18 +57,15 @@ class MovieDetailsViewModel(
         val id = _movie.value?.id ?: return
 
         deleteFromFavoriteByIdUseCase(id).subscribe({
-            Timber.d("SUCCESS DELETE")
+            Timber.d("Success delete from favorite by id $id")
         }, {
-            Timber.d("ERROR DELETE")
-        }).toComposite()
+            Timber.e(it)
+        }).addToComposite()
 
         _isFavorite.value = false
     }
 
     fun onItemActorClicked(actor: MovieEntity.Actor) {
-    }
-
-    private fun Disposable.toComposite() {
-        compositeDisposable.add(this)
+        Timber.d("On item actor clicked $actor")
     }
 }

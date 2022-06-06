@@ -2,18 +2,14 @@ package com.my.profile.favorite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.my.domain.entity.MovieDetails
 import com.my.domain.usecase.FetchAllFavoriteUseCase
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import com.my.resources.mvvm.RxViewModel
 import timber.log.Timber
 
 class FavoriteViewModel(
     fetchAllFavoriteUseCase: FetchAllFavoriteUseCase
-) : ViewModel() {
-
-    private val compositeDisposable = CompositeDisposable()
+) : RxViewModel() {
 
     private val _content: MutableLiveData<List<MovieDetails>> = MutableLiveData()
     val content: LiveData<List<MovieDetails>> = _content
@@ -21,12 +17,9 @@ class FavoriteViewModel(
     init {
         fetchAllFavoriteUseCase()
             .subscribe({
-                Timber.d("SUCCESS = ${it.size}")
                 _content.value = it
             }, {
-                Timber.d("Load favorite with error $it")
-            }).toComposite()
+                Timber.e("Load favorite with error $it")
+            }).addToComposite()
     }
-
-    private fun Disposable.toComposite() = compositeDisposable.add(this)
 }
