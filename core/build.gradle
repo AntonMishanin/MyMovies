@@ -1,0 +1,62 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+}
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode 1
+        versionName "1.0"
+        buildConfigField "String", "MOVIE_BASE_URL", '"https://api.themoviedb.org/3/"'
+        buildConfigField 'String', 'MOVIE_API_KEY', keystoreProperties['MOVIE_API_KEY']
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation libraries.coreKtx
+    implementation libraries.appcompat
+    implementation libraries.material
+
+    implementation libraries.picasso
+
+    implementation libraries.rxJava
+    implementation libraries.rxAndroid
+
+    implementation libraries.dagger
+    kapt libraries.daggerCompiler
+
+    implementation libraries.retrofit
+    implementation libraries.converterGson
+    implementation libraries.adapterRxJava
+
+    implementation libraries.gson
+
+    implementation libraries.loggingInterceptor
+}
