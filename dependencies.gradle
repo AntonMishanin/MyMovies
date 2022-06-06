@@ -42,7 +42,10 @@ ext.versions = [
 
         room                     : '2.3.0',
         roomCompiler             : '2.3.0',
-        roomRxJava2              : '2.3.0'
+        roomRxJava2              : '2.3.0',
+
+        dagger                   : '2.38.1',
+        daggerCompiler           : '2.38.1'
 ]
 
 ext.libraries = [
@@ -84,7 +87,10 @@ ext.libraries = [
 
         room               : "androidx.room:room-runtime:$versions.room",
         roomCompiler       : "androidx.room:room-compiler:$versions.roomCompiler",
-        roomRxJava2        : "androidx.room:room-rxjava2:$versions.roomRxJava2"
+        roomRxJava2        : "androidx.room:room-rxjava2:$versions.roomRxJava2",
+
+        dagger             : "com.google.dagger:dagger:$versions.dagger",
+        daggerCompiler     : "com.google.dagger:dagger-compiler:$versions.daggerCompiler"
 ]
 
 ext.gradlePlugins = [

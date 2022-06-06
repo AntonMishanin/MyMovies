@@ -1,12 +1,16 @@
 package com.my.feed
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.my.domain.entity.Movie
 import com.my.feed.databinding.FragmentFeedBinding
-import com.my.feed.di.FeedFactory
+import com.my.feed.di.FeedComponentViewModel
+import com.my.feed.di.FeedViewModelFactory
 import com.my.feed.item.MainCardContainer
 import com.my.feed.item.MovieItem
 import com.my.feed.navigator.FeedNavigator
@@ -14,20 +18,30 @@ import com.my.feed.state.NavigationState
 import com.my.resources.extensions.hide
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import dagger.Lazy
 import ru.androidschool.intensiv.ui.afterTextChanged
 import timber.log.Timber
+import javax.inject.Inject
 
 class FeedFragment : Fragment() {
 
     private var _binding: FragmentFeedBinding? = null
     private val binding get() = _binding!!
 
+    @Inject
+    internal lateinit var feedViewModelFactory: Lazy<FeedViewModelFactory>
+
     private val viewModel: FeedViewModel by viewModels {
-        FeedFactory().provideViewModelFactory(requireActivity().applicationContext)
+        feedViewModelFactory.get()
     }
 
     private val adapter by lazy {
         GroupAdapter<GroupieViewHolder>()
+    }
+
+    override fun onAttach(context: Context) {
+        ViewModelProvider(this).get<FeedComponentViewModel>().component.inject(fragment = this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(
