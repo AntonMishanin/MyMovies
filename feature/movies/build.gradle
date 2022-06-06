@@ -1,0 +1,68 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+}
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
+
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode 1
+        versionName "1.0"
+        buildConfigField "String", "BASE_IMAGE_PATH", '"https://image.tmdb.org/t/p/w500"'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation project(':core')
+    implementation project(':common:favorite')
+
+    implementation libraries.coreKtx
+    implementation libraries.appcompat
+    implementation libraries.constraintLayout
+    implementation libraries.material
+
+    implementation libraries.groupie
+    implementation libraries.groupieViewbinding
+
+    implementation libraries.fragmentKtx
+
+    debugImplementation libraries.leakCanary
+
+    implementation libraries.timber
+
+    implementation libraries.dagger
+    kapt libraries.daggerCompiler
+
+    implementation libraries.retrofit
+
+    implementation libraries.gson
+
+    implementation libraries.rxJava
+
+    implementation libraries.room
+    kapt libraries.roomCompiler
+
+    implementation libraries.roomRxJava2
+}
