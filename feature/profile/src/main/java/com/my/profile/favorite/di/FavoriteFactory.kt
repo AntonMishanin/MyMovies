@@ -1,8 +1,8 @@
 package com.my.profile.favorite.di
 
 import android.content.Context
-import com.my.domain.usecase.FetchAllFavoriteUseCase
-import com.my.movie.favorite.di.FavoriteFactory as FavoriteDataFactory
+import com.my.favorite.domain.usecase.FetchAllFavoriteUseCase
+import com.my.favorite.data.di.FavoriteFactory as FavoriteDataFactory
 
 class FavoriteFactory {
     fun provideViewModelFactory(context: Context): FavoriteViewModelFactory {
