@@ -41,13 +41,10 @@ android {
 
 dependencies {
     implementation project(':feature:profile')
+    implementation project(':feature:movies')
     implementation project(':feature:search')
-    implementation project(':feature:feed')
     implementation project(':feature:tv-shows')
-    implementation project(':feature:movie-details')
-    implementation project(':shared:data:movies')
-    implementation project(':shared:domain')
-    implementation project(':shared:components')
+    implementation project(':core')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 

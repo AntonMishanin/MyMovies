@@ -44,8 +44,8 @@ ext.versions = [
         roomCompiler             : '2.3.0',
         roomRxJava2              : '2.3.0',
 
-        dagger                   : '2.38.1',
-        daggerCompiler           : '2.38.1'
+        dagger                   : '2.42',
+        daggerCompiler           : '2.42'
 ]
 
 ext.libraries = [
