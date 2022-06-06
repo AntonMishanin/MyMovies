@@ -1,5 +1,6 @@
 package com.my.movies.data
 
+import com.my.movies.BuildConfig
 import com.my.movies.data.dto.MovieDetailsResponse
 import com.my.movies.data.storage.MovieDao
 import com.my.movies.data.storage.dto.NowPlayingEntity
@@ -58,7 +59,7 @@ internal class MovieRepositoryImpl(
 
 internal fun MovieDetailsResponse.toViewObject() = MovieDetails(
     id = this.id ?: throw NullPointerException("id must not be null"),
-    posterPath = this.posterPath ?: "",
+    posterPath = BuildConfig.BASE_IMAGE_PATH + this.posterPath,
     title = this.title ?: "",
     overview = this.overview ?: "",
     rating = this.voteAverage ?: 5f,
