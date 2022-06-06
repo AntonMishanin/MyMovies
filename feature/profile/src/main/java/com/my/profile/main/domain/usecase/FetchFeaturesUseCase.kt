@@ -1,12 +1,11 @@
 package com.my.profile.main.domain.usecase
 
-import com.my.domain.entity.Movie
-import com.my.domain.repository.FavoriteRepository
+import com.my.core.extensions.applySchedulers
+import com.my.favorite.domain.repository.FavoriteRepository
 import com.my.profile.main.domain.entity.ContentViewType
 import com.my.profile.main.domain.entity.ProfileFeature
 import com.my.profile.main.domain.entity.TitleViewType
 import com.my.profile.main.domain.repository.ProfileRepository
-import com.my.resources.extensions.applySchedulers
 import io.reactivex.Flowable
 
 /**
@@ -46,5 +45,5 @@ class FetchFeaturesUseCase(
         }
     }
 
-    private fun getMockWatchlist() = Flowable.just(listOf<Movie>())
+    private fun getMockWatchlist() = Flowable.just(listOf<String>())
 }

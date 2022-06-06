@@ -1,10 +1,10 @@
 package com.my.tv_shows.presentation
 
 import android.view.View
-import com.my.domain.entity.TvShowsEntity
-import com.my.resources.extensions.load
+import com.my.core.extensions.load
 import com.my.tv_shows.R
 import com.my.tv_shows.databinding.ItemTvShowsBinding
+import com.my.tv_shows.domain.TvShowsEntity
 import com.xwray.groupie.viewbinding.BindableItem
 
 class TvShowsItem(

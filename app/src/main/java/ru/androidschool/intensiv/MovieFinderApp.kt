@@ -3,7 +3,7 @@
 package ru.androidschool.intensiv
 
 import android.app.Application
-import com.my.feed.di.FeedDepsStore
+import com.my.movies.feed.di.FeedDepsStore
 import ru.androidschool.intensiv.di.AppComponent
 import ru.androidschool.intensiv.di.DaggerAppComponent
 import timber.log.Timber

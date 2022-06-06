@@ -1,10 +1,10 @@
 package com.my.profile.main.data.converter
 
+import com.my.core.converter.ConverterDtoToVo
 import com.my.profile.main.data.dto.FeatureTypeDto
 import com.my.profile.main.domain.entity.ContentViewType
 import com.my.profile.main.domain.entity.ProfileFeature
 import com.my.profile.main.domain.entity.TitleViewType
-import com.my.resources.converter.ConverterDtoToVo
 
 object Converter : ConverterDtoToVo<FeatureTypeDto, ProfileFeature> {
     const val FAVORITE_TYPE = "FAVORITE_TYPE"

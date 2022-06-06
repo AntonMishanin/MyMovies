@@ -1,8 +1,8 @@
 package com.my.tv_shows.presentation
 
-import com.my.domain.entity.TvShowsEntity
-import com.my.domain.usecase.FetchPopularTvShowsUseCase
-import com.my.resources.mvp.RxPresenter
+import com.my.core.mvp.RxPresenter
+import com.my.tv_shows.domain.FetchPopularTvShowsUseCase
+import com.my.tv_shows.domain.TvShowsEntity
 import timber.log.Timber
 
 class TvShowsPresenter(

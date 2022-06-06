@@ -2,7 +2,7 @@ package com.my.profile.favorite.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.my.domain.usecase.FetchAllFavoriteUseCase
+import com.my.favorite.domain.usecase.FetchAllFavoriteUseCase
 import com.my.profile.favorite.FavoriteViewModel
 
 class FavoriteViewModelFactory(

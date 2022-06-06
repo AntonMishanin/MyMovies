@@ -1,14 +1,14 @@
 package com.my.profile.favorite
 
 import android.view.View
-import com.my.domain.entity.MovieDetails
+import com.my.core.extensions.load
+import com.my.favorite.domain.usecase.FavoriteEntity
 import com.my.profile.R
 import com.my.profile.databinding.ItemSmallBinding
-import com.my.resources.extensions.load
 import com.xwray.groupie.viewbinding.BindableItem
 
 class FavoriteItem(
-    private val content: MovieDetails
+    private val content: FavoriteEntity
 ) : BindableItem<ItemSmallBinding>() {
 
     override fun getLayout(): Int = R.layout.item_small

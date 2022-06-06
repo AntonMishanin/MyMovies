@@ -7,9 +7,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navOptions
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.my.feed.navigator.FeedNavigator
-import com.my.resources.KEY_ID
-import com.my.resources.KEY_SEARCH
+import com.my.core.KEY_ID
+import com.my.core.KEY_SEARCH
+import com.my.movies.feed.navigator.FeedNavigator
 
 class SingleActivity : AppCompatActivity(R.layout.activity_single), FeedNavigator {
 

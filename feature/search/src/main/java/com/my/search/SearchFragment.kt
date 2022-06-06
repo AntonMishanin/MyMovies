@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.my.resources.KEY_SEARCH
+import com.my.core.KEY_SEARCH
 import com.my.search.databinding.FragmentSearchBinding
 import ru.androidschool.intensiv.ui.afterTextChanged
 

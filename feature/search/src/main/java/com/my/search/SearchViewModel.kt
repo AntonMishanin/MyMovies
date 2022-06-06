@@ -1,7 +1,7 @@
 package com.my.search
 
 import android.text.Editable
-import com.my.resources.mvvm.RxViewModel
+import com.my.core.mvvm.RxViewModel
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
