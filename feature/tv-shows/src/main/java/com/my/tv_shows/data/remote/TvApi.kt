@@ -1,6 +1,6 @@
-package com.my.tv.remote
+package com.my.tv_shows.data.remote
 
-import com.my.tv.remote.dto.TvShowsResponse
+import com.my.tv_shows.data.remote.dto.TvShowsResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 

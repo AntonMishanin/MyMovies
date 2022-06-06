@@ -1,4 +1,4 @@
-package com.my.tv.remote.dto
+package com.my.tv_shows.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 

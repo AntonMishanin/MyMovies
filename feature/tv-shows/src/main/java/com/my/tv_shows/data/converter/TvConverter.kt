@@ -1,7 +1,7 @@
-package com.my.tv.converter
+package com.my.tv_shows.data.converter
 
-import com.my.domain.entity.TvShowsEntity
-import com.my.tv.remote.dto.TvShowDto
+import com.my.tv_shows.data.remote.dto.TvShowDto
+import com.my.tv_shows.domain.TvShowsEntity
 
 internal object TvConverter {
     fun toValueObject(dto: TvShowDto): TvShowsEntity = TvShowsEntity(

@@ -1,4 +1,4 @@
-package com.my.domain.entity
+package com.my.tv_shows.domain
 
 data class TvShowsEntity(
     val id: Int,

@@ -1,6 +1,5 @@
-package com.my.domain.repository
+package com.my.tv_shows.domain
 
-import com.my.domain.entity.TvShowsEntity
 import io.reactivex.Single
 
 interface TvRepository {

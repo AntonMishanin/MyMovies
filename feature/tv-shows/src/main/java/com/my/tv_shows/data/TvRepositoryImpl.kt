@@ -1,9 +1,9 @@
-package com.my.tv
+package com.my.tv_shows.data
 
-import com.my.domain.entity.TvShowsEntity
-import com.my.domain.repository.TvRepository
-import com.my.tv.converter.TvConverter
-import com.my.tv.remote.TvRemoteDataSource
+import com.my.tv_shows.data.converter.TvConverter
+import com.my.tv_shows.data.remote.TvRemoteDataSource
+import com.my.tv_shows.domain.TvRepository
+import com.my.tv_shows.domain.TvShowsEntity
 import io.reactivex.Single
 
 internal class TvRepositoryImpl(

@@ -1,8 +1,6 @@
-package com.my.domain.usecase
+package com.my.tv_shows.domain
 
-import com.my.domain.entity.TvShowsEntity
-import com.my.domain.repository.TvRepository
-import com.my.resources.extensions.applySchedulers
+import com.my.core.extensions.applySchedulers
 import io.reactivex.Single
 
 class FetchPopularTvShowsUseCase(private val repository: TvRepository) {
