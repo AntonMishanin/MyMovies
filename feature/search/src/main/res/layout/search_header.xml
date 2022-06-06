@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.my.resources.view.SearchBar
+                    <com.my.core.view.SearchBar
                         android:id="@+id/search_toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/search_bar_height"
