@@ -1,7 +1,6 @@
 package com.my.movies.data.dto
 
 import com.google.gson.annotations.SerializedName
-import com.my.movies.BuildConfig
 import com.my.movies.data.storage.dto.NowPlayingEntity
 import com.my.movies.domain.Movie
 
@@ -33,7 +32,7 @@ internal data class MovieDto(
         id = id ?: throw NullPointerException("id must not be null"),
         title = title ?: "",
         voteAverage = voteAverage?.toDouble() ?: 5.0,
-        posterPath = BuildConfig.BASE_IMAGE_PATH + posterPath
+        posterPath = "https://image.tmdb.org/t/p/w500" + posterPath // TODO: use BuildConfigWrapper
     )
 
     fun toDbo() = NowPlayingEntity(
