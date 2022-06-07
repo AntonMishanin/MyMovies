@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.my.core.di.AppScope
 import com.my.core.di.BuildConfigWrapper
+import com.my.core.di.SchedulersWrapper
 import com.my.favorite.data.di.FavoriteFactory
 import com.my.favorite.domain.repository.FavoriteRepository
 import com.my.favorite.domain.usecase.DeleteFromFavoriteByIdUseCase
@@ -68,4 +69,7 @@ internal class AppModule {
 
         override fun isDebug() = BuildConfig.DEBUG
     }
+
+    @[Provides AppScope]
+    internal fun provideSchedulersWrapper(): SchedulersWrapper = SchedulersWrapper.Impl()
 }
