@@ -45,6 +45,7 @@ dependencies {
     implementation project(':feature:search')
     implementation project(':feature:tv-shows')
     implementation project(':core')
+    implementation project(':common:favorite')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 

@@ -8,7 +8,7 @@ import com.my.favorite.domain.usecase.SaveMovieToFavoriteUseCase
 
 interface MovieDetailsDependencies : FeatureDependencies {
 
-    fun context(): Context
+    fun provideContext(): Context
 
     fun provideIsFavoriteByIdUseCase(): IsFavoriteByIdUseCase
 

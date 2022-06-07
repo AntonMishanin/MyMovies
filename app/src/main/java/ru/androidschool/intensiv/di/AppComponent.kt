@@ -1,19 +1,18 @@
 package ru.androidschool.intensiv.di
 
 import android.app.Application
-import com.my.domain.usecase.FetchCompositeMovieUseCase
-import com.my.feed.di.FeedDeps
-import com.my.movie.di.MoviesFactory
+import com.my.core.di.AppScope
+import com.my.movies.detail.di.MovieDetailsDependencies
+import com.my.movies.feed.di.FeedDependencies
 import dagger.BindsInstance
 import dagger.Component
-import dagger.Module
-import dagger.Provides
-import javax.inject.Scope
 
 @[AppScope Component(modules = [AppModule::class])]
-interface AppComponent : FeedDeps {
+internal interface AppComponent {
 
-    override val fetchCompositeMovieUseCase: FetchCompositeMovieUseCase
+    fun provideFeedDependencies(): FeedDependencies
+
+    fun provideMovieDetailsDependencies(): MovieDetailsDependencies
 
     @Component.Builder
     interface Builder {
@@ -24,16 +23,3 @@ interface AppComponent : FeedDeps {
         fun build(): AppComponent
     }
 }
-
-@Module
-class AppModule {
-
-    @[Provides AppScope]
-    fun provideFetchCompositeMovieUseCase(application: Application): FetchCompositeMovieUseCase {
-        val movieRepository = MoviesFactory().provideMovieRepository(application.applicationContext)
-        return FetchCompositeMovieUseCase(movieRepository)
-    }
-}
-
-@Scope
-annotation class AppScope
