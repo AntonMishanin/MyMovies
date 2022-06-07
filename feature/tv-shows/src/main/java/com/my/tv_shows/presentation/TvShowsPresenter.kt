@@ -1,21 +1,18 @@
 package com.my.tv_shows.presentation
 
 import com.my.core.mvp.RxPresenter
-import com.my.tv_shows.domain.FetchPopularTvShowsUseCase
 import com.my.tv_shows.domain.TvShowsEntity
 import timber.log.Timber
 
-class TvShowsPresenter(
-    private val fetchPopularTvShowsUseCase: FetchPopularTvShowsUseCase
-) : RxPresenter<TvShowsView>() {
+class TvShowsPresenter : RxPresenter<TvShowsView>() {
 
     override fun onViewReady() {
-        fetchPopularTvShowsUseCase()
-            .subscribe({
-                view?.setTvShowsList(it)
-            }, {
-                Timber.e(it)
-            }).addToComposite()
+        // fetchPopularTvShowsUseCase()
+        //     .subscribe({
+        //         view?.setTvShowsList(it)
+        //     }, {
+        //         Timber.e(it)
+        //     }).addToComposite()
     }
 
     fun onItemTvShowClicked(tvShowsEntity: TvShowsEntity) {
