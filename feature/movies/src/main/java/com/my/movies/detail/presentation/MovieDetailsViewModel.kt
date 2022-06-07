@@ -6,11 +6,10 @@ import com.my.favorite.domain.usecase.DeleteFromFavoriteByIdUseCase
 import com.my.favorite.domain.usecase.FavoriteEntity
 import com.my.favorite.domain.usecase.IsFavoriteByIdUseCase
 import com.my.favorite.domain.usecase.SaveMovieToFavoriteUseCase
+import com.my.movies.BaseViewModel
 import com.my.movies.detail.entity.MovieEntity
 import com.my.movies.domain.FetchMovieByIdUseCase
 import com.my.movies.domain.MovieDetails
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import timber.log.Timber
 
 internal class MovieDetailsViewModel(
@@ -19,8 +18,7 @@ internal class MovieDetailsViewModel(
     private val saveMovieToFavoriteUseCase: SaveMovieToFavoriteUseCase,
     private val deleteFromFavoriteByIdUseCase: DeleteFromFavoriteByIdUseCase,
     fetchMovieByIdUseCase: FetchMovieByIdUseCase
-) {
-    private val compositeDisposable = CompositeDisposable()
+) : BaseViewModel() {
 
     private val _movie = MutableLiveData<MovieDetails>()
     val movie: LiveData<MovieDetails> = _movie
@@ -83,10 +81,4 @@ internal class MovieDetailsViewModel(
         genre = this.genre,
         year = this.year
     )
-
-    protected fun finalize() {
-        compositeDisposable.dispose()
-    }
-
-    private fun Disposable.addToComposite() = compositeDisposable.add(this)
 }

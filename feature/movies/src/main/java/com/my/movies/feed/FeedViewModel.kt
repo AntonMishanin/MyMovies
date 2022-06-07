@@ -3,7 +3,7 @@ package com.my.movies.feed
 import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.my.core.mvvm.RxViewModel
+import com.my.movies.BaseViewModel
 import com.my.movies.domain.CompositeMovieEntity
 import com.my.movies.domain.FetchCompositeMovieUseCase
 import com.my.movies.domain.Movie
@@ -13,7 +13,7 @@ private const val MIN_SEARCH_LENGTH = 3
 
 class FeedViewModel(
     fetchCompositeMovieUseCase: FetchCompositeMovieUseCase
-) : RxViewModel() {
+) : BaseViewModel() {
 
     private val _content: MutableLiveData<CompositeMovieEntity> = MutableLiveData()
     val content: LiveData<CompositeMovieEntity> = _content
