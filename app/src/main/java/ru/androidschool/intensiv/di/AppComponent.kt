@@ -5,11 +5,14 @@ import com.my.core.data.RetrofitModule
 import com.my.core.di.AppScope
 import com.my.movies.detail.di.MovieDetailsDependencies
 import com.my.movies.feed.di.FeedDependencies
+import com.my.search.di.SearchDependencies
 import dagger.BindsInstance
 import dagger.Component
 
 @[AppScope Component(modules = [AppModule::class, RetrofitModule::class])]
 internal interface AppComponent {
+
+    fun provideSearchDependencies(): SearchDependencies
 
     fun provideFeedDependencies(): FeedDependencies
 
