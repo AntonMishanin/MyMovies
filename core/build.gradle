@@ -54,4 +54,7 @@ dependencies {
     implementation libraries.gson
 
     implementation libraries.loggingInterceptor
+
+    implementation libraries.groupie
+    implementation libraries.groupieViewbinding
 }

@@ -1,20 +1,15 @@
 package com.my.tv_shows.presentation
 
-import android.view.View
 import com.my.core.extensions.load
+import com.my.core.presentation.BaseItem
 import com.my.tv_shows.R
 import com.my.tv_shows.databinding.ItemTvShowsBinding
 import com.my.tv_shows.domain.TvShowsEntity
-import com.xwray.groupie.viewbinding.BindableItem
 
 class TvShowsItem(
     private val content: TvShowsEntity,
     private val onItemClicked: (TvShowsEntity) -> Unit
-) : BindableItem<ItemTvShowsBinding>() {
-
-    override fun getLayout(): Int = R.layout.item_tv_shows
-
-    override fun initializeViewBinding(view: View) = ItemTvShowsBinding.bind(view)
+) : BaseItem<ItemTvShowsBinding>(R.layout.item_tv_shows, ItemTvShowsBinding::bind) {
 
     override fun bind(viewBinding: ItemTvShowsBinding, position: Int) {
         viewBinding.title.text = content.title
