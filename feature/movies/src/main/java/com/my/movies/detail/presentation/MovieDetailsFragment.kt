@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.my.core.di.DependenciesProvider
 import com.my.core.extensions.load
 import com.my.movies.databinding.FragmentMovieDetailsBinding
-import com.my.movies.detail.di.MovieDetailsFactory
+import com.my.movies.detail.di.MovieDetailsDependencies
+import com.my.movies.detail.di.MovieDetailsDiContainer
 import com.my.movies.detail.utils.setCheckedListener
 import com.my.movies.domain.MovieDetails
 import com.xwray.groupie.GroupAdapter
@@ -22,9 +24,11 @@ class MovieDetailsFragment : Fragment() {
 
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
-    private val viewModel: MovieDetailsViewModel by viewModels {
-        MovieDetailsFactory()
-            .provideViewModelFactory(arguments, requireActivity().applicationContext)
+    private val viewModel by lazy {
+        viewModels<MovieDetailsDiContainer>().value.getComponent(
+            (requireActivity().application as DependenciesProvider).provide(MovieDetailsDependencies::class),
+            arguments
+        ).provideViewModel()
     }
 
     override fun onCreateView(

@@ -3,12 +3,16 @@
 package ru.androidschool.intensiv
 
 import android.app.Application
-import com.my.movies.feed.di.FeedDepsStore
+import com.my.core.di.DependenciesProvider
+import com.my.core.di.FeatureDependencies
+import com.my.movies.detail.di.MovieDetailsDependencies
+import com.my.movies.feed.di.FeedDependencies
 import ru.androidschool.intensiv.di.AppComponent
 import ru.androidschool.intensiv.di.DaggerAppComponent
 import timber.log.Timber
+import kotlin.reflect.KClass
 
-class MovieFinderApp : Application() {
+class MovieFinderApp : Application(), DependenciesProvider {
 
     private val appComponent: AppComponent by lazy {
         DaggerAppComponent
@@ -19,7 +23,6 @@ class MovieFinderApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        FeedDepsStore.deps = appComponent
         initDebugTools()
     }
 
@@ -31,5 +34,13 @@ class MovieFinderApp : Application() {
 
     private fun initTimber() {
         Timber.plant(Timber.DebugTree())
+    }
+
+    override fun <T : FeatureDependencies> provide(kClass: KClass<T>): T {
+        return when (kClass) {
+            MovieDetailsDependencies::class -> appComponent.provideMovieDetailsDependencies()
+            FeedDependencies::class -> appComponent.provideFeedDependencies()
+            else -> throw IllegalArgumentException("Unknown dependencies kClass")
+        } as T
     }
 }

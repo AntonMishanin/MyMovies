@@ -1,42 +1,22 @@
 package com.my.movies.feed.di
 
-import androidx.annotation.RestrictTo
-import androidx.lifecycle.ViewModel
-import com.my.movies.domain.FetchCompositeMovieUseCase
-import com.my.movies.feed.FeedFragment
+import com.my.movies.data.di.MoviesDataModule
+import com.my.movies.feed.FeedViewModel
 import dagger.Component
-import kotlin.properties.Delegates.notNull
 
-@Component(dependencies = [FeedDeps::class])
+@Component(
+    modules = [FeedModule::class, MoviesDataModule::class],
+    dependencies = [FeedDependencies::class]
+)
 interface FeedComponent {
 
-    fun inject(fragment: FeedFragment)
+    fun provideViewModel(): FeedViewModel
 
     @Component.Builder
     interface Builder {
 
-        fun deps(feedDeps: FeedDeps): Builder
+        fun dependencies(dependencies: FeedDependencies): Builder
 
         fun build(): FeedComponent
     }
-}
-
-interface FeedDeps {
-    val fetchCompositeMovieUseCase: FetchCompositeMovieUseCase
-}
-
-interface FeedDepsProvider {
-
-    @get: RestrictTo(RestrictTo.Scope.LIBRARY)
-    val deps: FeedDeps
-
-    companion object : FeedDepsProvider by FeedDepsStore
-}
-
-object FeedDepsStore : FeedDepsProvider {
-    override var deps: FeedDeps by notNull()
-}
-
-internal class FeedComponentViewModel : ViewModel() {
-    val component = DaggerFeedComponent.builder().deps(FeedDepsProvider.deps).build()
 }
