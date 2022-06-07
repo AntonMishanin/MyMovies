@@ -10,12 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.my.core.di.DependenciesProvider
 import com.my.profile.R
 import com.my.profile.databinding.FragmentProfileBinding
+import com.my.profile.di.ProfileDependencies
+import com.my.profile.di.ProfileDiContainer
 import com.my.profile.main.domain.entity.ContentViewType
 import com.my.profile.main.domain.entity.ProfileFeature
 import com.my.profile.main.domain.entity.TitleViewType
-import com.my.profile.main.presentation.di.ProfileFactory
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
@@ -29,8 +31,10 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ProfileViewModel by viewModels {
-        ProfileFactory().provideViewModelFactory(requireActivity().applicationContext)
+    private val viewModel by lazy {
+        viewModels<ProfileDiContainer>().value.getComponent(
+            (requireActivity().application as DependenciesProvider).provide(ProfileDependencies::class)
+        ).provideProfileViewModel()
     }
 
     private var profilePageChangeCallback = object : ViewPager2.OnPageChangeCallback() {

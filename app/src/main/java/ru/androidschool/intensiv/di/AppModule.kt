@@ -8,10 +8,12 @@ import com.my.core.di.SchedulersWrapper
 import com.my.favorite.data.di.FavoriteFactory
 import com.my.favorite.domain.repository.FavoriteRepository
 import com.my.favorite.domain.usecase.DeleteFromFavoriteByIdUseCase
+import com.my.favorite.domain.usecase.FetchAllFavoriteUseCase
 import com.my.favorite.domain.usecase.IsFavoriteByIdUseCase
 import com.my.favorite.domain.usecase.SaveMovieToFavoriteUseCase
 import com.my.movies.detail.di.MovieDetailsDependencies
 import com.my.movies.feed.di.FeedDependencies
+import com.my.profile.di.ProfileDependencies
 import com.my.search.di.SearchDependencies
 import com.my.tv_shows.presentation.di.TvShowsDependencies
 import dagger.Module
@@ -21,6 +23,17 @@ import ru.androidschool.intensiv.BuildConfig
 
 @Module
 internal class AppModule {
+
+    @[Provides AppScope]
+    fun provideProfileDependencies(
+        favoriteRepository: FavoriteRepository
+    ) = object : ProfileDependencies {
+
+        override fun provideFavoriteRepository() = favoriteRepository
+
+        override fun provideFetchAllFavoriteUseCase() =
+            FetchAllFavoriteUseCase(favoriteRepository)
+    }
 
     @[Provides AppScope]
     fun provideTvShowsDependencies(retrofit: Retrofit) = object : TvShowsDependencies {
