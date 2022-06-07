@@ -3,7 +3,7 @@ package com.my.movies.feed
 import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.my.movies.BaseViewModel
+import com.my.core.presentation.BaseViewModel
 import com.my.movies.domain.CompositeMovieEntity
 import com.my.movies.domain.FetchCompositeMovieUseCase
 import com.my.movies.domain.Movie

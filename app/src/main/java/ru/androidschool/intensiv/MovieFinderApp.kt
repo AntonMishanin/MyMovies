@@ -7,6 +7,7 @@ import com.my.core.di.DependenciesProvider
 import com.my.core.di.FeatureDependencies
 import com.my.movies.detail.di.MovieDetailsDependencies
 import com.my.movies.feed.di.FeedDependencies
+import com.my.search.di.SearchDependencies
 import ru.androidschool.intensiv.di.AppComponent
 import ru.androidschool.intensiv.di.DaggerAppComponent
 import timber.log.Timber
@@ -40,6 +41,7 @@ class MovieFinderApp : Application(), DependenciesProvider {
         return when (kClass) {
             MovieDetailsDependencies::class -> appComponent.provideMovieDetailsDependencies()
             FeedDependencies::class -> appComponent.provideFeedDependencies()
+            SearchDependencies::class -> appComponent.provideSearchDependencies()
             else -> throw IllegalArgumentException("Unknown dependencies kClass")
         } as T
     }

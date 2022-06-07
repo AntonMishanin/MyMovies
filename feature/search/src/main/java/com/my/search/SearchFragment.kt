@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.my.core.KEY_SEARCH
+import com.my.core.di.DependenciesProvider
 import com.my.search.databinding.FragmentSearchBinding
+import com.my.search.di.SearchDependencies
+import com.my.search.di.SearchDiContainer
 import ru.androidschool.intensiv.ui.afterTextChanged
 
 class SearchFragment : Fragment() {
@@ -15,7 +18,11 @@ class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: SearchViewModel by viewModels()
+    private val viewModel: SearchViewModel by lazy {
+        viewModels<SearchDiContainer>().value.component(
+            (requireActivity().application as DependenciesProvider).provide(SearchDependencies::class)
+        ).provideSearchViewModel()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

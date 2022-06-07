@@ -12,6 +12,7 @@ import com.my.favorite.domain.usecase.IsFavoriteByIdUseCase
 import com.my.favorite.domain.usecase.SaveMovieToFavoriteUseCase
 import com.my.movies.detail.di.MovieDetailsDependencies
 import com.my.movies.feed.di.FeedDependencies
+import com.my.search.di.SearchDependencies
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -19,6 +20,9 @@ import ru.androidschool.intensiv.BuildConfig
 
 @Module
 internal class AppModule {
+
+    @[Provides AppScope]
+    internal fun provideSearchDependencies() = object : SearchDependencies {}
 
     @[Provides AppScope]
     internal fun provideFeedDependencies(
