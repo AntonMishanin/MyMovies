@@ -13,6 +13,7 @@ import com.my.favorite.domain.usecase.SaveMovieToFavoriteUseCase
 import com.my.movies.detail.di.MovieDetailsDependencies
 import com.my.movies.feed.di.FeedDependencies
 import com.my.search.di.SearchDependencies
+import com.my.tv_shows.presentation.di.TvShowsDependencies
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -20,6 +21,12 @@ import ru.androidschool.intensiv.BuildConfig
 
 @Module
 internal class AppModule {
+
+    @[Provides AppScope]
+    fun provideTvShowsDependencies(retrofit: Retrofit) = object : TvShowsDependencies {
+
+        override fun provideRetrofit() = retrofit
+    }
 
     @[Provides AppScope]
     internal fun provideSearchDependencies() = object : SearchDependencies {}
