@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.my.core.di.DependenciesProvider
 import com.my.tv_shows.databinding.FragmentTvShowsBinding
-import com.my.tv_shows.di.TvShowsFactory
 import com.my.tv_shows.domain.TvShowsEntity
+import com.my.tv_shows.presentation.di.TvShowsDependencies
+import com.my.tv_shows.presentation.di.TvShowsDiContainer
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
@@ -17,7 +20,12 @@ class TvShowsFragment : Fragment(), TvShowsView {
     private val binding get() = _binding!!
 
     private val adapter = GroupAdapter<GroupieViewHolder>()
-    private val presenter by lazy { TvShowsFactory().providePresenter() }
+
+    private val presenter by lazy {
+        viewModels<TvShowsDiContainer>().value.component(
+            (requireActivity().application as DependenciesProvider).provide(TvShowsDependencies::class)
+        ).providePresenter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +54,6 @@ class TvShowsFragment : Fragment(), TvShowsView {
 
     override fun setTvShowsList(content: List<TvShowsEntity>) {
         val list = content.map { TvShowsItem(it, presenter::onItemTvShowClicked) }
-        adapter.apply { addAll(list) }
+        adapter.addAll(list)
     }
 }
