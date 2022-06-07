@@ -1,7 +1,6 @@
 package com.my.movies.data.di
 
 import android.content.Context
-import com.my.core.data.RemoteFactory
 import com.my.movies.data.MovieRepositoryImpl
 import com.my.movies.data.MoviesApi
 import com.my.movies.data.MoviesDataSource
@@ -14,9 +13,6 @@ import retrofit2.Retrofit
 
 @Module
 internal class MoviesDataModule {
-
-    @Provides
-    internal fun provideRetrofit() = RemoteFactory().provideRetrofit()
 
     @Provides
     internal fun provideMoviesApi(retrofit: Retrofit) = retrofit.create(MoviesApi::class.java)

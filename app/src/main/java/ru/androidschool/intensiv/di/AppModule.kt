@@ -13,20 +13,28 @@ import com.my.movies.detail.di.MovieDetailsDependencies
 import com.my.movies.feed.di.FeedDependencies
 import dagger.Module
 import dagger.Provides
+import retrofit2.Retrofit
+import ru.androidschool.intensiv.BuildConfig
 
 @Module
 internal class AppModule {
 
     @[Provides AppScope]
-    internal fun provideFeedDependencies(context: Context) = object : FeedDependencies {
+    internal fun provideFeedDependencies(
+        context: Context,
+        retrofit: Retrofit
+    ) = object : FeedDependencies {
 
         override fun provideContext() = context
+
+        override fun provideRetrofit() = retrofit
     }
 
     @[Provides AppScope]
     internal fun provideMovieDetailsDependencies(
         context: Context,
-        favoriteRepository: FavoriteRepository
+        favoriteRepository: FavoriteRepository,
+        retrofit: Retrofit
     ) = object : MovieDetailsDependencies {
 
         override fun provideContext() = context
@@ -38,6 +46,8 @@ internal class AppModule {
 
         override fun provideSaveMovieToFavoriteUseCase() =
             SaveMovieToFavoriteUseCase(favoriteRepository)
+
+        override fun provideRetrofit() = retrofit
     }
 
     @[Provides AppScope]
