@@ -7,6 +7,7 @@ import com.my.core.di.DependenciesProvider
 import com.my.core.di.FeatureDependencies
 import com.my.movies.detail.di.MovieDetailsDependencies
 import com.my.movies.feed.di.FeedDependencies
+import com.my.profile.di.ProfileDependencies
 import com.my.search.di.SearchDependencies
 import com.my.tv_shows.presentation.di.TvShowsDependencies
 import ru.androidschool.intensiv.di.AppComponent
@@ -44,6 +45,7 @@ class MovieFinderApp : Application(), DependenciesProvider {
             FeedDependencies::class -> appComponent.provideFeedDependencies()
             SearchDependencies::class -> appComponent.provideSearchDependencies()
             TvShowsDependencies::class -> appComponent.provideTvShowsDependencies()
+            ProfileDependencies::class -> appComponent.provideProfileDependencies()
             else -> throw IllegalArgumentException("Unknown dependencies kClass")
         } as T
     }

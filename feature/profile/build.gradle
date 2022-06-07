@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -52,4 +53,7 @@ dependencies {
     implementation libraries.fragmentKtx
 
     implementation libraries.rxJava
+
+    implementation libraries.dagger
+    kapt libraries.daggerCompiler
 }
