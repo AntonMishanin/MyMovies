@@ -3,6 +3,7 @@ package ru.androidschool.intensiv.di
 import android.app.Application
 import android.content.Context
 import com.my.core.di.AppScope
+import com.my.core.di.BuildConfigWrapper
 import com.my.favorite.data.di.FavoriteFactory
 import com.my.favorite.domain.repository.FavoriteRepository
 import com.my.favorite.domain.usecase.DeleteFromFavoriteByIdUseCase
@@ -45,4 +46,16 @@ internal class AppModule {
 
     @[Provides AppScope]
     internal fun provideContext(application: Application) = application.applicationContext
+
+    @[Provides AppScope]
+    internal fun provideBuildConfigWrapper() = object : BuildConfigWrapper {
+
+        override fun movieBaseUrl() = BuildConfig.MOVIE_BASE_URL
+
+        override fun movieApiKey() = BuildConfig.MOVIE_API_KEY
+
+        override fun imageBaseUrl() = BuildConfig.BASE_IMAGE_PATH
+
+        override fun isDebug() = BuildConfig.DEBUG
+    }
 }
