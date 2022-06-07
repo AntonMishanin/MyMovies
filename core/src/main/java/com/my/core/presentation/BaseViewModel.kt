@@ -1,4 +1,4 @@
-package com.my.movies
+package com.my.core.presentation
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable

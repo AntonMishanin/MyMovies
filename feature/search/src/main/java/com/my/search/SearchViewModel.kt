@@ -1,7 +1,7 @@
 package com.my.search
 
 import android.text.Editable
-import com.my.core.mvvm.RxViewModel
+import com.my.core.presentation.BaseViewModel
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 private const val DEBOUNCE_TIMEOUT = 500L
 
-class SearchViewModel : RxViewModel() {
+internal class SearchViewModel : BaseViewModel() {
 
     private val searchSubject = PublishSubject.create<String>()
     private val mockContent = listOf(

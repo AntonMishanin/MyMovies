@@ -2,11 +2,11 @@ package com.my.movies.detail.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.my.core.presentation.BaseViewModel
 import com.my.favorite.domain.usecase.DeleteFromFavoriteByIdUseCase
 import com.my.favorite.domain.usecase.FavoriteEntity
 import com.my.favorite.domain.usecase.IsFavoriteByIdUseCase
 import com.my.favorite.domain.usecase.SaveMovieToFavoriteUseCase
-import com.my.movies.BaseViewModel
 import com.my.movies.detail.entity.MovieEntity
 import com.my.movies.domain.FetchMovieByIdUseCase
 import com.my.movies.domain.MovieDetails
