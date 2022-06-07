@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.my.core.di.DependenciesProvider
 import com.my.profile.databinding.FragmentWatchlistBinding
+import com.my.profile.di.ProfileDependencies
+import com.my.profile.di.ProfileDiContainer
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
@@ -18,7 +21,11 @@ class WatchlistFragment : Fragment() {
     private var _binding: FragmentWatchlistBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: WatchlistViewModel by viewModels()
+    private val viewModel by lazy {
+        viewModels<ProfileDiContainer>().value.getComponent(
+            (requireActivity().application as DependenciesProvider).provide(ProfileDependencies::class)
+        ).provideWatchlistViewModel()
+    }
 
     private val adapter by lazy {
         GroupAdapter<GroupieViewHolder>()

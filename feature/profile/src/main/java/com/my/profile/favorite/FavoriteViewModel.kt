@@ -2,14 +2,14 @@ package com.my.profile.favorite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.my.core.mvvm.RxViewModel
+import com.my.core.presentation.BaseViewModel
 import com.my.favorite.domain.usecase.FavoriteEntity
 import com.my.favorite.domain.usecase.FetchAllFavoriteUseCase
 import timber.log.Timber
 
 class FavoriteViewModel(
     fetchAllFavoriteUseCase: FetchAllFavoriteUseCase
-) : RxViewModel() {
+) : BaseViewModel() {
 
     private val _content: MutableLiveData<List<FavoriteEntity>> = MutableLiveData()
     val content: LiveData<List<FavoriteEntity>> = _content

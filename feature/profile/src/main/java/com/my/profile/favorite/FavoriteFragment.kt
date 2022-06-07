@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.my.core.di.DependenciesProvider
 import com.my.profile.databinding.FragmentFavoriteBinding
-import com.my.profile.favorite.di.FavoriteFactory
+import com.my.profile.di.ProfileDependencies
+import com.my.profile.di.ProfileDiContainer
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
@@ -19,8 +21,10 @@ class FavoriteFragment : Fragment() {
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: FavoriteViewModel by viewModels {
-        FavoriteFactory().provideViewModelFactory(requireActivity().applicationContext)
+    private val viewModel by lazy {
+        viewModels<ProfileDiContainer>().value.getComponent(
+            (requireActivity().application as DependenciesProvider).provide(ProfileDependencies::class)
+        ).provideFavoriteViewModel()
     }
 
     private val adapter by lazy {
