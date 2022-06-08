@@ -5,7 +5,6 @@ import android.content.Context
 import com.my.core.di.AppScope
 import com.my.core.di.BuildConfigWrapper
 import com.my.core.di.SchedulersWrapper
-import com.my.favorite.data.di.FavoriteFactory
 import com.my.favorite.domain.repository.FavoriteRepository
 import com.my.favorite.domain.usecase.DeleteFromFavoriteByIdUseCase
 import com.my.favorite.domain.usecase.FetchAllFavoriteUseCase
@@ -26,13 +25,13 @@ internal class AppModule {
 
     @[Provides AppScope]
     fun provideProfileDependencies(
-        favoriteRepository: FavoriteRepository
+        favoriteRepository: FavoriteRepository,
+        fetchAllFavoriteUseCase: FetchAllFavoriteUseCase
     ) = object : ProfileDependencies {
 
         override fun provideFavoriteRepository() = favoriteRepository
 
-        override fun provideFetchAllFavoriteUseCase() =
-            FetchAllFavoriteUseCase(favoriteRepository)
+        override fun provideFetchAllFavoriteUseCase() = fetchAllFavoriteUseCase
     }
 
     @[Provides AppScope]
@@ -58,26 +57,22 @@ internal class AppModule {
     @[Provides AppScope]
     internal fun provideMovieDetailsDependencies(
         context: Context,
-        favoriteRepository: FavoriteRepository,
-        retrofit: Retrofit
+        retrofit: Retrofit,
+        deleteFromFavoriteByIdUseCase: DeleteFromFavoriteByIdUseCase,
+        saveMovieToFavoriteUseCase: SaveMovieToFavoriteUseCase,
+        isFavoriteByIdUseCase: IsFavoriteByIdUseCase
     ) = object : MovieDetailsDependencies {
 
         override fun provideContext() = context
 
-        override fun provideDeleteFromFavoriteByIdUseCase() =
-            DeleteFromFavoriteByIdUseCase(favoriteRepository)
+        override fun provideDeleteFromFavoriteByIdUseCase() = deleteFromFavoriteByIdUseCase
 
-        override fun provideIsFavoriteByIdUseCase() = IsFavoriteByIdUseCase(favoriteRepository)
+        override fun provideIsFavoriteByIdUseCase() = isFavoriteByIdUseCase
 
-        override fun provideSaveMovieToFavoriteUseCase() =
-            SaveMovieToFavoriteUseCase(favoriteRepository)
+        override fun provideSaveMovieToFavoriteUseCase() = saveMovieToFavoriteUseCase
 
         override fun provideRetrofit() = retrofit
     }
-
-    @[Provides AppScope]
-    internal fun provideFavoriteRepository(context: Context): FavoriteRepository =
-        FavoriteFactory().provideRepository(context)
 
     @[Provides AppScope]
     internal fun provideContext(application: Application) = application.applicationContext

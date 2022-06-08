@@ -42,4 +42,7 @@ dependencies {
     kapt libraries.roomCompiler
 
     implementation libraries.roomRxJava2
+
+    implementation libraries.dagger
+    kapt libraries.daggerCompiler
 }
