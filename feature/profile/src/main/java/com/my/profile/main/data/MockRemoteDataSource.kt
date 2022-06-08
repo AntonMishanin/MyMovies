@@ -1,8 +1,8 @@
 package com.my.profile.main.data
 
-import com.my.profile.main.data.converter.Converter.FAVORITE_TYPE
-import com.my.profile.main.data.converter.Converter.WATCHLIST_TYPE
-import com.my.profile.main.data.converter.Converter.WITH_QUANTITY
+import com.my.profile.main.data.converter.ProfileToDomainConverter.Companion.FAVORITE_TYPE
+import com.my.profile.main.data.converter.ProfileToDomainConverter.Companion.WATCHLIST_TYPE
+import com.my.profile.main.data.converter.ProfileToDomainConverter.Companion.WITH_QUANTITY
 import com.my.profile.main.data.dto.FeatureTypeDto
 import io.reactivex.Single
 

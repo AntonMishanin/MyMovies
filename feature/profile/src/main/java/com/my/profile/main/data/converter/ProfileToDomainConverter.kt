@@ -1,23 +1,18 @@
 package com.my.profile.main.data.converter
 
-import com.my.core.converter.ConverterDtoToVo
+import com.my.core.converter.IterableConverter
 import com.my.profile.main.data.dto.FeatureTypeDto
 import com.my.profile.main.domain.entity.ContentViewType
 import com.my.profile.main.domain.entity.ProfileFeature
 import com.my.profile.main.domain.entity.TitleViewType
 
-object Converter : ConverterDtoToVo<FeatureTypeDto, ProfileFeature> {
-    const val FAVORITE_TYPE = "FAVORITE_TYPE"
-    const val WATCHLIST_TYPE = "WATCHLIST_TYPE"
+class ProfileToDomainConverter : IterableConverter<FeatureTypeDto, ProfileFeature>() {
 
-    const val WITH_QUANTITY = "WITH_QUANTITY"
-    const val ONLY_TITLE = "ONLY_TITLE"
-
-    override fun toValueObject(dto: FeatureTypeDto): ProfileFeature {
-        return when (dto.type) {
-            FAVORITE_TYPE -> handleFavoriteType(dto.titleType)
-            WATCHLIST_TYPE -> handleWatchlistType(dto.titleType)
-            else -> throw IllegalArgumentException("Unknown type ${dto.type}")
+    override fun convert(input: FeatureTypeDto): ProfileFeature {
+        return when (input.type) {
+            FAVORITE_TYPE -> handleFavoriteType(input.titleType)
+            WATCHLIST_TYPE -> handleWatchlistType(input.titleType)
+            else -> throw IllegalArgumentException("Unknown type ${input.type}")
         }
     }
 
@@ -41,5 +36,13 @@ object Converter : ConverterDtoToVo<FeatureTypeDto, ProfileFeature> {
             ONLY_TITLE -> TitleViewType.OnlyTitle
             else -> throw IllegalArgumentException("Unknown type $titleType")
         }
+    }
+
+    companion object {
+        const val FAVORITE_TYPE = "FAVORITE_TYPE"
+        const val WATCHLIST_TYPE = "WATCHLIST_TYPE"
+
+        const val WITH_QUANTITY = "WITH_QUANTITY"
+        const val ONLY_TITLE = "ONLY_TITLE"
     }
 }
