@@ -5,6 +5,7 @@ import com.my.core.di.Feature
 import com.my.favorite.domain.usecase.DeleteFromFavoriteByIdUseCase
 import com.my.favorite.domain.usecase.IsFavoriteByIdUseCase
 import com.my.favorite.domain.usecase.SaveMovieToFavoriteUseCase
+import com.my.movies.detail.presentation.MovieDetailsToDomainConverter
 import com.my.movies.detail.presentation.MovieDetailsViewModel
 import com.my.movies.domain.FetchMovieByIdUseCase
 import com.my.movies.domain.MovieRepository
@@ -16,25 +17,34 @@ internal class MovieDetailsModule {
 
     @Feature
     @Provides
-    internal fun provideMovieDetailsViewModel(
+    fun provideMovieDetailsViewModel(
         id: String,
         isFavoriteByIdUseCase: IsFavoriteByIdUseCase,
         saveMovieToFavoriteUseCase: SaveMovieToFavoriteUseCase,
         deleteFromFavoriteByIdUseCase: DeleteFromFavoriteByIdUseCase,
-        fetchMovieByIdUseCase: FetchMovieByIdUseCase
+        fetchMovieByIdUseCase: FetchMovieByIdUseCase,
+        movieDetailsToDomainConverter: MovieDetailsToDomainConverter
     ) = MovieDetailsViewModel(
         id,
         isFavoriteByIdUseCase,
         saveMovieToFavoriteUseCase,
         deleteFromFavoriteByIdUseCase,
-        fetchMovieByIdUseCase
+        fetchMovieByIdUseCase,
+        movieDetailsToDomainConverter
     )
 
     @Provides
-    internal fun provideId(arguments: Bundle?) =
-        arguments?.getString("id") ?: throw IllegalArgumentException("id must be not null")
+    fun provideId(arguments: Bundle?) =
+        arguments?.getString(MOVIE_ID_KEY) ?: throw IllegalArgumentException("id must be not null")
 
     @Provides
-    internal fun provideFetchMovieByIdUseCase(moviesRepository: MovieRepository) =
+    fun provideFetchMovieByIdUseCase(moviesRepository: MovieRepository) =
         FetchMovieByIdUseCase(moviesRepository)
+
+    @Provides
+    fun provideMovieDetailsToDomainConverter() = MovieDetailsToDomainConverter()
+
+    private companion object {
+        const val MOVIE_ID_KEY = "id"
+    }
 }

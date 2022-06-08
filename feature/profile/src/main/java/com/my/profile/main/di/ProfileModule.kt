@@ -4,6 +4,7 @@ import com.my.core.di.Feature
 import com.my.favorite.domain.repository.FavoriteRepository
 import com.my.profile.main.data.MockRemoteDataSource
 import com.my.profile.main.data.ProfileRepositoryImpl
+import com.my.profile.main.data.converter.ProfileToDomainConverter
 import com.my.profile.main.domain.repository.ProfileRepository
 import com.my.profile.main.domain.usecase.FetchFeaturesUseCase
 import com.my.profile.main.presentation.ProfileViewModel
@@ -25,9 +26,14 @@ internal class ProfileModule {
     ) = FetchFeaturesUseCase(profileRepository, favoriteRepository)
 
     @Provides
-    fun provideProfileRepository(dataSource: MockRemoteDataSource): ProfileRepository =
-        ProfileRepositoryImpl(dataSource)
+    fun provideProfileRepository(
+        dataSource: MockRemoteDataSource,
+        profileToDomainConverter: ProfileToDomainConverter
+    ): ProfileRepository = ProfileRepositoryImpl(dataSource, profileToDomainConverter)
 
     @Provides
     fun provideDataSource() = MockRemoteDataSource()
+
+    @Provides
+    fun provideProfileToDomainConverter() = ProfileToDomainConverter()
 }
