@@ -5,7 +5,6 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.CallAdapter
 import retrofit2.Converter
@@ -13,6 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Named
 
 @Module
 class RetrofitModule {
@@ -39,45 +39,33 @@ class RetrofitModule {
     @Provides
     internal fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
-        authInterceptor: Interceptor
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .addInterceptor(authInterceptor)
-            .connectTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
-            .readTimeout(TIMEOUT, TimeUnit.MILLISECONDS)
-            .build()
-    }
+        authInterceptor: Interceptor,
+        @Named(TIMEOUT_KEY) timeout: Long
+    ) = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
+        .addInterceptor(authInterceptor)
+        .connectTimeout(timeout, TimeUnit.MILLISECONDS)
+        .readTimeout(timeout, TimeUnit.MILLISECONDS)
+        .build()
 
     @Provides
-    internal fun provideLogging(buildConfigWrapper: BuildConfigWrapper): HttpLoggingInterceptor {
-        val logging = HttpLoggingInterceptor()
-        logging.level = if (buildConfigWrapper.isDebug()) {
-            HttpLoggingInterceptor.Level.BODY
-        } else {
-            HttpLoggingInterceptor.Level.NONE
-        }
-        return logging
-    }
+    @Named(TIMEOUT_KEY)
+    internal fun provideTimeout() = 120_000L
 
     @Provides
-    internal fun provideInterceptor(buildConfigWrapper: BuildConfigWrapper): Interceptor {
-        return object : Interceptor {
-            override fun intercept(chain: Interceptor.Chain): Response {
-                val url = chain.request().url
-                    .newBuilder()
-                    .addQueryParameter("api_key", buildConfigWrapper.movieApiKey())
-                    .build()
-                val request = chain.request()
-                    .newBuilder()
-                    .url(url)
-                    .build()
-                return chain.proceed(request)
+    internal fun provideLogging(buildConfigWrapper: BuildConfigWrapper) =
+        HttpLoggingInterceptor().apply {
+            level = when (buildConfigWrapper.isDebug()) {
+                true -> HttpLoggingInterceptor.Level.BODY
+                false -> HttpLoggingInterceptor.Level.NONE
             }
         }
-    }
 
-    companion object {
-        private const val TIMEOUT = 120_000L
+    @Provides
+    internal fun provideInterceptor(buildConfigWrapper: BuildConfigWrapper): Interceptor =
+        AuthInterceptor(buildConfigWrapper)
+
+    private companion object {
+        const val TIMEOUT_KEY = "Timeout"
     }
 }
