@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.my.core.presentation.BaseViewModel
 import com.my.favorite.domain.usecase.DeleteFromFavoriteByIdUseCase
-import com.my.favorite.domain.usecase.FavoriteEntity
 import com.my.favorite.domain.usecase.IsFavoriteByIdUseCase
 import com.my.favorite.domain.usecase.SaveMovieToFavoriteUseCase
 import com.my.movies.detail.entity.MovieEntity
@@ -17,7 +16,8 @@ internal class MovieDetailsViewModel(
     isFavoriteByIdUseCase: IsFavoriteByIdUseCase,
     private val saveMovieToFavoriteUseCase: SaveMovieToFavoriteUseCase,
     private val deleteFromFavoriteByIdUseCase: DeleteFromFavoriteByIdUseCase,
-    fetchMovieByIdUseCase: FetchMovieByIdUseCase
+    fetchMovieByIdUseCase: FetchMovieByIdUseCase,
+    private val toDomainConverter: MovieDetailsToDomainConverter
 ) : BaseViewModel() {
 
     private val _movie = MutableLiveData<MovieDetails>()
@@ -46,14 +46,15 @@ internal class MovieDetailsViewModel(
     }
 
     private fun addToFavorite() {
-        saveMovieToFavoriteUseCase(
-            _movie.value?.toFavorite() ?: return
-        ).subscribe({
-            Timber.d("Success save movie to favorite ${_movie.value}")
-            _isFavorite.value = true
-        }, {
-            Timber.e(it)
-        }).addToComposite()
+        val value = _movie.value ?: return
+
+        saveMovieToFavoriteUseCase(toDomainConverter.convert(value))
+            .subscribe({
+                Timber.d("Success save movie to favorite $value")
+                _isFavorite.value = true
+            }, {
+                Timber.e(it)
+            }).addToComposite()
     }
 
     private fun removeFromFavorite() {
@@ -70,15 +71,4 @@ internal class MovieDetailsViewModel(
     fun onItemActorClicked(actor: MovieEntity.Actor) {
         Timber.d("On item actor clicked $actor")
     }
-
-    private fun MovieDetails.toFavorite() = FavoriteEntity(
-        id = this.id,
-        title = this.title,
-        overview = "this.overview",
-        posterPath = this.posterPath,
-        rating = this.rating,
-        studio = this.studio,
-        genre = this.genre,
-        year = this.year
-    )
 }
