@@ -1,11 +1,13 @@
 package com.my.tv_shows.di
 
+import com.my.core.data.HandleResponse
 import com.my.tv_shows.data.TvRepositoryImpl
 import com.my.tv_shows.data.converter.TvShowsToDomainConverter
 import com.my.tv_shows.data.remote.TvApi
 import com.my.tv_shows.data.remote.TvRemoteDataSource
 import com.my.tv_shows.domain.FetchPopularTvShowsUseCase
 import com.my.tv_shows.domain.TvRepository
+import com.my.tv_shows.domain.TvShowsEntity
 import com.my.tv_shows.presentation.TvShowsPresenter
 import dagger.Module
 import dagger.Provides
@@ -25,8 +27,9 @@ internal class TvShowsModule {
     @Provides
     fun provideTvRepository(
         remoteDataSource: TvRemoteDataSource,
-        tvShowsToDomainConverter: TvShowsToDomainConverter
-    ): TvRepository = TvRepositoryImpl(remoteDataSource, tvShowsToDomainConverter)
+        tvShowsToDomainConverter: TvShowsToDomainConverter,
+        handleResponse: HandleResponse<List<TvShowsEntity>>
+    ): TvRepository = TvRepositoryImpl(remoteDataSource, tvShowsToDomainConverter, handleResponse)
 
     @Provides
     fun provideRemoteDataSource(tvApi: TvApi) = TvRemoteDataSource(tvApi)
@@ -36,4 +39,7 @@ internal class TvShowsModule {
 
     @Provides
     fun provideTvShowsToDomainConverter() = TvShowsToDomainConverter()
+
+    @Provides
+    fun provideHandleResult() = HandleResponse<List<TvShowsEntity>>()
 }
