@@ -14,7 +14,7 @@ import com.my.movies.detail.di.MovieDetailsDependencies
 import com.my.movies.feed.di.FeedDependencies
 import com.my.profile.di.ProfileDependencies
 import com.my.search.di.SearchDependencies
-import com.my.tv_shows.presentation.di.TvShowsDependencies
+import com.my.tv_shows.di.TvShowsDependencies
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

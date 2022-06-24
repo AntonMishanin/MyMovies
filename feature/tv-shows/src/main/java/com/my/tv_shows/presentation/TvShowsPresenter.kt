@@ -1,8 +1,10 @@
 package com.my.tv_shows.presentation
 
+import com.my.core.domain.Response
 import com.my.core.mvp.RxPresenter
 import com.my.tv_shows.domain.FetchPopularTvShowsUseCase
 import com.my.tv_shows.domain.TvShowsEntity
+import io.reactivex.functions.Consumer
 import timber.log.Timber
 
 class TvShowsPresenter(
@@ -11,10 +13,12 @@ class TvShowsPresenter(
 
     override fun onViewReady() {
         fetchPopularTvShowsUseCase()
-            .subscribe({
-                view?.setTvShowsList(it)
-            }, {
-                Timber.e(it)
+            .subscribe(Consumer {
+                when (it) {
+                    is Response.Success -> view?.setTvShowsList(it.value)
+                    is Response.Error -> {
+                    } // TODO(): show error state
+                }
             }).addToComposite()
     }
 
