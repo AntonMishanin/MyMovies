@@ -1,6 +1,7 @@
 package com.my.movies.data.di
 
 import android.content.Context
+import androidx.room.Room
 import com.my.movies.data.MovieRepositoryImpl
 import com.my.movies.data.MoviesApi
 import com.my.movies.data.MoviesDataSource
@@ -11,6 +12,7 @@ import com.my.movies.domain.MovieRepository
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import javax.inject.Named
 
 @Module
 internal class MoviesDataModule {
@@ -22,8 +24,7 @@ internal class MoviesDataModule {
     fun provideMoviesDataSource(moviesApi: MoviesApi) = MoviesDataSource(moviesApi)
 
     @Provides
-    fun provideMoviesDao(context: Context) =
-        MovieDatabase.getFavoriteDatabase(context).getMovieDao()
+    fun provideMoviesDao(movieDatabase: MovieDatabase) = movieDatabase.getMovieDao()
 
     @Provides
     fun provideMoviesRepositoryImpl(
@@ -67,4 +68,23 @@ internal class MoviesDataModule {
 
     @Provides
     fun movieResponseToDomain() = MovieResponseToDomain()
+
+    @Provides
+    fun provideMoviesDatabase(
+        context: Context,
+        @Named(DATABASE_NAME_KEY) name: String
+    ): MovieDatabase {
+        return Room
+            .databaseBuilder(context, MovieDatabase::class.java, name)
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Named(DATABASE_NAME_KEY)
+    fun provideMoviesDatabaseName() = "Movie_database"
+
+    private companion object {
+        const val DATABASE_NAME_KEY = "DATABASE_NAME"
+    }
 }
