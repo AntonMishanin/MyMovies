@@ -52,6 +52,7 @@ dependencies {
     implementation project(':feature:movies')
     implementation project(':feature:search')
     implementation project(':feature:tv-shows')
+    implementation project(':feature:bottom-navigation')
     implementation project(':core')
     implementation project(':common:favorite')
 
