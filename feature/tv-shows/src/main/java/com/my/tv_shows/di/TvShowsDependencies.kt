@@ -1,4 +1,4 @@
-package com.my.tv_shows.presentation.di
+package com.my.tv_shows.di
 
 import com.my.core.di.FeatureDependencies
 import retrofit2.Retrofit

@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.my.core.di.DependenciesProvider
 import com.my.tv_shows.databinding.FragmentTvShowsBinding
+import com.my.tv_shows.di.TvShowsDependencies
+import com.my.tv_shows.di.TvShowsDiContainer
 import com.my.tv_shows.domain.TvShowsEntity
-import com.my.tv_shows.presentation.di.TvShowsDependencies
-import com.my.tv_shows.presentation.di.TvShowsDiContainer
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
