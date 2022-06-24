@@ -1,52 +1,24 @@
 package ru.androidschool.intensiv
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.navOptions
-import com.my.bottom_navigation.BottomNavigator
-import com.my.core.KEY_ID
-import com.my.core.KEY_SEARCH
-import com.my.movies.feed.navigator.FeedNavigator
+import com.my.bottom_navigation.BottomNavigation
+import com.my.core.navigation.Navigation
+import com.my.core.navigation.ProvideNavigation
+import com.my.movies.feed.navigator.FeedNavigation
 
-class SingleActivity : AppCompatActivity(R.layout.activity_single), FeedNavigator, BottomNavigator {
+class SingleActivity : AppCompatActivity(R.layout.activity_single), ProvideNavigation {
 
-    private var bottomNavigationController: NavController? = null
-
-    private val options = navOptions {
-        anim {
-            enter = R.anim.slide_in_right
-            exit = R.anim.slide_out_left
-            popEnter = R.anim.slide_in_left
-            popExit = R.anim.slide_out_right
-        }
-    }
+    private val mainNavigator = MainNavigation()
 
     override fun onSupportNavigateUp(): Boolean {
-        return bottomNavigationController?.navigateUp() ?: super.onSupportNavigateUp()
+        return mainNavigator.onSupportNavigateUp() ?: super.onSupportNavigateUp()
     }
 
-    /**
-     * Handle navigation from feature Feed
-     */
-
-    override fun openMovieDetails(id: String) {
-        val bundle = Bundle()
-        bundle.putString(KEY_ID, id)
-        bottomNavigationController?.navigate(R.id.movie_details_fragment, bundle, options)
-    }
-
-    override fun openSearch(searchText: String) {
-        val bundle = Bundle()
-        bundle.putString(KEY_SEARCH, searchText)
-        bottomNavigationController?.navigate(R.id.search_dest, bundle, options)
-    }
-
-    /**
-     * Handle navigation from feature bottom navigation
-     */
-
-    override fun init(navController: NavController) {
-        bottomNavigationController = navController
+    override fun <T : Navigation> provideNavigation(clazz: Class<T>): T {
+        return when (clazz) {
+            FeedNavigation::class.java -> mainNavigator
+            BottomNavigation::class.java -> mainNavigator
+            else -> throw IllegalArgumentException("Unknown class $clazz")
+        } as T
     }
 }

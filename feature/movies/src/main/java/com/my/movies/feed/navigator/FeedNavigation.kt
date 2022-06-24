@@ -1,6 +1,8 @@
 package com.my.movies.feed.navigator
 
-interface FeedNavigator {
+import com.my.core.navigation.Navigation
+
+interface FeedNavigation : Navigation {
 
     fun openMovieDetails(id: String)
 

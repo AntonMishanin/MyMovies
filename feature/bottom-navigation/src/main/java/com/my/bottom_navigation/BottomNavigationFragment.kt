@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.my.bottom_navigation.databinding.FragmentBottomNavigationBinding
+import com.my.core.navigation.ProvideNavigation
 
 class BottomNavigationFragment : Fragment() {
 
@@ -29,7 +30,8 @@ class BottomNavigationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navigator = requireActivity() as BottomNavigator
+        val navigation = (requireActivity() as ProvideNavigation)
+            .provideNavigation(BottomNavigation::class.java)
         var navController: NavController? = null
 
         // Bug with navigation library(need delay) - work around
@@ -38,7 +40,7 @@ class BottomNavigationFragment : Fragment() {
                 view.findViewById<FragmentContainerView>(R.id.bottom_navigation_container)
                     .findNavController()
 
-            navigator.init(navController!!)
+            navigation.init(navController!!)
         }, 1000)
 
         binding.bottomNavigationView.setOnItemSelectedListener {

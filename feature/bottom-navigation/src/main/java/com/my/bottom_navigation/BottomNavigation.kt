@@ -1,8 +1,9 @@
 package com.my.bottom_navigation
 
 import androidx.navigation.NavController
+import com.my.core.navigation.Navigation
 
-interface BottomNavigator {
+interface BottomNavigation : Navigation {
 
     fun init(navController: NavController)
 }
