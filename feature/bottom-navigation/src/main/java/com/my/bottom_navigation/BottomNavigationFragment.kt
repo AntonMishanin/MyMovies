@@ -30,7 +30,7 @@ class BottomNavigationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val navigator = requireActivity() as BottomNavigator
-        var navController: NavController?
+        var navController: NavController? = null
 
         // Bug with navigation library(need delay) - work around
         Handler(Looper.getMainLooper()).postDelayed({
@@ -41,12 +41,11 @@ class BottomNavigationFragment : Fragment() {
             navigator.init(navController!!)
         }, 1000)
 
-
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.title) {
-                getString(R.string.home) -> navigator.navigateToHome()
-                getString(R.string.tv_shows) -> navigator.navigateToTvShows()
-                getString(R.string.profile) -> navigator.navigateToProfile()
+                getString(R.string.home) -> navController?.navigate(R.id.home_dest)
+                getString(R.string.tv_shows) -> navController?.navigate(R.id.tv_shows_dest)
+                getString(R.string.profile) -> navController?.navigate(R.id.profile_fragment)
                 else -> throw IllegalArgumentException("Unknown item ${it.title}")
             }
             true

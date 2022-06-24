@@ -49,16 +49,4 @@ class SingleActivity : AppCompatActivity(R.layout.activity_single), FeedNavigato
     override fun init(navController: NavController) {
         bottomNavigationController = navController
     }
-
-    override fun navigateToHome() {
-        bottomNavigationController?.navigate(R.id.home_dest, Bundle(), options)
-    }
-
-    override fun navigateToTvShows() {
-        bottomNavigationController?.navigate(R.id.tv_shows_dest, Bundle(), options)
-    }
-
-    override fun navigateToProfile() {
-        bottomNavigationController?.navigate(R.id.profile_fragment, Bundle(), options)
-    }
 }
