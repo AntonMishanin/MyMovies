@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.my.core.di.DependenciesProvider
 import com.my.core.extensions.hide
+import com.my.core.navigation.ProvideNavigation
 import com.my.movies.R
 import com.my.movies.databinding.FragmentFeedBinding
 import com.my.movies.domain.Movie
@@ -13,7 +14,7 @@ import com.my.movies.feed.di.FeedDependencies
 import com.my.movies.feed.di.FeedDiContainer
 import com.my.movies.feed.item.MainCardContainer
 import com.my.movies.feed.item.MovieItem
-import com.my.movies.feed.navigator.FeedNavigator
+import com.my.movies.feed.navigator.FeedNavigation
 import com.my.movies.feed.state.NavigationState
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -96,17 +97,18 @@ class FeedFragment : Fragment() {
 
     private fun openMovieDetails(id: String) {
         viewModel.onNavigationSuccess()
-        navigator()?.openMovieDetails(id)
+        navigation().openMovieDetails(id)
     }
 
     private fun openSearch(searchText: String) {
         viewModel.onNavigationSuccess()
-        navigator()?.openSearch(searchText)
+        navigation().openSearch(searchText)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_menu, menu)
     }
 
-    private fun navigator() = requireActivity() as? FeedNavigator
+    private fun navigation() =
+        (requireActivity() as ProvideNavigation).provideNavigation(FeedNavigation::class.java)
 }
