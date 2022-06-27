@@ -7,7 +7,7 @@ import dagger.Component
     modules = [TvShowsModule::class],
     dependencies = [TvShowsDependencies::class]
 )
-interface TvShowsComponent {
+internal interface TvShowsComponent {
 
     fun providePresenter(): TvShowsPresenter
 

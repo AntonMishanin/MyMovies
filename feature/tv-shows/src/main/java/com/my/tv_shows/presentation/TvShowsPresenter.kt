@@ -1,28 +1,37 @@
 package com.my.tv_shows.presentation
 
-import com.my.core.domain.Response
 import com.my.core.mvp.RxPresenter
 import com.my.tv_shows.domain.FetchPopularTvShowsUseCase
 import com.my.tv_shows.domain.TvShowsEntity
-import io.reactivex.functions.Consumer
-import timber.log.Timber
+import com.my.tv_shows.ui.OnItemClickedCallback
+import com.my.tv_shows.ui.OnTryAgainClickedCallback
 
-class TvShowsPresenter(
-    private val fetchPopularTvShowsUseCase: FetchPopularTvShowsUseCase
-) : RxPresenter<TvShowsView>() {
+internal class TvShowsPresenter(
+    private val fetchPopularTvShowsUseCase: FetchPopularTvShowsUseCase,
+    private val tvShowsUiConverter: TvShowsUiConverter
+) : RxPresenter<TvShowsView>(), OnTryAgainClickedCallback, OnItemClickedCallback {
 
     override fun onViewReady() {
-        fetchPopularTvShowsUseCase()
-            .subscribe(Consumer {
-                when (it) {
-                    is Response.Success -> view?.setTvShowsList(it.value)
-                    is Response.Error -> {
-                    } // TODO(): show error state
-                }
-            }).addToComposite()
+        onTryAgainClicked()
     }
 
-    fun onItemTvShowClicked(tvShowsEntity: TvShowsEntity) {
-        Timber.d("On item tv show clicked $tvShowsEntity")
+    // Invoke from TvShowsItem
+    override fun onItemClicked(tvShowsEntity: TvShowsEntity) {
+
+    }
+
+    // Invoke from UnknownErrorItem
+    override fun onTryAgainClicked() {
+        fetchPopularTvShowsUseCase()
+            .doOnSubscribe {
+                view?.showState(tvShowsUiConverter.progress())
+            }
+            .subscribe({ content ->
+                val state = tvShowsUiConverter.convert(content, onItemClickedCallback = this)
+                view?.showState(state)
+            }, { throwable ->
+                val state = tvShowsUiConverter.convert(throwable, tryAgainClickedCallback = this)
+                view?.showState(state)
+            }).addToComposite()
     }
 }
