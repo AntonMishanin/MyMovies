@@ -9,17 +9,17 @@ internal class TvShowsUiConverter {
 
     fun convert(
         input: List<TvShowsEntity>,
-        onItemClickedCallback: OnItemClickedCallback
-    ) = input.map { TvShowsItem(it, onItemClickedCallback) }
+        toggleOverviewCallback: ToggleOverviewCallback
+    ) = input.map { TvShowsItem(it, toggleOverviewCallback) }
 
     fun progress() = MutableList(20) { ProgressItem() }
 
     fun convert(
         exception: Throwable,
-        tryAgainClickedCallback: OnTryAgainClickedCallback
+        refreshCallback: RefreshCallback
     ) = when (exception) {
-        is NoInternetConnectionException -> listOf(NoInternetErrorItem(tryAgainClickedCallback))
-        is UnknownException -> listOf(UnknownErrorItem(tryAgainClickedCallback))
+        is NoInternetConnectionException -> listOf(NoInternetErrorItem(refreshCallback))
+        is UnknownException -> listOf(UnknownErrorItem(refreshCallback))
         else -> throw IllegalArgumentException("Unknown exception $exception")
     }
 }

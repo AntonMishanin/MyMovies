@@ -5,7 +5,7 @@ import com.my.tv_shows.R
 import com.my.tv_shows.databinding.ItemUnknownErrorBinding
 
 internal class UnknownErrorItem(
-    private val tryAgainClickedCallback: OnTryAgainClickedCallback
+    private val refreshCallback: RefreshCallback
 ) : BaseItem<ItemUnknownErrorBinding>(
     R.layout.item_unknown_error,
     ItemUnknownErrorBinding::bind
@@ -13,7 +13,7 @@ internal class UnknownErrorItem(
 
     override fun bind(viewBinding: ItemUnknownErrorBinding, position: Int) {
         viewBinding.tryAgain.setOnClickListener {
-            tryAgainClickedCallback.onTryAgainClicked()
+            refreshCallback.onRefreshClicked()
         }
     }
 }
