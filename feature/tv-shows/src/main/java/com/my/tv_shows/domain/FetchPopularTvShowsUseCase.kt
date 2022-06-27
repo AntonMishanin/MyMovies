@@ -2,7 +2,7 @@ package com.my.tv_shows.domain
 
 import com.my.core.extensions.applySchedulers
 
-class FetchPopularTvShowsUseCase(
+internal class FetchPopularTvShowsUseCase(
     private val repository: TvRepository
 ) {
 
