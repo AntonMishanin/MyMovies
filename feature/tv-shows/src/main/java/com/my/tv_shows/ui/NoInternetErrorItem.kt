@@ -5,7 +5,7 @@ import com.my.tv_shows.R
 import com.my.tv_shows.databinding.ItemNoInternetBinding
 
 internal class NoInternetErrorItem(
-    private val tryAgainClickedCallback: OnTryAgainClickedCallback
+    private val refreshCallback: RefreshCallback
 ) : BaseItem<ItemNoInternetBinding>(
     R.layout.item_no_internet,
     ItemNoInternetBinding::bind
@@ -13,7 +13,7 @@ internal class NoInternetErrorItem(
 
     override fun bind(viewBinding: ItemNoInternetBinding, position: Int) {
         viewBinding.tryAgain.setOnClickListener {
-            tryAgainClickedCallback.onTryAgainClicked()
+            refreshCallback.onRefreshClicked()
         }
     }
 }

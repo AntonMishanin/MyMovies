@@ -17,7 +17,9 @@ internal class TvShowsToDomainConverter :
                 id = it.id ?: throw NullPointerException("id must be not null"),
                 imagePath = "https://image.tmdb.org/t/p/w500" + it.posterPath,// TODO: use BuildConfigWrapper
                 title = it.name ?: "",
-                rating = it.voteAverage ?: 5f
+                rating = it.voteAverage ?: 5f,
+                overview = it.overview ?: "",
+                isOverviewVisible = false
             )
         } ?: throw NullPointerException("Result must be not null")
     }

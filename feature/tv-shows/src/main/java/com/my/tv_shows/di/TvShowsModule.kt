@@ -1,11 +1,16 @@
 package com.my.tv_shows.di
 
+import com.my.core.di.Feature
+import com.my.core.di.SchedulersWrapper
+import com.my.tv_shows.data.MemoryCacheDataSource
 import com.my.tv_shows.data.TvRepositoryImpl
 import com.my.tv_shows.data.converter.ToDomainExceptionConverter
 import com.my.tv_shows.data.converter.TvShowsToDomainConverter
 import com.my.tv_shows.data.remote.TvApi
 import com.my.tv_shows.data.remote.TvRemoteDataSource
-import com.my.tv_shows.domain.FetchPopularTvShowsUseCase
+import com.my.tv_shows.domain.ObserveTvShowsUseCase
+import com.my.tv_shows.domain.RefreshTvShowsUseCase
+import com.my.tv_shows.domain.ToggleOverviewUseCase
 import com.my.tv_shows.domain.TvRepository
 import com.my.tv_shows.presentation.TvShowsPresenter
 import com.my.tv_shows.presentation.TvShowsUiConverter
@@ -18,24 +23,47 @@ internal class TvShowsModule {
 
     @Provides
     fun provideTvShowsPresenter(
-        fetchPopularTvShowsUseCase: FetchPopularTvShowsUseCase,
-        tvShowsUiConverter: TvShowsUiConverter
-    ) = TvShowsPresenter(fetchPopularTvShowsUseCase, tvShowsUiConverter)
+        observeTvShowsUseCase: ObserveTvShowsUseCase,
+        toggleOverviewUseCase: ToggleOverviewUseCase,
+        RefreshTvShowsUseCase: RefreshTvShowsUseCase,
+        tvShowsUiConverter: TvShowsUiConverter,
+        schedulersWrapper: SchedulersWrapper
+    ) = TvShowsPresenter(
+        observeTvShowsUseCase,
+        toggleOverviewUseCase,
+        RefreshTvShowsUseCase,
+        tvShowsUiConverter,
+        schedulersWrapper
+    )
 
     @Provides
     fun provideFetchPopularTvShowsUseCase(tvRepository: TvRepository) =
-        FetchPopularTvShowsUseCase(tvRepository)
+        RefreshTvShowsUseCase(tvRepository)
 
+    @Provides
+    fun provideObserveTvShowsUseCase(tvRepository: TvRepository) =
+        ObserveTvShowsUseCase(tvRepository)
+
+    @Provides
+    fun provideClickOnTvShowsUseCase(tvRepository: TvRepository) =
+        ToggleOverviewUseCase(tvRepository)
+
+    @Feature
     @Provides
     fun provideTvRepository(
         remoteDataSource: TvRemoteDataSource,
         tvShowsToDomainConverter: TvShowsToDomainConverter,
-        toDomainExceptionConverter: ToDomainExceptionConverter
+        toDomainExceptionConverter: ToDomainExceptionConverter,
+        memoryCacheDataSource: MemoryCacheDataSource
     ): TvRepository = TvRepositoryImpl(
         remoteDataSource,
         tvShowsToDomainConverter,
-        toDomainExceptionConverter
+        toDomainExceptionConverter,
+        memoryCacheDataSource
     )
+
+    @Provides
+    fun provideMemoryCacheDataSource() = MemoryCacheDataSource()
 
     @Provides
     fun provideRemoteDataSource(tvApi: TvApi) = TvRemoteDataSource(tvApi)

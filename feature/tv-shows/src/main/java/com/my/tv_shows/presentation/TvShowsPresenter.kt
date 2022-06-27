@@ -1,37 +1,64 @@
 package com.my.tv_shows.presentation
 
+import com.my.core.di.SchedulersWrapper
 import com.my.core.mvp.RxPresenter
-import com.my.tv_shows.domain.FetchPopularTvShowsUseCase
+import com.my.tv_shows.domain.ObserveTvShowsUseCase
+import com.my.tv_shows.domain.RefreshTvShowsUseCase
+import com.my.tv_shows.domain.ToggleOverviewUseCase
 import com.my.tv_shows.domain.TvShowsEntity
-import com.my.tv_shows.ui.OnItemClickedCallback
-import com.my.tv_shows.ui.OnTryAgainClickedCallback
+import com.my.tv_shows.ui.RefreshCallback
+import com.my.tv_shows.ui.ToggleOverviewCallback
+import com.xwray.groupie.viewbinding.BindableItem
 
 internal class TvShowsPresenter(
-    private val fetchPopularTvShowsUseCase: FetchPopularTvShowsUseCase,
-    private val tvShowsUiConverter: TvShowsUiConverter
-) : RxPresenter<TvShowsView>(), OnTryAgainClickedCallback, OnItemClickedCallback {
+    observeTvShowsUseCase: ObserveTvShowsUseCase,
+    private val toggleOverviewUseCase: ToggleOverviewUseCase,
+    private val refreshTvShowsUseCase: RefreshTvShowsUseCase,
+    private val tvShowsUiConverter: TvShowsUiConverter,
+    private val schedulersWrapper: SchedulersWrapper
+) : RxPresenter<TvShowsView>(), RefreshCallback, ToggleOverviewCallback {
+
+    private var state: List<BindableItem<*>> = tvShowsUiConverter.progress()
+        set(value) {
+            field = value
+            view?.showState(value)
+        }
+
+    init {
+        observeTvShowsUseCase.invoke()
+            .observeOn(schedulersWrapper.ui())
+            .doOnSubscribe {
+                state = tvShowsUiConverter.progress()
+            }
+            .subscribe({ content ->
+                state = tvShowsUiConverter.convert(content, toggleOverviewCallback = this)
+            }, { throwable ->
+                state = tvShowsUiConverter.convert(throwable, refreshCallback = this)
+            })
+            .addToComposite()
+
+        onRefreshClicked()
+    }
 
     override fun onViewReady() {
-        onTryAgainClicked()
+        view?.showState(state)
     }
 
     // Invoke from TvShowsItem
-    override fun onItemClicked(tvShowsEntity: TvShowsEntity) {
-
+    override fun onToggleOverviewClicked(tvShowsEntity: TvShowsEntity) {
+        toggleOverviewUseCase.invoke(tvShowsEntity)
+            .subscribe()
+            .addToComposite()
     }
 
     // Invoke from UnknownErrorItem
-    override fun onTryAgainClicked() {
-        fetchPopularTvShowsUseCase()
+    override fun onRefreshClicked() {
+        refreshTvShowsUseCase.invoke()
+            .observeOn(schedulersWrapper.ui())
             .doOnSubscribe {
-                view?.showState(tvShowsUiConverter.progress())
+                state = tvShowsUiConverter.progress()
             }
-            .subscribe({ content ->
-                val state = tvShowsUiConverter.convert(content, onItemClickedCallback = this)
-                view?.showState(state)
-            }, { throwable ->
-                val state = tvShowsUiConverter.convert(throwable, tryAgainClickedCallback = this)
-                view?.showState(state)
-            }).addToComposite()
+            .subscribe()
+            .addToComposite()
     }
 }

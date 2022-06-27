@@ -2,11 +2,11 @@ package com.my.tv_shows.domain
 
 import com.my.core.extensions.applySchedulers
 
-class FetchPopularTvShowsUseCase(
+internal class RefreshTvShowsUseCase(
     private val repository: TvRepository
 ) {
 
-    operator fun invoke() = repository.fetchPopularTvShows()
+    operator fun invoke() = repository.fetchFreshTvShows()
         .doOnError {
             it.printStackTrace()
         }.applySchedulers()
