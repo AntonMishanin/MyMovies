@@ -4,7 +4,7 @@ import com.my.core.presentation.BaseItem
 import com.my.tv_shows.R
 import com.my.tv_shows.databinding.ItemProgressBinding
 
-class ProgressItem : BaseItem<ItemProgressBinding>(
+internal class ProgressItem : BaseItem<ItemProgressBinding>(
     R.layout.item_progress,
     ItemProgressBinding::bind
 ) {

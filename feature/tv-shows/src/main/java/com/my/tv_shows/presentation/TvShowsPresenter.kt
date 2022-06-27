@@ -6,7 +6,7 @@ import com.my.tv_shows.domain.TvShowsEntity
 import com.my.tv_shows.ui.OnItemClickedCallback
 import com.my.tv_shows.ui.OnTryAgainClickedCallback
 
-class TvShowsPresenter(
+internal class TvShowsPresenter(
     private val fetchPopularTvShowsUseCase: FetchPopularTvShowsUseCase,
     private val tvShowsUiConverter: TvShowsUiConverter
 ) : RxPresenter<TvShowsView>(), OnTryAgainClickedCallback, OnItemClickedCallback {

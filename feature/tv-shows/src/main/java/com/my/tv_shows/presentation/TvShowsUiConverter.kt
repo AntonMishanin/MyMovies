@@ -5,7 +5,7 @@ import com.my.core.domain.UnknownException
 import com.my.tv_shows.domain.TvShowsEntity
 import com.my.tv_shows.ui.*
 
-class TvShowsUiConverter {
+internal class TvShowsUiConverter {
 
     fun convert(
         input: List<TvShowsEntity>,

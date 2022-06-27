@@ -1,6 +1,6 @@
 package com.my.tv_shows.ui
 
-interface OnTryAgainClickedCallback {
+internal interface OnTryAgainClickedCallback {
 
     fun onTryAgainClicked()
 }

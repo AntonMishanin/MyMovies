@@ -4,7 +4,7 @@ import com.my.core.presentation.BaseItem
 import com.my.tv_shows.R
 import com.my.tv_shows.databinding.ItemNoInternetBinding
 
-class NoInternetErrorItem(
+internal class NoInternetErrorItem(
     private val tryAgainClickedCallback: OnTryAgainClickedCallback
 ) : BaseItem<ItemNoInternetBinding>(
     R.layout.item_no_internet,

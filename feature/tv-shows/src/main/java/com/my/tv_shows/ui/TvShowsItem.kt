@@ -6,7 +6,7 @@ import com.my.tv_shows.R
 import com.my.tv_shows.databinding.ItemTvShowsBinding
 import com.my.tv_shows.domain.TvShowsEntity
 
-class TvShowsItem(
+internal class TvShowsItem(
     private val content: TvShowsEntity,
     private val onItemClickedCallback: OnItemClickedCallback
 ) : BaseItem<ItemTvShowsBinding>(R.layout.item_tv_shows, ItemTvShowsBinding::bind) {

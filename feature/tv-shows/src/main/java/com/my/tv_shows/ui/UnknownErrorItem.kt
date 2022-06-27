@@ -4,7 +4,7 @@ import com.my.core.presentation.BaseItem
 import com.my.tv_shows.R
 import com.my.tv_shows.databinding.ItemUnknownErrorBinding
 
-class UnknownErrorItem(
+internal class UnknownErrorItem(
     private val tryAgainClickedCallback: OnTryAgainClickedCallback
 ) : BaseItem<ItemUnknownErrorBinding>(
     R.layout.item_unknown_error,
