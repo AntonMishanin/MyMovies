@@ -35,6 +35,8 @@ android {
 dependencies {
     implementation project(':core')
 
+    implementation libraries.shimmerlayout
+
     implementation libraries.coreKtx
     implementation libraries.appcompat
     implementation libraries.fragmentKtx
