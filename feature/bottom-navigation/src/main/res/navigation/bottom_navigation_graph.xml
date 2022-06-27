@@ -44,7 +44,7 @@
 
     <fragment
         android:id="@+id/tv_shows_dest"
-        android:name="com.my.tv_shows.presentation.TvShowsFragment"
+        android:name="com.my.tv_shows.ui.TvShowsFragment"
         android:label="@string/tv_show"
         tools:layout="@layout/fragment_tv_shows">
 
