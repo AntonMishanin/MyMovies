@@ -4,5 +4,7 @@ internal data class TvShowsEntity(
     val id: Int,
     val imagePath: String,
     val title: String,
-    val rating: Float
+    val rating: Float,
+    val overview: String,
+    val isOverviewVisible: Boolean
 )

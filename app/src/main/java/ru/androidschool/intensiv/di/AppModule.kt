@@ -35,9 +35,14 @@ internal class AppModule {
     }
 
     @[Provides AppScope]
-    fun provideTvShowsDependencies(retrofit: Retrofit) = object : TvShowsDependencies {
+    fun provideTvShowsDependencies(
+        retrofit: Retrofit,
+        schedulersWrapper: SchedulersWrapper
+    ) = object : TvShowsDependencies {
 
         override fun provideRetrofit() = retrofit
+
+        override fun provideSchedulersWrapper() = schedulersWrapper
     }
 
     @[Provides AppScope]
