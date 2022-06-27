@@ -9,6 +9,7 @@ import com.my.tv_shows.domain.FetchPopularTvShowsUseCase
 import com.my.tv_shows.domain.TvRepository
 import com.my.tv_shows.domain.TvShowsEntity
 import com.my.tv_shows.presentation.TvShowsPresenter
+import com.my.tv_shows.presentation.TvShowsUiConverter
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -17,8 +18,10 @@ import retrofit2.Retrofit
 internal class TvShowsModule {
 
     @Provides
-    fun provideTvShowsPresenter(fetchPopularTvShowsUseCase: FetchPopularTvShowsUseCase) =
-        TvShowsPresenter(fetchPopularTvShowsUseCase)
+    fun provideTvShowsPresenter(
+        fetchPopularTvShowsUseCase: FetchPopularTvShowsUseCase,
+        tvShowsUiConverter: TvShowsUiConverter
+    ) = TvShowsPresenter(fetchPopularTvShowsUseCase, tvShowsUiConverter)
 
     @Provides
     fun provideFetchPopularTvShowsUseCase(tvRepository: TvRepository) =
@@ -42,4 +45,7 @@ internal class TvShowsModule {
 
     @Provides
     fun provideHandleResult() = HandleResponse<List<TvShowsEntity>>()
+
+    @Provides
+    fun provideTvShowsUiConverter() = TvShowsUiConverter()
 }
