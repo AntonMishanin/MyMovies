@@ -8,6 +8,7 @@ import com.my.tv_shows.domain.ToggleOverviewUseCase
 import com.my.tv_shows.domain.TvShowsEntity
 import com.my.tv_shows.ui.RefreshCallback
 import com.my.tv_shows.ui.ToggleOverviewCallback
+import com.xwray.groupie.viewbinding.BindableItem
 
 internal class TvShowsPresenter(
     observeTvShowsUseCase: ObserveTvShowsUseCase,
@@ -17,24 +18,30 @@ internal class TvShowsPresenter(
     private val schedulersWrapper: SchedulersWrapper
 ) : RxPresenter<TvShowsView>(), RefreshCallback, ToggleOverviewCallback {
 
+    private var state: List<BindableItem<*>> = tvShowsUiConverter.progress()
+        set(value) {
+            field = value
+            view?.showState(value)
+        }
+
     init {
         observeTvShowsUseCase.invoke()
             .observeOn(schedulersWrapper.ui())
             .doOnSubscribe {
-                view?.showState(tvShowsUiConverter.progress())
+                state = tvShowsUiConverter.progress()
             }
             .subscribe({ content ->
-                val state = tvShowsUiConverter.convert(content, toggleOverviewCallback = this)
-                view?.showState(state)
+                state = tvShowsUiConverter.convert(content, toggleOverviewCallback = this)
             }, { throwable ->
-                val state = tvShowsUiConverter.convert(throwable, refreshCallback = this)
-                view?.showState(state)
+                state = tvShowsUiConverter.convert(throwable, refreshCallback = this)
             })
             .addToComposite()
+
+        onRefreshClicked()
     }
 
     override fun onViewReady() {
-        onRefreshClicked()
+        view?.showState(state)
     }
 
     // Invoke from TvShowsItem
@@ -49,7 +56,7 @@ internal class TvShowsPresenter(
         refreshTvShowsUseCase.invoke()
             .observeOn(schedulersWrapper.ui())
             .doOnSubscribe {
-                view?.showState(tvShowsUiConverter.progress())
+                state = tvShowsUiConverter.progress()
             }
             .subscribe()
             .addToComposite()
