@@ -58,4 +58,8 @@ dependencies {
 
     implementation libraries.dagger
     kapt libraries.daggerCompiler
+
+    implementation libraries.room
+    kapt libraries.roomCompiler
+    implementation libraries.roomRxJava2
 }

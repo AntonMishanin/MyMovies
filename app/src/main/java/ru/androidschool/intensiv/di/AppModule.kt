@@ -37,12 +37,15 @@ internal class AppModule {
     @[Provides AppScope]
     fun provideTvShowsDependencies(
         retrofit: Retrofit,
-        schedulersWrapper: SchedulersWrapper
+        schedulersWrapper: SchedulersWrapper,
+        context: Context
     ) = object : TvShowsDependencies {
 
         override fun provideRetrofit() = retrofit
 
         override fun provideSchedulersWrapper() = schedulersWrapper
+
+        override fun provideContext() = context
     }
 
     @[Provides AppScope]
