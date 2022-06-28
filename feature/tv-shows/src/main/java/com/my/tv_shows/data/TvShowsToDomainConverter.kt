@@ -1,4 +1,4 @@
-package com.my.tv_shows.data.converter
+package com.my.tv_shows.data
 
 import com.my.core.converter.Converter
 import com.my.core.converter.IterableConverter

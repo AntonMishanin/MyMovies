@@ -20,6 +20,6 @@ internal class TvShowsUiConverter {
     ) = when (exception) {
         is NoInternetConnectionException -> listOf(NoInternetErrorItem(refreshCallback))
         is UnknownException -> listOf(UnknownErrorItem(refreshCallback))
-        else -> throw IllegalArgumentException("Unknown exception $exception")
+        else -> listOf(UnknownErrorItem(refreshCallback))
     }
 }

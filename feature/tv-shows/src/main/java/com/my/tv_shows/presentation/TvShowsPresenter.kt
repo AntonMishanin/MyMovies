@@ -58,7 +58,9 @@ internal class TvShowsPresenter(
             .doOnSubscribe {
                 state = tvShowsUiConverter.progress()
             }
-            .subscribe()
+            .subscribe({}, { throwable ->
+                state = tvShowsUiConverter.convert(throwable, refreshCallback = this)
+            })
             .addToComposite()
     }
 }
