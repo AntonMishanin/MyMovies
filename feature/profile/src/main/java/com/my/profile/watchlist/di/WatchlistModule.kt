@@ -1,11 +1,11 @@
 package com.my.profile.watchlist.di
 
 import com.my.core.di.Feature
-import com.my.profile.watchlist.WatchlistViewModel
 import com.my.profile.watchlist.data.PurchaseRepository
 import com.my.profile.watchlist.data.WatchlistRepository
 import com.my.profile.watchlist.domain.FetchWatchlistUseCase
 import com.my.profile.watchlist.presentation.WatchlistConverter
+import com.my.profile.watchlist.presentation.WatchlistViewModel
 import dagger.Module
 import dagger.Provides
 

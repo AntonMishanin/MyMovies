@@ -3,7 +3,7 @@ package com.my.profile.watchlist.domain
 import com.my.profile.watchlist.data.PurchaseRepository
 import com.my.profile.watchlist.data.WatchlistRepository
 
-class FetchWatchlistUseCase(
+internal class FetchWatchlistUseCase(
     private val purchaseRepository: PurchaseRepository,
     private val watchlistRepository: WatchlistRepository
 ) {

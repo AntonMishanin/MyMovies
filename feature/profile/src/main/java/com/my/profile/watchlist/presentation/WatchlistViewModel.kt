@@ -1,15 +1,14 @@
-package com.my.profile.watchlist
+package com.my.profile.watchlist.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.my.core.presentation.BaseViewModel
 import com.my.favorite.domain.usecase.FavoriteEntity
 import com.my.profile.watchlist.domain.FetchWatchlistUseCase
-import com.my.profile.watchlist.presentation.WatchlistConverter
 import com.xwray.groupie.viewbinding.BindableItem
 import timber.log.Timber
 
-class WatchlistViewModel(
+internal class WatchlistViewModel(
     fetchWatchlistUseCase: FetchWatchlistUseCase,
     watchlistConverter: WatchlistConverter
 ) : BaseViewModel() {

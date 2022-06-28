@@ -4,7 +4,7 @@ import com.my.core.presentation.BaseItem
 import com.my.profile.R
 import com.my.profile.databinding.ItemAccessErrorBinding
 
-class AccessErrorItem : BaseItem<ItemAccessErrorBinding>(
+internal class AccessErrorItem : BaseItem<ItemAccessErrorBinding>(
     R.layout.item_access_error,
     ItemAccessErrorBinding::bind
 ) {

@@ -1,4 +1,4 @@
-package com.my.profile.watchlist
+package com.my.profile.watchlist.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +16,7 @@ import com.xwray.groupie.GroupieViewHolder
 
 private const val WATCHLIST_SPAN_COUNT = 4
 
-class WatchlistFragment : Fragment() {
+internal class WatchlistFragment : Fragment() {
 
     private var _binding: FragmentWatchlistBinding? = null
     private val binding get() = _binding!!
