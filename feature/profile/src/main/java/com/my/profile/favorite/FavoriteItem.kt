@@ -11,6 +11,6 @@ class FavoriteItem(
 ) : BaseItem<ItemSmallBinding>(R.layout.item_small, ItemSmallBinding::bind) {
 
     override fun bind(viewBinding: ItemSmallBinding, position: Int) {
-        viewBinding.imagePreview.load(R.drawable.ic_avatar)
+        viewBinding.imagePreview.load(content.posterPath)
     }
 }
