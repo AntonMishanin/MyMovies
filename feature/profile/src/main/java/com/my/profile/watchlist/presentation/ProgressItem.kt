@@ -9,7 +9,5 @@ internal class ProgressItem : BaseItem<ItemProgressBinding>(
     ItemProgressBinding::bind
 ) {
 
-    override fun bind(viewBinding: ItemProgressBinding, position: Int) {
-
-    }
+    override fun bind(viewBinding: ItemProgressBinding, position: Int) = Unit
 }
