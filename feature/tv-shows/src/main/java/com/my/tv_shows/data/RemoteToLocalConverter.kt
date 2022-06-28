@@ -6,12 +6,15 @@ import com.my.tv_shows.data.remote.dto.TvShowDto
 import com.my.tv_shows.data.remote.dto.TvShowsResponse
 import com.my.tv_shows.domain.TvShowsEntity
 
+// TODO: think about type = "popular"
+
 internal class RemoteToLocalConverter {
 
-    fun convert(input: TvShowsResponse, type: String) = input.results?.map { convert(it, type) }
-        ?: throw IllegalArgumentException("TvShowsResponse must be not null")
+    fun convert(input: TvShowsResponse, type: String = "popular") =
+        input.results?.map { convert(it, type) }
+            ?: throw IllegalArgumentException("TvShowsResponse must be not null")
 
-    private fun convert(source: TvShowDto, type: String) = TvShowsDbo(
+    private fun convert(source: TvShowDto, type: String = "popular") = TvShowsDbo(
         id = source.id ?: throw IllegalArgumentException("Id must be not null"),
         type = type,
         posterPath = source.posterPath ?: "",

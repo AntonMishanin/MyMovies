@@ -1,57 +1,41 @@
 package com.my.tv_shows.data
 
+import com.my.core.data.OfflineFirstRepository
 import com.my.core.di.SchedulersWrapper
 import com.my.tv_shows.data.local.LocalDataSource
+import com.my.tv_shows.data.local.TvShowsDbo
 import com.my.tv_shows.data.remote.TvRemoteDataSource
+import com.my.tv_shows.data.remote.dto.TvShowsResponse
 import com.my.tv_shows.domain.TvRepository
 import com.my.tv_shows.domain.TvShowsEntity
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 internal class TvRepositoryImpl(
-    private val remote: TvRemoteDataSource,
-    private val toDomainConverter: TvShowsToDomainConverter,
-    private val toDomainException: ToDomainExceptionConverter,
+    remote: TvRemoteDataSource,
+    toDomainException: ToDomainExceptionConverter,
     private val memoryCache: MemoryCacheDataSource,
-    private val localDataSource: LocalDataSource,
-    private val remoteToLocalConverter: RemoteToLocalConverter,
-    private val localToDomainConverter: LocalToDomainConverter,
-    private val schedulersWrapper: SchedulersWrapper
-) : TvRepository {
+    localDataSource: LocalDataSource,
+    remoteToLocalConverter: RemoteToLocalConverter,
+    localToDomainConverter: LocalToDomainConverter,
+    schedulersWrapper: SchedulersWrapper
+) : TvRepository, OfflineFirstRepository<List<TvShowsEntity>, TvShowsResponse, List<TvShowsDbo>>(
+    schedulersWrapper = schedulersWrapper,
+    observeFromMemory = memoryCache::observable,
+    fetchFromStorage = localDataSource::fetch,
+    fetchFromNetwork = remote::fetchPopularTvShows,
+    saveToStorage = localDataSource::insert,
+    saveToMemory = memoryCache::save,
+    networkToStorage = remoteToLocalConverter::convert,
+    storageToDomain = localToDomainConverter::convert,
+    toDomainException = toDomainException::convert
+) {
 
-    override fun observeTvShows() = memoryCache.observable()
+    override fun observeTvShows(): Flowable<List<TvShowsEntity>> = observable()
 
-    override fun fetchFreshTvShows(): Single<List<TvShowsEntity>> {
-        val type = "popular"//TODO: send to api
-        return remote.fetchPopularTvShows()
-            .flatMap {
-                val tvShows = remoteToLocalConverter.convert(it, type)
-                localDataSource.insert(tvShows).toSingleDefault(it)
-            }
-            .map { toDomainConverter.convert(it) }
-            .doOnSuccess { memoryCache.save(it) }
-            .onErrorResumeNext { fetchLocal(it) }
-            .onErrorReturn { throwable ->
-                throwable.printStackTrace()
-                throw toDomainException.convert(throwable)
-            }
-            .subscribeOn(schedulersWrapper.io())
-    }
+    override fun fetchCachedTvShows(): Single<List<TvShowsEntity>> = memoryCache.read()
 
-    override fun fetchCachedTvShows() = memoryCache.read()
+    override fun fetchFreshTvShows(): Single<List<TvShowsEntity>> = refresh()
 
-    override fun saveToCachedTvShows(tvShows: List<TvShowsEntity>) {
-        memoryCache.save(tvShows)
-    }
-
-    private fun fetchLocal(throwable: Throwable): Single<List<TvShowsEntity>> {
-        return localDataSource.fetch()
-            .map { localToDomainConverter.convert(it) }
-            .doOnSuccess { memoryCache.save(it) }
-            .map {
-                when (it.isEmpty()) {
-                    true -> throw throwable
-                    false -> it
-                }
-            }
-    }
+    override fun saveToCachedTvShows(tvShows: List<TvShowsEntity>) = memoryCache.save(tvShows)
 }

@@ -36,8 +36,6 @@ internal class TvShowsPresenter(
                 state = tvShowsUiConverter.convert(throwable, refreshCallback = this)
             })
             .addToComposite()
-
-        onRefreshClicked()
     }
 
     override fun onViewReady() {
