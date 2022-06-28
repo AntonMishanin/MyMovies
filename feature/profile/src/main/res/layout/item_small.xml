@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/image_preview"
-    android:layout_width="@dimen/image_preview_width"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/image_preview_height"
-    android:layout_margin="@dimen/material_margin_small"
-    tools:src="@drawable/ic_avatar"
+    android:padding="@dimen/material_margin_small"
     android:scaleType="centerCrop"
-    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent" />
+    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+    tools:src="@drawable/ic_avatar" />
