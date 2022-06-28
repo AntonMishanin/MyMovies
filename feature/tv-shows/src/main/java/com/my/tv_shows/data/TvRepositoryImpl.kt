@@ -6,7 +6,6 @@ import com.my.tv_shows.data.remote.TvRemoteDataSource
 import com.my.tv_shows.domain.TvRepository
 import com.my.tv_shows.domain.TvShowsEntity
 import io.reactivex.Single
-import io.reactivex.disposables.CompositeDisposable
 
 internal class TvRepositoryImpl(
     private val remote: TvRemoteDataSource,
@@ -16,8 +15,7 @@ internal class TvRepositoryImpl(
     private val localDataSource: LocalDataSource,
     private val remoteToLocalConverter: RemoteToLocalConverter,
     private val localToDomainConverter: LocalToDomainConverter,
-    private val schedulersWrapper: SchedulersWrapper,
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    private val schedulersWrapper: SchedulersWrapper
 ) : TvRepository {
 
     override fun observeTvShows() = memoryCache.observable()
@@ -25,10 +23,9 @@ internal class TvRepositoryImpl(
     override fun fetchFreshTvShows(): Single<List<TvShowsEntity>> {
         val type = "popular"//TODO: send to api
         return remote.fetchPopularTvShows()
-            .doOnSuccess {
+            .flatMap {
                 val tvShows = remoteToLocalConverter.convert(it, type)
-                val disposable = localDataSource.insert(tvShows).subscribe()
-                compositeDisposable.add(disposable)
+                localDataSource.insert(tvShows).toSingleDefault(it)
             }
             .map { toDomainConverter.convert(it) }
             .doOnSuccess { memoryCache.save(it) }
@@ -56,9 +53,5 @@ internal class TvRepositoryImpl(
                     false -> it
                 }
             }
-    }
-
-    protected fun finalize() {
-        compositeDisposable.dispose()
     }
 }

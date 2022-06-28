@@ -5,8 +5,8 @@ import com.my.profile.favorite.FavoriteViewModel
 import com.my.profile.favorite.di.FavoriteModule
 import com.my.profile.main.di.ProfileModule
 import com.my.profile.main.presentation.ProfileViewModel
-import com.my.profile.watchlist.WatchlistViewModel
 import com.my.profile.watchlist.di.WatchlistModule
+import com.my.profile.watchlist.presentation.WatchlistViewModel
 import dagger.Component
 
 @Feature

@@ -5,7 +5,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.my.profile.favorite.FavoriteFragment
 import com.my.profile.main.domain.entity.ContentViewType
 import com.my.profile.main.domain.entity.ProfileFeature
-import com.my.profile.watchlist.WatchlistFragment
+import com.my.profile.watchlist.presentation.WatchlistFragment
 
 class ProfileAdapter(
     fragment: Fragment,
