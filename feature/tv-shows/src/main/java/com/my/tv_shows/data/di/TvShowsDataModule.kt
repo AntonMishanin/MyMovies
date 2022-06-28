@@ -23,7 +23,6 @@ internal class TvShowsDataModule {
     @Provides
     fun provideTvRepository(
         remoteDataSource: TvRemoteDataSource,
-        tvShowsToDomainConverter: TvShowsToDomainConverter,
         toDomainExceptionConverter: ToDomainExceptionConverter,
         memoryCacheDataSource: MemoryCacheDataSource,
         localDataSource: LocalDataSource,
@@ -32,7 +31,6 @@ internal class TvShowsDataModule {
         schedulersWrapper: SchedulersWrapper
     ): TvRepository = TvRepositoryImpl(
         remoteDataSource,
-        tvShowsToDomainConverter,
         toDomainExceptionConverter,
         memoryCacheDataSource,
         localDataSource,
@@ -49,9 +47,6 @@ internal class TvShowsDataModule {
 
     @Provides
     fun provideTvShowsApi(retrofit: Retrofit) = retrofit.create(TvApi::class.java)
-
-    @Provides
-    fun provideTvShowsToDomainConverter() = TvShowsToDomainConverter()
 
     @Provides
     fun provideToDomainExceptionConverter() = ToDomainExceptionConverter()
