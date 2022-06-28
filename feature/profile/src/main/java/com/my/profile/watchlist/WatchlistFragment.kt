@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.my.core.di.DependenciesProvider
 import com.my.profile.databinding.FragmentWatchlistBinding
 import com.my.profile.di.ProfileDependencies
@@ -52,14 +52,14 @@ class WatchlistFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.moviesRecyclerView.layoutManager = GridLayoutManager(context, WATCHLIST_SPAN_COUNT)
+        binding.moviesRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.moviesRecyclerView.adapter = adapter
     }
 
     private fun subscribeToObservers() {
-        viewModel.content.observe(viewLifecycleOwner) { movies ->
-            val items = movies.map { MoviePreviewItem(it, viewModel::onMovieItemClicked) }
-            adapter.addAll(items)
+        viewModel.content.observe(viewLifecycleOwner) {
+            // Think about different span count for different items
+            adapter.replaceAll(it)
         }
     }
 

@@ -4,18 +4,31 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.my.core.presentation.BaseViewModel
 import com.my.favorite.domain.usecase.FavoriteEntity
+import com.my.profile.watchlist.domain.FetchWatchlistUseCase
+import com.my.profile.watchlist.presentation.WatchlistConverter
+import com.xwray.groupie.viewbinding.BindableItem
 import timber.log.Timber
 
-class WatchlistViewModel : BaseViewModel() {
+class WatchlistViewModel(
+    fetchWatchlistUseCase: FetchWatchlistUseCase,
+    watchlistConverter: WatchlistConverter
+) : BaseViewModel() {
 
-    private val _content: MutableLiveData<List<FavoriteEntity>> = MutableLiveData()
-    val content: LiveData<List<FavoriteEntity>> = _content
+    private val privateContent: MutableLiveData<List<BindableItem<*>>> = MutableLiveData()
+    val content: LiveData<List<BindableItem<*>>> = privateContent
 
     init {
-        _content.value = emptyList()
+        fetchWatchlistUseCase.invoke()
+            //TODO: use schedulers
+            .doOnSubscribe { privateContent.value = watchlistConverter.progress() }
+            .subscribe({
+                privateContent.value = watchlistConverter.convert(it, ::onMovieItemClicked)
+            }, {
+                privateContent.value = watchlistConverter.convert(it)
+            }).addToComposite()
     }
 
-    fun onMovieItemClicked(movie: FavoriteEntity) {
+    private fun onMovieItemClicked(movie: FavoriteEntity) {
         Timber.d("On movie item clicked $movie")
     }
 }

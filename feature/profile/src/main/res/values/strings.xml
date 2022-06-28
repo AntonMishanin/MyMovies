@@ -4,4 +4,5 @@
     <string name="favorite">Понравилось</string>
 
     <string name="placeholder">Пёс Киноман</string>
+    <string name="only_for_premium_users">Only for premium users</string>
 </resources>
