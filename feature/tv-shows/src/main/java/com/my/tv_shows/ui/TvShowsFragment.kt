@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.my.core.di.DependenciesProvider
+import com.my.core.presentation.addOnScrollListener
 import com.my.tv_shows.databinding.FragmentTvShowsBinding
 import com.my.tv_shows.di.TvShowsDependencies
 import com.my.tv_shows.di.TvShowsDiContainer
@@ -41,6 +42,7 @@ class TvShowsFragment : Fragment(), TvShowsView {
         super.onViewCreated(view, savedInstanceState)
         presenter.onViewAttached(view = this)
         binding.tvShowsRecyclerView.adapter = adapter
+        binding.tvShowsRecyclerView.addOnScrollListener(presenter::onScrolled)
     }
 
     override fun onDestroyView() {
