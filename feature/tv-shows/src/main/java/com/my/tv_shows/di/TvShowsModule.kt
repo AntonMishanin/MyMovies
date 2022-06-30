@@ -1,10 +1,9 @@
 package com.my.tv_shows.di
 
 import com.my.core.di.SchedulersWrapper
-import com.my.tv_shows.domain.ObserveTvShowsUseCase
-import com.my.tv_shows.domain.RefreshTvShowsUseCase
-import com.my.tv_shows.domain.ToggleOverviewUseCase
+import com.my.tv_shows.domain.PaginationConfig
 import com.my.tv_shows.domain.TvRepository
+import com.my.tv_shows.domain.TvSeasonsInteractor
 import com.my.tv_shows.presentation.TvShowsPresenter
 import com.my.tv_shows.presentation.TvShowsUiConverter
 import dagger.Module
@@ -15,30 +14,23 @@ internal class TvShowsModule {
 
     @Provides
     fun provideTvShowsPresenter(
-        observeTvShowsUseCase: ObserveTvShowsUseCase,
-        toggleOverviewUseCase: ToggleOverviewUseCase,
-        RefreshTvShowsUseCase: RefreshTvShowsUseCase,
+        tvSeasonsInteractor: TvSeasonsInteractor,
         tvShowsUiConverter: TvShowsUiConverter,
         schedulersWrapper: SchedulersWrapper
     ) = TvShowsPresenter(
-        observeTvShowsUseCase,
-        toggleOverviewUseCase,
-        RefreshTvShowsUseCase,
+        tvSeasonsInteractor,
         tvShowsUiConverter,
         schedulersWrapper
     )
 
     @Provides
-    fun provideFetchPopularTvShowsUseCase(tvRepository: TvRepository) =
-        RefreshTvShowsUseCase(tvRepository)
+    fun provideTvSeasonsInteractor(
+        tvRepository: TvRepository,
+        paginationConfig: PaginationConfig
+    ) = TvSeasonsInteractor(tvRepository, paginationConfig)
 
     @Provides
-    fun provideObserveTvShowsUseCase(tvRepository: TvRepository) =
-        ObserveTvShowsUseCase(tvRepository)
-
-    @Provides
-    fun provideClickOnTvShowsUseCase(tvRepository: TvRepository) =
-        ToggleOverviewUseCase(tvRepository)
+    fun providePaginationConfig() = PaginationConfig()
 
     @Provides
     fun provideTvShowsUiConverter() = TvShowsUiConverter()
