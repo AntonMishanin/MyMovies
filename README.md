@@ -1,7 +1,7 @@
 ### MyMovies
 
-Application for checking different movie's types: now playing, popular, upcoming. 
-You can see the movie's details information and it to favorite. Also you can use the search to find any movies.
+Application for watching different movie's types: now playing, popular, upcoming. 
+You can see the movie's details information and add it to favorite. Also you can use the search to find any movies.
 Tv-seasons are available too.
 
  > Tagline: Open source. Welcome to contribute. See issues. Check develop.
