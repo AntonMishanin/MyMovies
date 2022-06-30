@@ -25,7 +25,7 @@ internal class TvRepositoryImpl(
     fetchFromStorage = localDataSource::fetch,
     fetchFromNetwork = remote::fetchPopularTvShows,
     saveToStorage = localDataSource::insert,
-    saveToMemory = memoryCache::save,
+    saveToMemory = memoryCache::add,
     networkToStorage = remoteToLocalConverter::convert,
     storageToDomain = localToDomainConverter::convert,
     toDomainException = toDomainException::convert
@@ -37,5 +37,5 @@ internal class TvRepositoryImpl(
 
     override fun fetchFreshTvShows(): Single<List<TvShowsEntity>> = refresh()
 
-    override fun saveToCachedTvShows(tvShows: List<TvShowsEntity>) = memoryCache.save(tvShows)
+    override fun saveToCachedTvShows(tvShows: List<TvShowsEntity>) = memoryCache.replace(tvShows)
 }

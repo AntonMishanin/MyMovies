@@ -7,13 +7,20 @@ import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 
 internal class MemoryCacheDataSource(
-    private val observable: BehaviorSubject<List<TvShowsEntity>> = BehaviorSubject.create()
+    private val observable: BehaviorSubject<List<TvShowsEntity>> = BehaviorSubject.create(),
+    private val data: MutableList<TvShowsEntity> = mutableListOf()
 ) {
 
-    fun read(): Single<List<TvShowsEntity>> = Single.just(observable.value)
+    fun read(): Single<List<TvShowsEntity>> = Single.just(data)
 
-    fun save(data: List<TvShowsEntity>) {
-        this.observable.onNext(data)
+    fun replace(data: List<TvShowsEntity>) {
+        this.data.clear()
+        add(data)
+    }
+
+    fun add(data: List<TvShowsEntity>) {
+        this.data.addAll(data)
+        observable.onNext(this.data)
     }
 
     fun observable(): Flowable<List<TvShowsEntity>> =
