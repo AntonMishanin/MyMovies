@@ -1,10 +1,13 @@
 package com.my.tv_shows.data.remote
 
-import com.my.tv_shows.data.remote.dto.TvShowsResponse
-import io.reactivex.Single
+import com.my.tv_shows.domain.PaginationConfig
 
 internal class TvRemoteDataSource(
     private val tvApi: TvApi
 ) {
-    fun fetchPopularTvShows(): Single<TvShowsResponse> = tvApi.fetchPopularTvShows()
+
+    fun fetchTvShows(
+        type: String,
+        paginationConfig: PaginationConfig
+    ) = tvApi.fetchTvShows(type, paginationConfig.page)
 }

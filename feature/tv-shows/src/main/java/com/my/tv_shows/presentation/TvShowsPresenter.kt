@@ -2,18 +2,14 @@ package com.my.tv_shows.presentation
 
 import com.my.core.di.SchedulersWrapper
 import com.my.core.mvp.RxPresenter
-import com.my.tv_shows.domain.ObserveTvShowsUseCase
-import com.my.tv_shows.domain.RefreshTvShowsUseCase
-import com.my.tv_shows.domain.ToggleOverviewUseCase
+import com.my.tv_shows.domain.TvSeasonsInteractor
 import com.my.tv_shows.domain.TvShowsEntity
 import com.my.tv_shows.ui.RefreshCallback
 import com.my.tv_shows.ui.ToggleOverviewCallback
 import com.xwray.groupie.viewbinding.BindableItem
 
 internal class TvShowsPresenter(
-    observeTvShowsUseCase: ObserveTvShowsUseCase,
-    private val toggleOverviewUseCase: ToggleOverviewUseCase,
-    private val refreshTvShowsUseCase: RefreshTvShowsUseCase,
+    private val tvSeasonsInteractor: TvSeasonsInteractor,
     private val tvShowsUiConverter: TvShowsUiConverter,
     private val schedulersWrapper: SchedulersWrapper
 ) : RxPresenter<TvShowsView>(), RefreshCallback, ToggleOverviewCallback {
@@ -25,7 +21,7 @@ internal class TvShowsPresenter(
         }
 
     init {
-        observeTvShowsUseCase.invoke()
+        tvSeasonsInteractor.observable()
             .observeOn(schedulersWrapper.ui())
             .doOnSubscribe {
                 state = tvShowsUiConverter.progress()
@@ -44,14 +40,14 @@ internal class TvShowsPresenter(
 
     // Invoke from TvShowsItem
     override fun onToggleOverviewClicked(tvShowsEntity: TvShowsEntity) {
-        toggleOverviewUseCase.invoke(tvShowsEntity)
+        tvSeasonsInteractor.toggleOverview(tvShowsEntity)
             .subscribe()
             .addToComposite()
     }
 
     // Invoke from UnknownErrorItem
     override fun onRefreshClicked() {
-        refreshTvShowsUseCase.invoke()
+        tvSeasonsInteractor.refresh()
             .observeOn(schedulersWrapper.ui())
             .doOnSubscribe {
                 state = tvShowsUiConverter.progress()
@@ -61,4 +57,7 @@ internal class TvShowsPresenter(
             })
             .addToComposite()
     }
+
+    fun onScrolled(currentPosition: Int, itemsSize: Int) =
+        tvSeasonsInteractor.loadMore(currentPosition, itemsSize)
 }
