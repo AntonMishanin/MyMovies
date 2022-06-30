@@ -7,7 +7,7 @@ internal interface TvRepository {
 
     fun observeTvShows(): Flowable<List<TvShowsEntity>>
 
-    fun fetchFreshTvShows(): Single<List<TvShowsEntity>>
+    fun fetchFreshTvShows(paginationConfig: PaginationConfig): Single<List<TvShowsEntity>>
 
     fun fetchCachedTvShows(): Single<List<TvShowsEntity>>
 

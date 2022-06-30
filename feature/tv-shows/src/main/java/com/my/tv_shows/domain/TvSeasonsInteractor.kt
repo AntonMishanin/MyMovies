@@ -15,14 +15,14 @@ internal class TvSeasonsInteractor(
         loadMoreObservable
             .filter {
                 val currentPosition = it.first
-                val itemsSize = it.second - 1
-                currentPosition == itemsSize
+                val itemsSize = it.second - paginationConfig.prefetchDistance
+                currentPosition >= itemsSize
             }
-            .throttleFirst(1000, TimeUnit.MILLISECONDS)
+            .throttleFirst(THROTTLE_DURATION_MILLISECONDS, TimeUnit.MILLISECONDS)
             .filter { !paginationConfig.isProgress }
             .doOnNext {
-                val page = paginationConfig.page + 1
-                paginationConfig = paginationConfig.copy(page = page, isProgress = true)
+                val newPage = paginationConfig.page + paginationConfig.jumpRange
+                paginationConfig = paginationConfig.copy(page = newPage, isProgress = true)
             }
             .flatMap { repository.fetchFreshTvShows(paginationConfig).toObservable() }
             .doOnNext { paginationConfig = paginationConfig.copy(isProgress = false) }
@@ -53,4 +53,8 @@ internal class TvSeasonsInteractor(
     fun refresh() = repository.fetchFreshTvShows(paginationConfig)
 
     fun observable() = repository.observeTvShows()
+
+    companion object {
+        private const val THROTTLE_DURATION_MILLISECONDS = 1000L
+    }
 }
