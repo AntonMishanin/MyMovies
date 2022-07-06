@@ -1,4 +1,4 @@
-package com.my.core.presentation
+package com.my.core.pagination
 
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
