@@ -1,7 +1,7 @@
 package com.my.tv_shows.di
 
 import com.my.core.di.SchedulersWrapper
-import com.my.tv_shows.domain.PaginationConfig
+import com.my.core.pagination.Pagination
 import com.my.tv_shows.domain.TvRepository
 import com.my.tv_shows.domain.TvSeasonsInteractor
 import com.my.tv_shows.presentation.TvShowsPresenter
@@ -26,11 +26,11 @@ internal class TvShowsModule {
     @Provides
     fun provideTvSeasonsInteractor(
         tvRepository: TvRepository,
-        paginationConfig: PaginationConfig
+        paginationConfig: Pagination
     ) = TvSeasonsInteractor(tvRepository, paginationConfig)
 
     @Provides
-    fun providePaginationConfig() = PaginationConfig()
+    fun providePagination() = Pagination()
 
     @Provides
     fun provideTvShowsUiConverter() = TvShowsUiConverter()
